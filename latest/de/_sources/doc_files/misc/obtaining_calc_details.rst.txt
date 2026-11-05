@@ -64,15 +64,16 @@ made the MC procedure code easier to handle.
    At first, a deviation from an expected distribution symmetrically to
    zero is tested. This is done by comparing the mean value
    *y*\ :sub:`1`, deviating from zero, with the MC uncertainty of the
-   mean, *u*\ (*y*\ :sub:`1`)/√\ *N* (see below). In the case of
+   mean, *u*\ (*y*\ :sub:`1`)/√\ *N* (see below). If this ratio exceeds
+   0.02, or 0.150 if PMLE is applied, the following applies:
 
-   :math:`\frac{y_{1}}{u\left( y_{1} \right)/\sqrt{N}} > 0.10\ `
+   :math:`\frac{y_{1}}{u\left( y_{1} \right)/\sqrt{N}} > 0.02\ `
 
    **an iteration is performed for the decision threshold using the
-   secant method**, which shifts the mean value closer to zero\ **.** If
+   secant method**, which shifts the mean value closer to zero. If
    necessary, up to 12 steps are performed, each of them requiring a
    full MC simulation; this leads to increasing computational effort. If
-   the above ratio does not fall below 0.10, that distribution with the
+   none of the ratios falls below the applicable limit, that distribution with the
    lowest ratio is selected from those of the 12 steps, from which the
    decision threshold is then calculated. *y*\ :sub:`1` can be reduced
    by typically one to two orders of magnitude; it may happen, however,

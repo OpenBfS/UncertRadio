@@ -82,7 +82,7 @@ low counting numbers.
    prerequisite, x=GamDistAdd=0, UncertRadio internally adds 1 to N only
    if N=0 (this means “0+1”). This means that for N>0 a Gamma
    distribution is applied for the associated count rate R with a
-   prior(R) ~ 1/R. In contrast, for N=0 a uniform prior(R) is assumed.**
+   prior(R) ~ 1/R. In contrast, for N=0 a uniform prior(R) is assumed.
 
    If, however, x=GamDistAdd has been set a value > 0, which may be
    true for already existing UR projects, it will always be added to N,

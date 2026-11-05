@@ -3,7 +3,7 @@ Literature
 
 AKU, 2008\ *. Moderne Routine- und Schnellmethoden zur Bestimmung von
 Sr-89 und Sr-90 bei der Umweltüberwachung*. Bericht einer
-Ad-hoc-Arbeitsgruppe des Arbeitskreises Umweltüber­wachung (AKU). Bericht
+Ad-hoc-Arbeitsgruppe des Arbeitskreises Umweltüberwachung (AKU). Bericht
 FS-08-147-AKU des Fachverbandes für Strahlenschutz. TÜV Media GmbH,
 Köln.
 

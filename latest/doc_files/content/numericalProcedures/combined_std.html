@@ -96,7 +96,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../equation_topology.html">1.3. Equations as tree topology</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../additions.html">1.4. Additional Notes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Literature.html">1.5. Literature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html">1.5. Release Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Literature.html">1.6. Literature</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../first_steps/first_steps_index.html">2. User Guide</a></li>
@@ -154,8 +155,8 @@ of the output quantity is calculated from the values of the array
 elements <em>p(i)</em> by using the function parser.</p>
 <p>Similarly, the known measurement uncertainties of the individual
 quantities/parameters are transferred to an array <strong>StdUnc(i) = u(i)</strong>.
-For the calculation of the combined uncertainty a <a class="reference external" href="#URH_UNCPROPA_EN">subroutine
-Uncpropa</a> is used to which the two arrays <em>p(i)</em>
+For the calculation of the combined uncertainty a subroutine (see
+<a class="reference internal" href="../../misc/algorithm_combined_uncertainty.html#algorithm-for-numerical-calculation-of-the-combined-uncertainty"><span class="std std-numref">Section 5.2</span></a>) is used to which the two arrays <em>p(i)</em>
 and <em>u(i)</em> are transferred. Covariances are considered in this
 subroutine. The sensitivity coefficients, i.e. the partial derivates of
 the function calculated with RESULT with respect to the array elements

@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>3.1. Using command line arguments &#8212; UncertRadio  Dokumentation</title>
+    <title>3.1. Benutzung von Kommandozeilen-Argumenten &#8212; UncertRadio  Dokumentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
@@ -17,7 +17,7 @@
     <script src="../../_static/translations.js?v=9bf55d28"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="3.2. Batch mode processing with an Excel application" href="batch_mode_excel.html" />
+    <link rel="next" title="3.2. Automatisierter Betrieb mit einer Excelanwendung" href="batch_mode_excel.html" />
     <link rel="prev" title="3. Automatisierung" href="batch_mode_index.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -85,14 +85,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Inhalt</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="batch_mode_index.html">3. Automatisierung</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">3.1. Using command line arguments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="batch_mode_excel.html">3.2. Batch mode processing with an Excel application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="starting_macros.html">3.3. Starting the macros</a></li>
-<li class="toctree-l2"><a class="reference internal" href="run_within_excel.html">3.4. Run UR with a project edited within Excel</a></li>
-<li class="toctree-l2"><a class="reference internal" href="example_Excel_batch.html">3.5. Example of an Excel application for a batch-like processing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="serial_evaulation.html">3.6. Serial evaluations of an existing project</a></li>
-<li class="toctree-l2"><a class="reference internal" href="processing_projects_batch_mode.html">3.7. Processing projects in batch mode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="run_all_tests.html">3.8. Batch-mode testing the evaluation of example projects</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.1. Benutzung von Kommandozeilen-Argumenten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batch_mode_excel.html">3.2. Automatisierter Betrieb mit einer Excelanwendung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="starting_macros.html">3.3. Starten der einzelnen Makros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run_within_excel.html">3.4. UR mit einem in Excel editierten Projekt ausführen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_Excel_batch.html">3.5. Beispiel einer Excelanwendung für den Batch-artigen Betrieb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="serial_evaulation.html">3.6. Serielle Auswertungen eines vorhandenen Projekts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing_projects_batch_mode.html">3.7. Projekte im Batch-Mode auswerten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="run_all_tests.html">3.8. Testauswertung der Beispielprojekte im Batch-Mode</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Einzelne Methoden</a></li>
@@ -118,46 +118,27 @@
           <div class="body" role="main">
             
   <section id="using-command-line-arguments">
-<h1><span class="section-number">3.1. </span>Using command line arguments<a class="headerlink" href="#using-command-line-arguments" title="Link to this heading">¶</a></h1>
-<p>It is possible to run the UncertRadio program with adding command line
-arguments to the calling string. The command line arguments, abbreviated
-by Arg_n, are strings (without blank characters in them!) which are
-passed over to UR as a sort of keywords at the starting time and may
-serve e.g. for passing over the project filename to be processed to UR.
-Such a call under Windows looks like:</p>
+<h1><span class="section-number">3.1. </span>Benutzung von Kommandozeilen-Argumenten<a class="headerlink" href="#using-command-line-arguments" title="Link to this heading">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Bemerkung</p>
+<p><strong>Plattform-Kompatibilität</strong>: Die Kommandozeilen-Beispiele in diesem Abschnitt sind <strong>nur für Windows</strong>. Unter Linux und macOS unterscheidet sich die Syntax der Kommandozeilen-Argumente (kein „Start”-Präfix, andere Pfadtrennzeichen). Die Beispiele zum Excel-Batch-Modus (siehe <a class="reference internal" href="batch_mode_excel.html#batch-mode-processing-with-an-excel-application"><span class="std std-ref">Automatisierter Betrieb mit einer Excelanwendung</span></a>) sind <strong>nur für Windows</strong> und erfordern Microsoft Excel mit VBA-Unterstützung. LibreOffice Calc und andere Tabellenkalkulations-Anwendungen werden nicht unterstützt.</p>
+</div>
+<p>Es ist möglich das Programm UncertRadio mit der Beigabe von sogenannten Kommandozeilen-Argumenten zu starten. Die Kommandozeile-Argumente, hier mit Arg_n abgekürzt, sind Strings (ohne Leerzeichen!) und dienen dazu, dem Programm beim Start sowohl spezielle Dateinamen oder Schlüsselworte zur Steuerung des Ablaufs des Programms zu übergeben. Mit einem derart zusammengesetzten Kommando-String kann UR unter Windows-Start wie folgt aufgerufen werden:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Start<span class="w"> </span>D:<span class="se">\\</span>Uncertradio<span class="se">\\</span>Uncertradio.exe<span class="w"> </span>Arg_1<span class="w"> </span>Arg_2<span class="w"> </span>Arg_3
 </pre></div>
 </div>
-<p>For a first step towards an automated type of calculation of several UR
-projects, one after another, the following three command line arguments
-have been implemented, which are interpreted by UR:</p>
+<p>Zur Vorbereitung einer automatisierbaren Auswertung von mehreren UR-Projekten, hintereinander ausgeführt, sind in einem ersten Schritt folgende drei Kommandozeile-Argumente eingerichtet worden, die das Programm interpretiert:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Start<span class="w"> </span>D:<span class="se">\\</span>Uncertradio<span class="se">\\</span>Uncertradio.exe<span class="w"> </span>AUTO<span class="w"> </span>Inputfile.txp<span class="w"> </span>Sample_ID
 </pre></div>
 </div>
-<p>The first argument AUTO (capital letters) initiates the batch mode; the
-second argument is the name of the UR project file to be processed; the
-third argument is a sort of sample identification number (or a number
-within an experimental batch) and can e.g. be used to differentiate
-between such calculation results, which have between obtained for
-different samples but for different copies of the same master project
-file in which only a part of input parameters changed from experiment to
-experiment.</p>
-<p>Since the version 2.04.00 another batch mode is implemented by which a
-given project can be evaluated serially for specified varied input
-values. The evaluation corresponds to that one described in chapter 5.6.
-The above argument AUTO is replaced by BATSER, followed by the project
-file and the CSV file with records of specified input values in it. The
-full command line then is (see chapter 4.5):</p>
+<p>Hierbei initiiert das erste Argument AUTO (großgeschrieben) den Batchmode; das 2. Argument ist der Name der automatisch auszuwertenden UR-Projekt-Datei; das dritte Argument ist eine Proben-Identifikationsnummer (oder Versuchsnummer) und soll nur dabei helfen, solche Auswerteergebnisse, die zwar mit verschiedenen Probenummern, aber derselben UR-Projektdatei gerechnet wurden, voneinander zu unterscheiden.</p>
+<p>Es ist ein weiterer Batchmode integriert, mit dem ein vorgegebenes Projekt mehrfach seriell für spezifizierte Eingangswerte ausgewertet kann. Die Auswertung entspricht der in Kapitel <a class="reference internal" href="serial_evaulation.html#serial-evaluations-of-an-existing-project"><span class="std std-numref">Abschnitt 3.6</span></a> beschriebenen Auswertung. Das obige Argument AUTO wird hierbei durch BATSER ersetzt, gefolgt von der Projektdatei und der CSV-Datei mit den Datensätzen der darin spezifizierten Eingangswerte. Die Befehlszeile lautet in Anlehnung an Kapitel <a class="reference internal" href="serial_evaulation.html#serial-evaluations-of-an-existing-project"><span class="std std-numref">Abschnitt 3.6</span></a>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Start<span class="w"> </span>D:<span class="se">\\</span>UR2<span class="se">\\</span>Uncertradio.exe<span class="w"> </span>BATSER<span class="w"> </span>J-ALUFT-Sr89-Sr-90_DE.txp
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p>To avoid conflicts with antivirus software, the file
-UR2_start_xls.bat, which previously was used for starting UncertRadio
-from Excel, is no longer used. Instead, Excel-VBA invokes UncertRadio
-directly, the temporary modification of the Windows-PATH variable is
-also applied directly.</p>
+<p>Um Konflikte mit Antivirus-Software zu vermeiden, wird die Datei UR2_start_xls.bat, die zuvor zum Starten von UncertRadio aus Excel verwendet wurde, nicht mehr eingesetzt. Stattdessen ruft Excel-VBA UncertRadio direkt auf; die temporäre Änderung der Windows-PATH-Variable wird ebenfalls direkt angewendet.</p>
 </div>
 </section>
 

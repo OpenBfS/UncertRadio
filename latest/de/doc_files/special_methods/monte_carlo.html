@@ -18,8 +18,8 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="4.7. Low-Level Applications, (N+x)-rule" href="low_level_applications.html" />
-    <link rel="prev" title="4.5. Activity determination from several gamma lines" href="gamma_lines.html" />
+    <link rel="next" title="4.7. Low-Level-Anwendungen, (N+x)-Regel" href="low_level_applications.html" />
+    <link rel="prev" title="4.5. Aktivitätsbestimmung mit mehreren Gammalinien" href="gamma_lines.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -87,20 +87,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="special_methods_index.html">4. Einzelne Methoden</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Uncertainty propagation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Best estimates and confidence limits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Linear Least squares method</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Utilizing a calibration curve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Activity determination from several gamma lines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Unsicherheitsfortpflanzung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Beste Schätzwerte nach Bayes und Vertrauensgrenzen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Lineares Least squares-Verfahren</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Verwendung einer Kalibrierkurve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">4.6. Monte Carlo Simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level Applications, (N+x)-rule</a></li>
-<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Confidence ellipses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Using data sets for mean and variance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Measuring a short-lived radionuclide with comparably long counting duration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Special distributions and their properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Gross quantity: Variance interpolation for a mean</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Aggregating activities of several aliquots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Application of decay series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level-Anwendungen, (N+x)-Regel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Konfidenz-Ellipsen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Verwendung von Datensätzen für Mittelwert und Varianz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Spezielle Verteilungen und ihre Eigenschaften</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Anwendung von Zerfallsreihen</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Verschiedenes</a></li>
@@ -126,130 +126,44 @@
             
   <section id="monte-carlo-simulation">
 <h1><span class="section-number">4.6. </span>Monte Carlo Simulation<a class="headerlink" href="#monte-carlo-simulation" title="Link to this heading">¶</a></h1>
-<p>Under the <a class="reference internal" href="../first_steps/TABS/Results.html#tab-results"><span class="std std-ref">TAB “Resultate”</span></a>, the user can start
-a <strong>Monte Carlo simulation</strong> for
-cross-checking the value and the uncertainty of the output quantity
-<strong>y</strong>.</p>
-<p>The simulation is done for a chosen (large) number of simulations of the
-measurement. For this purpose, for each of those quantities having been
-defined in the symbol list under the TAB “Equations” and characterized
-there as independent (u) input quantities, simulated input values are
-taken from their correspondent distributions (normal, rectangular or
-triangular distributions). The underlying individual distributions have
-been determined under the TAB “Values, uncertainties”.
-If the <a class="reference internal" href="low_level_applications.html#low-level-applications-n-x-rule"><span class="std std-ref">Low-Level Applications, (N+x)-rule</span></a> has been selected there for
-counting numbers, their associated values are MC sampled according to a
-Gamma distribution; the values of the counting rates derived from the
-counting numbers then are also Gamma distributed. If all these input
-quantities have got a simulated value, a value of the output quantity -
-“the first simulated value of <strong>y</strong>” - is calculated according to the
-equations already defined.</p>
-<p>From the many-fold repetition of this step a statistical distribution of
-the values of the output quantity is obtained from which its best
-estimate and its associated standard uncertainty are calculated as
-arithmetic mean and standard deviation, respectively. At present, with
-this method only quantities having normal, rectangular or triangular
-distributions can be considered
-(see <a class="reference internal" href="../misc/obtaining_calc_details.html#obtaining-mc-distributions-and-statistics-derived-of-it-in-detail"><span class="std std-ref">Obtaining MC distributions and statistics derived of it in detail</span></a>).</p>
-<p>The great advantage of this method is that partial derivatives with
-respect to the independent quantities are not needed!</p>
-<p><strong>Note</strong>: the random generator used here has a period of about
-<span class="math notranslate nohighlight">\(10^{18}\)</span>.</p>
-<p>The procedure just described is correct for the case that no
-correlations exist between the input quantities. If in the TAB “Values,
-uncertainties”, however, covariances between <strong>pairs of correlating
-quantities</strong> have been given, correlated simulated values must be
-attributed to these quantities.</p>
-<p><strong>Important note on this issue</strong>: Since the UncertRadio version 0.05
-(2007/11) this method of producing correlated variables was completely
-adapted to methods described in textbooks where matrix methods are used
-(keyword: “Gaussian distributed random numbers in n dimensions”; S.
-Brandt, Datenanalyse; V. Blobel and E. Lohrmann, Statistische und
-numerische Methoden der Datenanalyse; as well as the Draft of the new
-Supplement 1 of ISO GUM). This can be proven by trying the UncertRadio
-example project files <strong>Kessel-2a-2006.txp and Kessel-2b-2006.txp</strong> from
-the recent publication by Kessel et al. (2006)
-(see also: <a class="reference internal" href="../first_steps/TABS/Uncertainty_Budget.html#tab-uncertainty-budget"><span class="std std-ref">Meaning of the TAB “Uncertainty budget”</span></a>).</p>
-<p>Intermediate results of the MC simulation, partially consisting of
-tables, are now (Version 2.2.11) collected in a separate text file
-MC_Tables.txt.</p>
-<p>Generally, one will find a good agreement between the results from the
-MC simulation method and from the analytical method. <strong>Therefore, the MC
-method is a relatively easy and elegant alternative to the more
-extensive analytical procedure</strong>.</p>
-<p><strong>What can be followed from deviations between the two methods?</strong></p>
-<p>If by using the MC method a result is obtained which deviates from that
-by the analytical method, one could easily conclude that there could be
-an error somewhere in the analytical procedure. However, this conclusion
-not always needs to be true!</p>
-<p><strong>What the described MC method actually is calculating can be
-interpreted as “Propagation of distributions”.</strong> This means that it in
-principle the expectation value of the output quantity is estimated,
-i.e. the following <em>n</em>-fold integral:</p>
+<p>Unter dem <a class="reference internal" href="../first_steps/TABS/Results.html#tab-results"><span class="std std-ref">TAB “Resultate”</span></a> kann zur Überprüfung des für die Ergebnisgröße <strong>y</strong> erhaltenen Werts und seiner Unsicherheit eine <strong>Monte Carlo Simulation</strong> gestartet werden.</p>
+<p>Die Simulation erfolgt für eine gewählte (große) Zahl von Simulationen der Messung. Dazu werden für jede derjenigen Größen, die in der Symboleliste unter dem TAB „Equations” definiert und dort als unabhängig (u) gekennzeichneten Eingangsgrößen sind, simulierte Eingangswerte aus ihren entsprechenden Verteilungen (Normal-, Rechteck- oder Dreiecksverteilung) entnommen. Die zugrunde liegenden Einzelverteilungen wurden unter dem TAB „Values, uncertainties” festgelegt. Wenn dort die <a class="reference internal" href="low_level_applications.html#low-level-applications-n-x-rule"><span class="std std-ref">Low-Level-Anwendungen, (N+x)-Regel</span></a> für Impulsanzahlen gewählt wurde, werden ihre zugehörigen Werte gemäß einer Gamma-Verteilung MC-gezogen; die Werte der aus den Impulsanzahlen abgeleiteten Zählraten sind dann ebenfalls Gamma-verteilt. Wenn alle diese Eingangsgrößen einen simulierten Wert erhalten haben, wird ein Wert der Ergebnisgröße – „der erste simulierte Wert von <strong>y</strong>” – gemäß den bereits definierten Gleichungen berechnet.</p>
+<p>Aus der vielfachen Wiederholung dieses Vorgangs erhält man dann eine statistische Verteilung von Einzelwerten der Ergebnisgröße. Daraus wird ihr bester Schätzwert als arithmetischer Mittelwert und aus der Streuung die Standardabweichung der Einzelwerte der Ergebnisgröße berechnet. Derzeit werden bei der Methode nur Normal-, Rechteck- und Dreiecksverteilungen der einzelnen Größen berücksichtigt (siehe <a class="reference internal" href="../misc/obtaining_calc_details.html#obtaining-mc-distributions-and-statistics-derived-of-it-in-detail"><span class="std std-ref">Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</span></a>).</p>
+<p>Der große Vorteil dieser Methode besteht darin, dass partielle Ableitungen nach den unabhängigen Größenwerten nicht benötigt werden!</p>
+<p><strong>[Hinweis]</strong>: der verwendete Zufallszahlengenerator hat eine Periode von etwa <span class="math notranslate nohighlight">\(10^{18}\)</span>.</p>
+<p>Das eben beschriebene Vorgehen gilt für den Fall, dass zwischen den als unabhängig deklarierten Größen keinerlei Korrelationen vorliegen. Hat man jedoch im TAB „Werte, Unsicherheiten” für bestimmte <strong>Paare von korrelierenden Größen</strong> Kovarianzen festgelegt, werden den Paaren beim „Würfeln” untereinander korrelierte Werte zugewiesen, entsprechend der Größe ihrer Kovarianz.</p>
+<p><strong>Wichtiger Hinweis zu diesem Thema</strong>: Seit der UncertRadio-Version 0.05 (2007/11) wurde diese Methode zur Erzeugung korrelierter Variablen vollständig an Lehrbuchmethoden angepasst, bei denen Matrixmethoden verwendet werden (Stichwort: „Gauß-verteilte Zufallszahlen in n Dimensionen”; S. Brandt, Datenanalyse; V. Blobel und E. Lohrmann, Statistische und numerische Methoden der Datenanalyse; sowie der Entwurf des neuen Supplement 1 des ISO GUM). Dies lässt sich durch Ausprobieren der UncertRadio-Beispielprojektdateien <strong>Kessel-2a-2006_EN.txp und Kessel-2b-2006_EN.txp</strong> aus der Veröffentlichung von Kessel et al. (2006) nachprüfen (siehe auch: <a class="reference internal" href="../first_steps/TABS/Uncertainty_Budget.html#tab-uncertainty-budget"><span class="std std-ref">Meaning of the TAB “Uncertainty budget”</span></a>).</p>
+<p>Zwischenergebnisse der MC-Simulation, zum Teil als Tabellen, werden in der separaten Datei MC_Tables.txt zusammengefasst.</p>
+<p>Im Allgemeinen wird man feststellen, dass das mit der MC-Methode erhaltene Ergebnis (Wert und Unsicherheit der Ergebnisgröße <strong>y</strong>) gut mit dem nach der analytischen Methode erhaltenen Ergebnis übereinstimmt. <strong>Somit ist die MC-Methode eine relativ einfache und elegante Alternative zu dem sehr viel aufwendigeren analytischen Verfahren</strong>.</p>
+<p><strong>Was kann man aus Abweichungen zwischen beiden Methoden folgern?</strong></p>
+<p>Kommt bei Anwendung der MC-Methode ein vom analytischen Verfahren abweichendes Ergebnis heraus, könnte man auf einen Fehler des Programmteils für die analytische Methode schließen. Dies muss aber nicht immer die richtige Folgerung sein!</p>
+<p><strong>Was die geschilderte MC-Methode tatsächlich ausführt, kann man auch als eine „Fortpflanzung von Verteilungen” interpretieren</strong>. Dies bedeutet, dass damit im Prinzip für die Ergebnisgröße <strong>y</strong> der Erwartungswert, also das folgende <em>n</em>-fache Integral, abgeschätzt wird:</p>
 <div class="math notranslate nohighlight">
 \[y = \iiint_{n}^{}{F\left( x_{1},x_{2},\ldots,x_{n} \right) \cdot \left\lbrack \varphi_{1}\left( x_{1} \right) \cdot \varphi_{2}\left( x_{2} \right)\ldots\varphi_{n}\left( x_{n} \right)\  \right\rbrack \cdot dx_{1} \cdot}dx_{2}\ldots\ dx_{n}\]</div>
-<p>Herein, <span class="math notranslate nohighlight">\(F\left( x_{1},x_{2},\ldots,x_{n} \right)\)</span> designates in
-compact form the equations which are necessary for the calculation of
-<strong>y</strong> (i.e. the formula with which the value of <strong>y</strong> is usually
-calculated) and <span class="math notranslate nohighlight">\(\varphi_{i}\left( x_{i} \right)\)</span> the probability
-density functions of the <em>n</em> input quantities <span class="math notranslate nohighlight">\(x_{i}\)</span>
-characterized as independent. The widths of the
-<span class="math notranslate nohighlight">\(\varphi_{i}\left( x_{i} \right)\)</span> are determined from their
-associated measurement uncertainties <span class="math notranslate nohighlight">\(u\left( x_{i} \right)\)</span>. An
-important assumption for the conventional propagation of uncertainties
-is that the uncertainties of the <span class="math notranslate nohighlight">\(x_{i}\)</span> should be small. In this
-case, the probability density functions
-<span class="math notranslate nohighlight">\(\varphi_{i}\left( x_{i} \right)\)</span> approximately become delta
-functions with the consequence that the <em>n</em>-fold integral reduces to the
-conventionally calculated value
-<span class="math notranslate nohighlight">\(F\left( x_{1},x_{2},\ldots,x_{n} \right)\)</span> of the output quantity
-<strong>y</strong>. In this sense deviations between both methods may occur with
-respect to the output quantity and its uncertainty if any of the
-involved uncertainties “are not small” which might also be if such
-quantities belong to the denominator of the evaluation equation
-(non-linearity).</p>
-<p>The collection of project files contains <strong>examples in which the
-discussed deviation between both methods is significant</strong>:</p>
+<p>Hierin bezeichnet <span class="math notranslate nohighlight">\(F\left( x_{1},x_{2},\ldots,x_{n} \right)\)</span> die zur analytischen Berechnung von <strong>y</strong> zusammengefassten Gleichungen (d.h. die Formel, mit der man <strong>y</strong> üblicherweise berechnet) und <span class="math notranslate nohighlight">\(\varphi_{i}\left( x_{i} \right)\)</span> die Wahrscheinlichkeitsdichtefunktionen der <em>n</em> als unabhängigen deklarierten Messgrößen bzw. Parameter <span class="math notranslate nohighlight">\(x_{i}\)</span>. Die Breiten der <span class="math notranslate nohighlight">\(\varphi_{i}\left( x_{i} \right)\)</span> werden durch die dazugehörigen Messunsicherheiten <span class="math notranslate nohighlight">\(u\left( x_{i} \right)\)</span> charakterisiert. Eine wesentliche Annahme bei der herkömmlichen Fortpflanzung der Unsicherheiten besteht darin, dass die Unsicherheiten der <span class="math notranslate nohighlight">\(x_{i}\)</span> „klein sein sollen”. In diesem Falle werden aus den Wahrscheinlichkeitsdichtefunktionen <span class="math notranslate nohighlight">\(\varphi_{i}\left( x_{i} \right)\)</span> näherungsweise Delta-Funktionen, so dass sich das o. a. <em>n</em>-fache Integral zum herkömmlich berechneten Wert <span class="math notranslate nohighlight">\(F\left( x_{1},x_{2},\ldots,x_{n} \right)\)</span> der Ergebnisgröße <strong>y</strong> selbst vereinfacht. In diesem Sinne können Abweichungen zwischen beiden Verfahren im Wert und der Unsicherheit der Ergebnisgröße auftreten, wenn einige der beteiligten Messunsicherheiten „nicht klein sind” und diese zudem noch im Nenner einer Gleichung stehen (Nicht-Linearität).</p>
+<p>Die Sammlung der Projektdateien enthält <strong>Beispiele, bei denen die diskutierte Abweichung zwischen beiden Verfahren signifikant ist</strong>:</p>
 <table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Projektdatei</strong></p></th>
+<th class="head"><p><strong>Besonderheit</strong></p></th>
+</tr>
+</thead>
 <tbody>
-<tr class="row-odd"><td><p><strong>Project file</strong></p></td>
-<td><p><strong>Special feature</strong></p></td>
+<tr class="row-even"><td><p>ISO-Beispiel-1a_DE.txp,
+ISO-Beispiel-1b_DE.txp</p></td>
+<td><p>Darin verursacht der Selbstabsorptionsfaktor <em>f</em> der Alphastrahlung, dem eine vergleichsweise breite Rechteck-Verteilung zugeordnet wurde und der im Nenner steht, diesen Effekt.</p></td>
 </tr>
-<tr class="row-even"><td><p>ISO-Example-1a_EN.txp,
-ISO-Example-1b_EN.txp</p></td>
-<td><p>Here, the alpha self-absorption factor
-<em>f</em>, having a rather broad rectangular
-distribution and belonging to the
-denominator, causes this effect.</p></td>
+<tr class="row-odd"><td><p>Neutron-Dose-Cox-2006_DE.txp</p></td>
+<td><p>Hierin verursacht die im Nenner stehende feldspezifische Korrektion <em>K</em> mit einer signifikant breiten Rechteckverteilung praktisch den gleichen Effekt wie im vorstehenden Beispiel: die erhaltene Verteilung ist deutlich asymmetrisch.</p></td>
 </tr>
-<tr class="row-odd"><td><p>Neut
-ron-Dose-Cox-2006_EN.txp</p></td>
-<td><p>The field specific correction K with a
-significantly broad rectangular
-distribution has practically the same
-effect as in the wipe test example above:
-the resultant distribution is
-significantly asymmetric.</p></td>
+<tr class="row-even"><td><p>Calibration-of-weight-Cox-2001_EN.txp</p></td>
+<td><p>In diesem Beispiel erhält man mit der MC-Methode eine signifikant größere Messunsicherheit. Drei der beteiligten Messgrößen ist eine Rechteckverteilung zugeordnet.</p></td>
 </tr>
-<tr class="row-even"><td><p>Calibration-o
-f-weight-Cox-2001_EN.txp</p></td>
-<td><p>In this example a significantly larger
-measurement uncertainty results from the
-MC method. Rectangular distributions are
-attributed to three of the involved input
-quantities.</p></td>
+<tr class="row-odd"><td><p>Wuebbeler-Ex1_DE.txp</p></td>
+<td><p>Eine nichtlineare Modellfunktion in Verbindung mit großen Unsicherheiten der normalverteilten Eingangswerte führen zu einer schiefsymmetrischen Verteilung der Ergebnisgröße</p></td>
 </tr>
-<tr class="row-odd"><td><p>Wuebbeler-Ex1_EN.txp</p></td>
-<td><p>A non-linear model function in
-combination with large uncertainties of
-normal distributed input quantities
-result in an asymmetric distribution of
-the output quantity.</p></td>
-</tr>
-<tr class="row-even"><td><p>Wuebbeler-Ex2_EN.txp</p></td>
-<td><p>Rectangular distributed input quantities
-result in a trapezoidal distribution of
-the output quantity.</p></td>
+<tr class="row-even"><td><p>Wuebbeler-Ex2_DE.txp</p></td>
+<td><p>Rechteck-verteilte Eingangsgrößen führen zu einer trapezförmigen Verteilung der Ergebnisgröße</p></td>
 </tr>
 </tbody>
 </table>

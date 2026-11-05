@@ -55,7 +55,7 @@ rates - or non-weighted. The internal use of covariances of measured net
 counting rates may be de-selected for testing.
 
 The type of the fitting procedure can be selected from four variants:
-WLS, PLSQ, PMLE und WTLS. The more complex but more time-consuming total
+WLS, PLSQ, PMLE and WTLS. The more complex but more time-consuming total
 least squares procedure (WTLS) is able to take uncertainties of the
 :math:`X_{i}\left( t_{k} \right)` values and covariances between them
 into account. See also :ref:`chi-square options`.
@@ -183,7 +183,7 @@ Decay functions: Input within the dialog field for the terms:
 +---------------------------------------+------------------------------+
 
 For a better understanding of this application, the reader is referred
-to the example project :file:`DWD-LSC-3kanal-V2.txp`, which corresponds to a
+to the example project :file:`DWD-LSC-3kanal-V2_EN.txp`, which corresponds to a
 quite detailed presentation of the equations in the report AKU (2008;
 page 160). For this application, the nine decay functions are defined as
 follows:
