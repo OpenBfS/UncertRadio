@@ -17,8 +17,8 @@
     <script src="../../_static/translations.js?v=9bf55d28"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="4.1. Uncertainty propagation" href="unc_prop/uncertainty_propagation_index.html" />
-    <link rel="prev" title="3.8. Batch-mode testing the evaluation of example projects" href="../batch_mode/run_all_tests.html" />
+    <link rel="next" title="4.1. Unsicherheitsfortpflanzung" href="unc_prop/uncertainty_propagation_index.html" />
+    <link rel="prev" title="3.8. Testauswertung der Beispielprojekte im Batch-Mode" href="../batch_mode/run_all_tests.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -86,20 +86,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">4. Einzelne Methoden</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Uncertainty propagation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Best estimates and confidence limits</a></li>
-<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Linear Least squares method</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Utilizing a calibration curve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Activity determination from several gamma lines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Unsicherheitsfortpflanzung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Beste Schätzwerte nach Bayes und Vertrauensgrenzen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Lineares Least squares-Verfahren</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration_curve.html">4.4. Verwendung einer Kalibrierkurve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
 <li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level Applications, (N+x)-rule</a></li>
-<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Confidence ellipses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Using data sets for mean and variance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Measuring a short-lived radionuclide with comparably long counting duration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Special distributions and their properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Gross quantity: Variance interpolation for a mean</a></li>
-<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Aggregating activities of several aliquots</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Application of decay series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level-Anwendungen, (N+x)-Regel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Konfidenz-Ellipsen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Verwendung von Datensätzen für Mittelwert und Varianz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Spezielle Verteilungen und ihre Eigenschaften</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Anwendung von Zerfallsreihen</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Verschiedenes</a></li>
@@ -127,54 +127,54 @@
 <h1><span class="section-number">4. </span>Einzelne Methoden<a class="headerlink" href="#special-methods" title="Link to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Uncertainty propagation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="unc_prop/without_linear_unfolding.html">4.1.1. Methods without linear unfolding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="unc_prop/several_output_quantities.html">4.1.2. Extension to several output quantities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Unsicherheitsfortpflanzung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/without_linear_unfolding.html">4.1.1. Verfahren ohne lineare Entfaltung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/several_output_quantities.html">4.1.2. Erweiterung auf mehrere Ergebnisgrößen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unc_prop/applications_in_UR.html">4.1.3. Applications in UR</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="best_estimate.html">4.2. Best estimates and confidence limits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="linear_least_square.html">4.3. Linear Least squares method</a></li>
-<li class="toctree-l1"><a class="reference internal" href="calibration_curve.html">4.4. Utilizing a calibration curve</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gamma_lines.html">4.5. Activity determination from several gamma lines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="best_estimate.html">4.2. Beste Schätzwerte nach Bayes und Vertrauensgrenzen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_least_square.html">4.3. Lineares Least squares-Verfahren</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calibration_curve.html">4.4. Verwendung einer Kalibrierkurve</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gamma_lines.html">4.5. Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
 <li class="toctree-l1"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level Applications, (N+x)-rule</a></li>
-<li class="toctree-l1"><a class="reference internal" href="confidence_ellipses.html">4.8. Confidence ellipses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_sets_mean.html">4.9. Using data sets for mean and variance</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html#mathematical-background">4.9.1. Mathematical background</a></li>
-<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html#applying-means-in-uncertradio">4.9.2. Applying means in UncertRadio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level-Anwendungen, (N+x)-Regel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="confidence_ellipses.html">4.8. Konfidenz-Ellipsen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_sets_mean.html">4.9. Verwendung von Datensätzen für Mittelwert und Varianz</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html#mathematical-background">4.9.1. Mathematischer Hintergrund</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html#applying-means-in-uncertradio">4.9.2. Anwendung von Mittelwerten in UncertRadio</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="short-lived_nuclide.html">4.10. Measuring a short-lived radionuclide with comparably long counting duration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html#basic-principles">4.10.1. Basic principles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html#aspects-of-uncertainties-and-evaluation">4.10.2. Aspects of uncertainties and evaluation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html#an-example-case">4.10.3. An example case</a></li>
-<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html#implementation-in-uncertradio">4.10.4. Implementation in UncertRadio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="short-lived_nuclide.html">4.10. Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html#basic-principles">4.10.1. Grundlagen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html#aspects-of-uncertainties-and-evaluation">4.10.2. Hinweise zu Unsicherheiten und zur Auswertung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html#an-example-case">4.10.3. Ein Beispielfall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html#implementation-in-uncertradio">4.10.4. Implementierung in UncertRadio</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="special_distributions.html">4.11. Special distributions and their properties</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="special_distributions.html#the-gamma-distribution">4.11.1. The gamma distribution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="special_distributions.html#the-beta-distribution">4.11.2. The beta distribution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="special_distributions.html">4.11. Spezielle Verteilungen und ihre Eigenschaften</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html#the-gamma-distribution">4.11.1. die Gammaverteilung,</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html#the-beta-distribution">4.11.2. die Betaverteilung und</a></li>
 <li class="toctree-l2"><a class="reference internal" href="special_distributions.html#the-t-distribution">4.11.3. The <em>t</em>-distribution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="special_distributions.html#generating-random-numbers">4.11.4. Generating random numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html#generating-random-numbers">4.11.4. Erzeugung von Zufallszahlen</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="gross_quantity.html">4.12. Gross quantity: Variance interpolation for a mean</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="gross_quantity.html">4.12. Bruttogröße: Varianzinterpolation für einen Mittelwert</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="gross_quantity.html#definitions">4.12.1. Definitions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html#principle-of-the-mc-simulation">4.12.2. Principle of the MC simulation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html#procedures-with-unknown-random-influences">4.12.3. Procedures with unknown random influences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html#procedures-with-known-random-influences">4.12.4. Procedures with known random influences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html#principle-of-the-mc-simulation">4.12.2. Prinzip der MC-Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html#procedures-with-unknown-random-influences">4.12.3. Verfahren mit unbekannten zufälligen Einflüssen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html#procedures-with-known-random-influences">4.12.4. Verfahren mit bekannten zufälligen Einflüssen</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="aggregating_activities.html">4.13. Aggregating activities of several aliquots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="decay_chains.html">4.14. Application of decay series</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="aggregating_activities.html">4.13. Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="decay_chains.html">4.14. Anwendung von Zerfallsreihen</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="decay_chains.html#basic-procedure">4.14.1. Basic procedure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decay_chains.html#decay-corrections">4.14.2. Decay corrections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decay_chains.html#impact-on-the-decision-threshold-and-the-detection-limit">4.14.3. Impact on the decision threshold and the detection limit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html#decay-corrections">4.14.2. Zerfallskorrektionen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html#impact-on-the-decision-threshold-and-the-detection-limit">4.14.3. Einfluss auf die Erkennungs- und die Nachweisgrenze</a></li>
 <li class="toctree-l2"><a class="reference internal" href="decay_chains.html#implementation-of-decay-chains-in-uncertradio">4.14.4. Implementation of decay chains in UncertRadio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="decay_chains.html#example-project">4.14.5. Example project</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decay_chains.html#generation-of-decay-factor-formulas">4.14.6. Generation of decay factor formulas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decay_chains.html#decay-chain-literature">4.14.7. Decay Chain Literature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html#generation-of-decay-factor-formulas">4.14.6. Generierung von Formeln für Abklingfaktoren</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html#decay-chain-literature">4.14.7. Zerfallsreihen-Literatur</a></li>
 </ul>
 </li>
 </ul>

@@ -34,7 +34,7 @@ quantities (input quantities). The columns are:
     * - 5:
       - **distribut.**
       - select. field
-      - selection of the quantity`s distribution
+      - selection of the quantity's distribution
         (normal / rectangular / triangular / others)
         The :ref:`Low-Level Applications, (N+x)-rule`
         may be selected here, implying Gamma distributions of the associated
@@ -87,7 +87,7 @@ table, **the first row (row 1) is the one for the output quantity, or
 the rows 1-3 in the case of three output quantities**.
 
 Special feature of non-normal distributed numbers of counts and count
-rates: :ref:`` .
+rates: :ref:`treatment of numbers of counts and count rates`.
 
 For a data set-based quantity, mean and uncertainty are calculated
 internally from the associated data set and transferred to the “values,
@@ -158,7 +158,7 @@ standard uncertainty may be expressed as:
     \sqrt{u(R_{0})^{2} + (u(R_g)^2 – u(R_{0})^{2})*(R_{g} - R_{0}) / (R_{gm} – R_{0})}
 
 
-Herein, Rg und Rgm are the modified (varied) and the measured value of
+Herein, Rg and Rgm are the modified (varied) and the measured value of
 the gross count rate, respectively. If Rg takes the upper value, Rgm,
 the result is sqrt(u_Rbm^2), while the result is sqrt(u_R0^2) for the
 lower value Rg=R0. This requires appending the symbols Rgm, u_Rgm and

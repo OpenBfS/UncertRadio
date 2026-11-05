@@ -18,8 +18,8 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../../genindex.html" />
     <link rel="search" title="Suche" href="../../../search.html" />
-    <link rel="next" title="2.5. Enhaltende Beispiele" href="../example_projects.html" />
-    <link rel="prev" title="2.4.4. TAB “Uncertainty Budget”" href="Uncertainty_Budget.html" />
+    <link rel="next" title="2.5. Enthaltene Beispiele" href="../example_projects.html" />
+    <link rel="prev" title="2.4.4. TAB „Unsicherheiten-Budget“" href="Uncertainty_Budget.html" />
    
   <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
@@ -87,21 +87,21 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../first_steps_index.html">2. Erste Schritte</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../config.html">2.1. Einstellungen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../main_menue.html">2.2. Das Hauptmenü</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../open_project.html">2.3. Viewing an existing project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../open_project.html">2.3. Existierendes Projekt einsehen</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="tabs_index.html">2.4. Bedienung der einzelnen TABs</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="Procedures.html">2.4.1. TAB Verfahren</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Equations.html">2.4.2. TAB “Gleichungen”</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Values_Uncertainties.html">2.4.3. TAB “Values, Uncertainties”</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Uncertainty_Budget.html">2.4.4. TAB “Uncertainty Budget”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Uncertainty_Budget.html">2.4.4. TAB „Unsicherheiten-Budget“</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">2.4.5. TAB “Resultate”</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../example_projects.html">2.5. Enhaltende Beispiele</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../options_dialog.html">2.6. Options dialog - Presetting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../problem_advice.html">2.7. Advice in case of problems</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../projectfile_structure.html">2.8. Structure of the project file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../output_plots.html">2.9. Graphics window</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../batch_test.html">2.10. Program testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../example_projects.html">2.5. Enthaltene Beispiele</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../options_dialog.html">2.6. Dialog Optionen - Voreinstellungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../problem_advice.html">2.7. Hinweise bei Problemen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../projectfile_structure.html">2.8. Struktur der Projektdatei</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output_plots.html">2.9. Grafik-Fenster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../batch_test.html">2.10. Programm-Test</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
@@ -138,86 +138,54 @@
 <li><p>die relative erweiterte Unsicherheit (in %)</p></li>
 <li><p>der Erweiterungsfaktor (kann über das <strong>Menü Optionen</strong> geändert werden)</p></li>
 </ul>
-<p><a class="reference internal" href="../../special_methods/best_estimate.html#best-estimates-and-confidence-limits"><span class="std std-ref">best estimates according to Bayes and confidence limits</span></a></p>
+<p><a class="reference internal" href="../../special_methods/best_estimate.html#best-estimates-and-confidence-limits"><span class="std std-ref">beste Schätzwerte nach Bayes und Vertrauensgrenzen</span></a></p>
 <p><strong>(see also ISO 11929:2019):</strong></p>
 <ul class="simple">
 <li><p>der Wert der Ergebnisgröße</p></li>
-<li><p>the expanded uncertainty</p></li>
-<li><p>the value of the lower confidence limit</p></li>
-<li><p>the value of the upper confidence limit</p></li>
-<li><p>probability <span class="math notranslate nohighlight">\((1 - \gamma)\)</span> associated with the confidence interval</p></li>
+<li><p>die erweiterte Unsicherheit</p></li>
+<li><p>der Wert der unteren Vertrauensgrenze</p></li>
+<li><p>der Wert der oberen Vertrauensgrenze</p></li>
+<li><p>Wahrscheinlichkeit <span class="math notranslate nohighlight">\((1 - \gamma)\)</span> zum Vertrauensbereich:</p></li>
 </ul>
 <blockquote>
-<div><p>The toggle button „min. Coverage interval“ can be used to switch the
-display between probabilistically symmetric and the shortest coverage
-intervals, also in the case of the MC-Simulation.</p>
+<div><p>Zur Darstellung der Grenzen des Überdeckungsintervalls im TAB „Resultate“ kann mit den Toggle-Buttons „min. Coverage-Intervall” zwischen der Anzeige der probabilistisch symmetrischen und der kürzesten Überdeckungsintervalle gewechselt werden, auch im Falle der MC-Simulation.</p>
 </div></blockquote>
-<p><strong>Decision threshold and Detection limit:</strong></p>
+<p><strong>Erkennungs- und Nachweisgrenze:</strong></p>
 <ul class="simple">
-<li><p>the value of the Decision threshold including the number of
-iterations (actually no iterations)</p></li>
-<li><p>the value of the Detection limit including the number of iterations</p></li>
-<li><p>the applied quantiles of the normal distribution,
-<span class="math notranslate nohighlight">\(k_{1 - \alpha}\)</span> and k_beta = <span class="math notranslate nohighlight">\(k_{1 - \beta}\)</span>,
-corresponding to the errors of first and second kind</p></li>
+<li><p>der Wert der Erkennungsgrenze mit der Anzahl der dafür benötigten Iterationen (eigentlich keine Iterationen)</p></li>
+<li><p>der Wert der Nachweisgrenze mit der Anzahl der dafür benötigten Iterationen</p></li>
+<li><p>die dafür verwendeten Quantile der Normalverteilung k_alpha = <span class="math notranslate nohighlight">\(k_{1 - \alpha}\)</span> und k_beta = <span class="math notranslate nohighlight">\(k_{1 - \beta}\)</span>, entsprechend den Fehlern 1. und 2. Art</p></li>
 </ul>
-<p><strong>WLS, PLSQ, PMLE or WTLS: Standard uncertainties of the fitting
-parameter corresponding to the output quantity from the analysis of
-decay curve:</strong></p>
+<p><strong>WLS, PLSQ, PMLE bzw. WTLS: Standardunsicherheiten des der Ergebnisgröße entsprechenden Fitparameters bei Analyse einer Abklingkurve:</strong></p>
 <ul class="simple">
-<li><p>the uncertainty obtained from the least squares analysis; it is
-<strong>NOT</strong> multiplied with <span class="math notranslate nohighlight">\(\sqrt{\chi_{R}^{2}}\)</span> if the reduced
-Chi-squared value is larger than 1; this variant of the
-uncertainty of the net counting rate is used for estimating the
-uncertainty of the output quantity;</p></li>
-<li><p>that value of the uncertainty of the output quantity which is
-obtained from uncertainty propagation of the arguments of the
-Linfit function (i.e., mainly the background counting rate, if
-applicable with blank contribution) and of the uncertainties of
-the gross counting rates of the decay curve</p></li>
-<li><p>the value of the reduced Chi-square <span class="math notranslate nohighlight">\(\chi_{R}^{2}\)</span></p></li>
+<li><p>die aus der Ausgleichsrechnung erhaltene Unsicherheit; sie ist <strong>NICHT</strong> mit <span class="math notranslate nohighlight">\(\sqrt{\chi_{R}^{2}}\)</span> multipliziert, wenn der reduzierte Chi-Quadrat-Wert größer als 1 ist; diese Variante der Unsicherheit der Nettozählrate wird zur Abschätzung der Unsicherheit der Ergebnisgröße verwendet;</p></li>
+<li><p>derjenige Wert der Unsicherheit der Ergebnisgröße, der aus der Unsicherheitsfortpflanzung der Argumente der Linfit-Funktion (d. h. im Wesentlichen der Untergrundzählrate, ggf. mit Blindwert-Beitrag) und der Unsicherheiten der Bruttozählraten der Abklingkurve erhalten wird</p></li>
+<li><p>der Wert des reduzierten Chi-Quadrats <span class="math notranslate nohighlight">\(\chi_{R}^{2}\)</span></p></li>
 </ul>
-<p>A <a class="reference internal" href="../../special_methods/monte_carlo.html#monte-carlo-simulation"><span class="std std-ref">Monte Carlo Simulation</span></a> may be started as
-a modern alternative to the propagation of uncertainties:</p>
+<p>Eine <a class="reference internal" href="../../special_methods/monte_carlo.html#monte-carlo-simulation"><span class="std std-ref">Monte-Carlo-Simulation</span></a> kann als moderne Alternative zur Fortpflanzung der Unsicherheiten gestartet werden:</p>
 <ul class="simple">
-<li><p>input of the number <em>N</em> of simulated calculations of the output
-quantity (defining one run)</p></li>
-<li><p>input of the number of runs <em>r</em></p></li>
-<li><p>Optional: selection of the coverage interval of shortest length
-(shortest <strong>c</strong>overage <strong>i</strong>nterval)</p></li>
+<li><p>Eingabe der gewünschten Anzahl <em>N</em> von simulierten Berechnungen für die Ergebnisgröße (ein Run)</p></li>
+<li><p>Festlegung der Anzahl <em>r</em> der Runs</p></li>
+<li><p>Optional Wahl der Vertrauensgrenzen kürzester Länge (kleinstes <strong>c</strong>overage <strong>i</strong>nterval)</p></li>
 </ul>
-<p>The MC simulation is started by clicking the button “Start”. The
-iteration number is indicated when iteratively estimating the detection
-limit.</p>
-<p>From the r-fold repetition (runs) means and relative standard deviations
-(in %) are determined for:</p>
-<p><em>Best estimates according to Bayes:</em></p>
+<p>Die MC Simulation wird mit dem Button „Start“ gestartet. Während der iterativen Ermittlung der Verteilung der Nachweisgrenze wird die Nummer der Iteration angezeigt.</p>
+<p>Aus der <em>r</em>-fachen Wiederholung (Runs) werden jeweils ein Mittelwert und seine relative Streustandardabweichung (in %) ermittelt, und zwar für:</p>
+<p><em>Beste Schätzwerte nach Bayes:</em></p>
 <ul class="simple">
-<li><p>the output quantity</p></li>
-<li><p>the expanded uncertainty</p></li>
-<li><p>the relative expanded uncertainty (%)</p></li>
-<li><p>the lower confidence limit</p></li>
-<li><p>the upper confidence limit</p></li>
+<li><p>die Ergebnisgröße</p></li>
+<li><p>die erweiterte Unsicherheit</p></li>
+<li><p>die relative erweiterte Unsicherheit (%)</p></li>
+<li><p>die untere Vertrauensgrenze</p></li>
+<li><p>die obere Vertrauensgrenze</p></li>
 </ul>
-<p><em>and:</em></p>
+<p><em>und:</em></p>
 <ul class="simple">
-<li><p>the Decision threshold</p></li>
-<li><p>the Detection limit</p></li>
+<li><p>die Erkennungsgrenze</p></li>
+<li><p>die Nachweisgrenze</p></li>
 </ul>
-<p>A <strong>new Button „Save values“</strong> was introduced. It can be used to
-transfer all the values being visible in the dialog, including those
-obtained by MC simulation, together with project name, date/time of
-execution into a CSV file: UR‑Saved-Results.csv. If this file does not
-yet exist, it is opened; then, records of data are appended to that
-file. The meaning of the columns is similar to those of the file
-AutoReport-Result.csv; however, there are further columns for the LINFIT
-parameters, for each of the output quantity, the decision threshold and
-the detection.</p>
-<p><strong>In an extra dialog the three distributions are displayed which have
-been obtained from the Monte Carlo simulation.</strong></p>
-<p>In the <strong>menu Options</strong> one can define the two values of the <strong>normal
-Quantiles</strong> corresponding to the errors of first and second kind,
-respectively. See also <a class="reference internal" href="../../misc/changes_options_menue.html#changes-within-the-options-menu"><span class="std std-ref">Changes within the Options menu</span></a>.</p>
+<p>Ein <strong>neuer Button „Save values“</strong> wurde eingeführt. Mit ihm können alle im Dialog sichtbaren Werte, einschließlich der durch die MC-Simulation erhaltenen, zusammen mit Projektname und Datum/Zeit der Ausführung in eine CSV-Datei UR-Saved-Results.csv übertragen werden. Falls diese Datei noch nicht existiert, wird sie angelegt; danach werden Datensätze an die Datei angehängt. Die Bedeutung der Spalten ähnelt der der Datei AutoReport-Result.csv; allerdings gibt es weitere Spalten für die LINFIT-Parameter sowie je einen für die Ergebnisgröße, die Erkennungsgrenze und die Nachweisgrenze.</p>
+<p><strong>In einem Extradialog werden die drei erzeugten Monte-Carlo-Verteilungen grafisch dargestellt.</strong></p>
+<p>In dem <strong>Menü Optionen</strong> können die beiden Werte der Quantile der Normalverteilung eingestellt werden, die den sog. Fehlern 1. und 2. Art, α und β, entsprechen. Siehe auch <a class="reference internal" href="../../misc/changes_options_menue.html#changes-within-the-options-menu"><span class="std std-ref">Auswirkung der Änderung von Optionen</span></a>.</p>
 </section>
 
 

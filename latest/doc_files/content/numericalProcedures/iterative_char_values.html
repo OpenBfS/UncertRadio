@@ -96,7 +96,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../equation_topology.html">1.3. Equations as tree topology</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../additions.html">1.4. Additional Notes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Literature.html">1.5. Literature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html">1.5. Release Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Literature.html">1.6. Literature</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../first_steps/first_steps_index.html">2. User Guide</a></li>
@@ -164,8 +165,8 @@ the left-hand side; the latter is obtained by the inverse function
 the simple linear relationship between <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(R_n\)</span>,
 <span class="math notranslate nohighlight">\(y = F_L \cdot R_n + F_C\)</span>.</p>
 <p>The solution of the implicit equation <a class="reference internal" href="#equation-char-thres-eq2">(1.2.9)</a> is obtained by a simple
-iterative procedure which is demonstrated for the <a class="reference external" href="#algorithm-for-iterative-numerical-calculation-of-the-detection-limit-mathbfymathbf">detection limit
-case</a>.
+iterative procedure which is demonstrated for the detection limit
+case (see <a class="reference internal" href="../../misc/algorithm_iterative_dl.html#algorithm-for-iterative-numerical-calculation-of-the-detection-limit"><span class="std std-numref">Section 5.3</span></a>).
 The value of Factor is determined in the subprogram <strong>RESULT</strong>, while
 the uncertainty in Eq. (2) is calculated with the function subprogram
 <strong>UncPropa</strong>. In order to use UncPropa correctly, for each iteration
@@ -187,14 +188,10 @@ Brent is applied.</p>
 <p>In the case of linear unfolding by using linear least squares analysis,
 e.g. in the evaluation of a decay curve, the fitting parameter for the
 desired net counting rate is that quantity which is varied by iteration
-for estimating Decision threshold and Detection limit (c.f. <a class="reference external" href="#note-on-decision-threshold-and-detection-limit-for-linear-fitting">Note on
-Decision threshold and Detection limit with linear
-unfolding</a>).</p>
+for estimating Decision threshold and Detection limit (c.f. <a class="reference internal" href="../../misc/note_dt_dl_fit.html#note-on-decision-threshold-and-detection-limit-for-linear-fitting"><span class="std std-numref">Section 5.6</span></a>).</p>
 <p>For determining the activity of a radionuclide from several gamma lines
 the quantity associated with this activity is the one of which the value
-is iterated (c.f. <a class="reference external" href="#approach-of-calculating-decision-threshold-and-detection-limit-for-gamspk1">Method for calculating Decision threshold and
-Detection limit with
-Gamspk1</a>).</p>
+is iterated (c.f. <a class="reference internal" href="../../misc/dt_dl_gamma.html#approach-of-calculating-decision-threshold-and-detection-limit-for-gamspk1"><span class="std std-numref">Section 5.15</span></a>).</p>
 </section>
 
 

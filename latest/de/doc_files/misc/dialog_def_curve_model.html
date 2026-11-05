@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>5.11. Dialog Definition of the decay curve model &#8212; UncertRadio  Dokumentation</title>
+    <title>5.11. Dialog Festlegung des Modells der Abklingkurve &#8212; UncertRadio  Dokumentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
@@ -18,8 +18,8 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
     <link rel="search" title="Suche" href="../../search.html" />
-    <link rel="next" title="5.12. Viewing the result from the LSQ fit to the decay curve" href="lsq_fit_results.html" />
-    <link rel="prev" title="5.10. Dialog “Values of decay curve”" href="dialog_decay_curve.html" />
+    <link rel="next" title="5.12. Ansicht des Ergebnisses der LSQ-Anpassung der Abklingkurve" href="lsq_fit_results.html" />
+    <link rel="prev" title="5.10. Dialog „Eingabe der Abklingkurve“" href="dialog_decay_curve.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -88,33 +88,33 @@
 <li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../special_methods/special_methods_index.html">4. Einzelne Methoden</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="misc_index.html">5. Verschiedenes</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="changes_options_menue.html">5.1. Changes within the Options menu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="algorithm_combined_uncertainty.html">5.2. Algorithm for numerical calculation of the combined uncertainty</a></li>
-<li class="toctree-l2"><a class="reference internal" href="algorithm_iterative_dl.html">5.3. Algorithm for iterative numerical calculation of the Detection limit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="math_lsq_fit.html">5.4. Mathematics of the linear LSQ curve fitting with correlated measured values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="note_wtls.html">5.5. Notes on linear curve-fitting using general least squares (WTLS)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="note_dt_dl_fit.html">5.6. Note on Decision threshold and Detection limit for linear fitting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="within_tables.html">5.7. Within tables: delete rows, working with column blocks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="text_fields_equations.html">5.8. Text field for equations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="edit_symbol_list.html">5.9. Editing the symbol list</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dialog_decay_curve.html">5.10. Dialog “Values of decay curve”</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">5.11. Dialog Definition of the decay curve model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#one-single-output-quantity-defined">5.11.1. One single output quantity defined</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#extension-to-two-or-three-output-quantities">5.11.2. Extension to two or three output quantities</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#organizing-of-the-xi-functions">5.11.3. Organizing of the Xi Functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#one-parameter-excluded-from-fitting">5.11.4. One parameter excluded from fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changes_options_menue.html">5.1. Auswirkung der Änderung von Optionen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_combined_uncertainty.html">5.2. Algorithmus für die numerische Berechnung der kombinierten Unsicherheit:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithm_iterative_dl.html">5.3. Algorithmus für die iterative numerische Berechnung der Nachweisgrenze</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math_lsq_fit.html">5.4. Mathematik der linearen LSQ-Kurvenanpassung mit Messwerten, die miteinander korreliert sind</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_wtls.html">5.5. Hinweise zur linearen Kurvenanpassung mit dem „allgemeinen Fall” der Least squares-Anpassung (WTLS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="note_dt_dl_fit.html">5.6. Hinweis zu Erkennungs- und Nachweisgrenzen bei linearer Entfaltung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="within_tables.html">5.7. In Tabellen Zeilen entfernen, Arbeiten mit Spaltenblöcken</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_fields_equations.html">5.8. Textfenster für die Gleichungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="edit_symbol_list.html">5.9. Bearbeiten der Symbolliste</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_decay_curve.html">5.10. Dialog „Eingabe der Abklingkurve“</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.11. Dialog Festlegung des Modells der Abklingkurve</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#one-single-output-quantity-defined">5.11.1. Eine einzige Ergebnisgröße vorhanden</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extension-to-two-or-three-output-quantities">5.11.2. Erweiterung auf zwei oder drei Ergebnisgrößen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#organizing-of-the-xi-functions">5.11.3. Organisation der Xi-Funktionen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#one-parameter-excluded-from-fitting">5.11.4. Einen Fitparameter fixieren</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="lsq_fit_results.html">5.12. Viewing the result from the LSQ fit to the decay curve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="weighted_mean_uncertainty.html">5.13. Calculation of the weighted mean and its standard uncertainty</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lsq_weighted_mean.html">5.14. Least-squares calculation of a weighted mean and its standard uncertainty</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Approach of calculating Decision threshold and Detection limit for Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Values from spectrum evaluation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. View of the result from calculating a mean with Gamspk1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Obtaining MC distributions and statistics derived of it in detail</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. PMLE procedure for linear unfolding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Treatment of numbers of counts and count rates</a></li>
-<li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Treatment of physical units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_fit_results.html">5.12. Ansicht des Ergebnisses der LSQ-Anpassung der Abklingkurve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weighted_mean_uncertainty.html">5.13. Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lsq_weighted_mean.html">5.14. Least-squares-Berechnung des gewichteten Mittelwerts und seiner Standardunsicherheit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dt_dl_gamma.html">5.15. Vorgehen zur Berechnung der Erkennungs- und Nachweisgrenze für Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialog_spectrum_eval.html">5.16. Dialog Werte der Spektrums-Auswertung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamspk1_results.html">5.17. Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obtaining_calc_details.html">5.18. Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notes_pmle_linear_unfold.html">5.19. Das PMLE-Verfahren für lineare Entfaltung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="number_count_rates.html">5.20. Behandlung von Impulsanzahlen und Zählraten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="physical_units_test.html">5.21. Behandlung physikalischer Einheiten</a></li>
 </ul>
 </li>
 </ul>
@@ -138,19 +138,15 @@
           <div class="body" role="main">
             
   <section id="dialog-definition-of-the-decay-curve-model">
-<h1><span class="section-number">5.11. </span>Dialog Definition of the decay curve model<a class="headerlink" href="#dialog-definition-of-the-decay-curve-model" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">5.11. </span>Dialog Festlegung des Modells der Abklingkurve<a class="headerlink" href="#dialog-definition-of-the-decay-curve-model" title="Link to this heading">¶</a></h1>
 <section id="one-single-output-quantity-defined">
-<h2><span class="section-number">5.11.1. </span>One single output quantity defined<a class="headerlink" href="#one-single-output-quantity-defined" title="Link to this heading">¶</a></h2>
-<p>The following picture gives an overview of the structure of the dialog.</p>
+<h2><span class="section-number">5.11.1. </span>Eine einzige Ergebnisgröße vorhanden<a class="headerlink" href="#one-single-output-quantity-defined" title="Link to this heading">¶</a></h2>
+<p>Der Aufbau des Dialogs ist im folgenden Bild gezeigt.</p>
 <img alt="../../_images/fit_function_dialog.de.png" class="align-center" src="../../_images/fit_function_dialog.de.png" />
-<p>In this dialog the <a class="reference internal" href="../special_methods/linear_least_square.html#linear-least-squares-method"><span class="std std-ref">Linear Least squares method</span></a> is presented for the case of
-more complex Y-90 decay-curves <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> (net counting rates)</p>
+<p>In diesem Dialog wird das <a class="reference internal" href="../special_methods/linear_least_square.html#linear-least-squares-method"><span class="std std-ref">Lineares Least squares-Verfahren</span></a> für den Fall der Analyse von komplexeren Abklingkurven <span class="math notranslate nohighlight">\(Y\left( t_{k} \right)\)</span> (Nettozählraten) dargestellt.</p>
 <p><span class="math notranslate nohighlight">\(Y\left( t_{k} \right) = a_{1} \cdot X_{1}\left( t_{k} \right) + \ a_{2} \cdot X_{2}\left( t_{k} \right) + \ a_{3} \cdot X_{3}\left( t_{k} \right)\)</span></p>
-<p>The three terms describe different radionuclide decay contributions to
-the net counting rates and are dependent on the time <em>t</em> but also on the
-counting time(s).</p>
-<p>For the case of a Y-90 decay curve the meaning of the three terms is as
-follows:</p>
+<p>Die drei Terme beschreiben Beiträge von Radionuklid-Abklingfaktoren zu den Nettozählraten und hängen von der Zeit <span class="math notranslate nohighlight">\(t_{k}\)</span> für die <em>k</em>-te Messung und den Messdauern ab.</p>
+<p>Für den Fall einer Y-90-Abklingkurve ist die Bedeutung der Terme wie folgt:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 30.0%" />
@@ -160,67 +156,28 @@ follows:</p>
 <tr class="row-odd"><td><div class="math notranslate nohighlight">
 \[a_{1} X_{1}(t_{k})\]</div>
 </td>
-<td><p>Represents the decay of the Y-90 component; <span class="math notranslate nohighlight">\(a_{1}\)</span> (in
-<span class="math notranslate nohighlight">\(s^{-1}\)</span>) is the Y-90 counting rate contribution at the time
-of Y/Sr separation which is to be fitted.</p></td>
+<td><p><span class="math notranslate nohighlight">\(a_{1} \bullet X_{1}\left( t_{k} \right):\)</span> beschreibt das Abklingen der reinen Y-90-Komponente; <span class="math notranslate nohighlight">\(a_{1}\)</span> (in <span class="math notranslate nohighlight">\(s^{-1}\)</span>) ist die anzupassende Y-90-Nettozählrate zum Zeitpunkt der Y/Sr-Abtrennung;</p></td>
 </tr>
 <tr class="row-even"><td><div class="math notranslate nohighlight">
 \[a_{2} X_{2}(t_{k})\]</div>
 </td>
-<td><p>Represents the (practically) constant counting rate contribution
-from an impurity due to a long-lived unidentified radionuclide
-(half-life assumed to be infinite). <span class="math notranslate nohighlight">\(X_{2}(t_{k})\)</span> is set
-equal to 1. An example of this is Th-234; if this is known or
-identified, its half-life can be specified (in the TAB “Values,
-uncertainties”); <span class="math notranslate nohighlight">\(a_{2}\)</span> (in <span class="math notranslate nohighlight">\(s^{-1}\)</span>) gives the size
-of this contribution (to be fitted).</p></td>
+<td><p><span class="math notranslate nohighlight">\(a_{2} \bullet X_{2}\left( t_{k} \right):\)</span> beschreibt den (praktisch) konstanten Zählratenbeitrag einer Verunreinigung mit einem langlebigen unbekannten Radionuklid (Halbwertszeit gleich unendlich angenommen, <span class="math notranslate nohighlight">\(X_{2}\left( t_{k} \right)\)</span> wird dann gleich 1 gesetzt). Als Beispiel kann hier Th-234 genannt werden; wenn dieses vorliegt, kann auch dessen Halbwertszeit Hwzlong (im TAB „Werte, Unsicherheiten”) spezifiziert werden; <span class="math notranslate nohighlight">\(a_{2}\)</span> (in <span class="math notranslate nohighlight">\(s^{-1}\)</span>) ist die anzupassende Amplitude dieser Komponente;</p></td>
 </tr>
 <tr class="row-odd"><td><div class="math notranslate nohighlight">
 \[a_{3} X_{3}(t_{k})\]</div>
 </td>
-<td><p>Represents the decay of the relatively short-lived Ac-228 which
-can occur as an impurity in the Y oxalate source; this term may
-also be used if the presence of short-lived contaminations of the
-counting source by short-lived Radon decay products; <span class="math notranslate nohighlight">\(a_{3}\)</span>
-(in <span class="math notranslate nohighlight">\(s^{-1}\)</span>) gives the size of this contribution (to be
-fitted).</p></td>
+<td><p><span class="math notranslate nohighlight">\(a_{3} \bullet X_{3}\left( t_{k} \right)`*:* beschreibt das Abklingen des relativ kurzlebigen Ac-228, das als Verunreinigung im Y-Oxalatpräparat auftreten kann; dieser Term kann auch verwendet werden, wenn der Verdacht auf kürzerlebige Verunreinigungen durch Radon-Folgeprodukte besteht; :math:`a_{3}\)</span> (in <span class="math notranslate nohighlight">\(s^{-1}\)</span>) ist die anzupassende Amplitude dieser Komponente;</p></td>
 </tr>
 </tbody>
 </table>
-<p>The user can choose whether the second and/or the third term shall be
-used in the model.</p>
-<p>Furthermore, it may be chosen whether the fitting shall be done with
-statistical weighting with the inverse variances of the net counting
-rates - or non-weighted. The internal use of covariances of measured net
-counting rates may be de-selected for testing.</p>
-<p>The type of the fitting procedure can be selected from four variants:
-WLS, PLSQ, PMLE und WTLS. The more complex but more time-consuming total
-least squares procedure (WTLS) is able to take uncertainties of the
-<span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> values and covariances between them
-into account. See also <a class="reference internal" href="math_lsq_fit.html#chi-square-options"><span class="std std-ref">Chi-square options</span></a>.</p>
-<p>A checkbox within this dialog allows to select instead of the simpler
-least squares analysis (WLS) the more complex but also more
-time-consuming general least squares procedure (WTLS). The latter is
-able to consider directly also uncertainties of the
-<span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> values and covariances between them.</p>
-<p>In most cases, the term functions Xi(t) between different measurements
-only differ by the time difference to the time of the Sr/Y separation
-(parameter t: tstart). Therefore, these functions Xi(t) needed to be
-given only once, for the first measurement (in case of more than one
-counting channel: for the first measurement of each counting channel).</p>
-<p>However, values of the counting efficiencies contained therein may now
-differ from measurement to measurement. In this case, which can be
-selected by a new checkbox, all term functions for each measurement have
-to be input explicitly. This increases the length of the argument list
-of the Linfit Call by additional values of counting efficiencies;</p>
-<p><strong>since version 2.4.24</strong> these detection efficiency parameters need no
-longer be specified explicitly within the Linfit call. Look at the new
-example project Sr89-Sr90_IAEA_AQ-27_2013_V2_EN.txp which demonstrates
-this.</p>
-<p>In a text field of the dialog the equations for the three functions
-<span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> can be defined. For the above example
-of the analysis of a Y-90 decay-curve they have to be defined as
-follows:</p>
+<p>Der Benutzer kann auswählen, ob der 2. und/oder 3. Term bei der Anpassung verwendet werden soll.</p>
+<p>Weiterhin kann er wählen, ob eine mit den inversen Varianzen der Nettozählraten gewichtete Anpassung (Fit) durchgeführt werden soll - oder ungewichtet. Die interne Verwendung der Kovarianzen der gemessenen Nettozählraten kann (zum Testen) auch abgewählt werden.</p>
+<p>Eine Auswahlliste in diesem Dialog erlaubt es, das Anpassungsverfahren aus vier Varianten auszuwählen: WLS, PLSQ, PMLE und WTLS. Das komplexere und rechenintensivere Total least squares-Verfahren (WTLS) ist in der Lage, Unsicherheiten der <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>-Werte und Kovarianzen zwischen ihnen direkt zu berücksichtigen. <a class="reference internal" href="math_lsq_fit.html#chi-square-options"><span class="std std-ref">Chi-Quadrat-Optionen</span></a></p>
+<p>Eine Checkbox in diesem Dialog erlaubt es, anstelle der einfacheren LSQ-Analyse (WLS) das allgemeinere, aufwändigere, aber auch rechenintensivere general least squares-Verfahren (WTLS) zu wählen. Letzteres kann direkt auch Unsicherheiten der <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span>-Werte und Kovarianzen zwischen ihnen berücksichtigen.</p>
+<p>In den meisten Fällen unterscheiden sich die Term-Funktionen Xi(t) zwischen einzelnen Messungen nur in der verwendeten Zeitdifferenz zur Sr-/Y-Abtrennung (Parameter t: tstart). Daher brauchen die Funktionen Xi(t) nur für die 1. Messung (bei mehreren Messkanälen: für die 1. Messung jeden Messkanals) aufgeführt werden.</p>
+<p>Die darin enthaltenen Werte der Zählausbeuten können sich jedoch nunmehr von Messung zu Messung unterscheiden. In diesem Fall, was über eine neue Checkbox selektiert werden kann, müssen alle Term-Funktionen für jede Messung explizit eingegeben werden. Dies verlängert die Argumentliste des Linfit-Aufrufs um zusätzliche Werte der Zählausbeuten;</p>
+<p><strong>seit Version 2.4.24</strong> müssen diese Nachweiseffizienz-Parameter nicht mehr explizit im Linfit-Aufruf angegeben werden. Siehe das neue Beispiel-Projekt Sr89-Sr90_IAEA_AQ-27_2013_V2_EN.txp, das dies zeigt.</p>
+<p>In einem Textfeld des Dialogs können die Gleichungen für die drei Funktionen <span class="math notranslate nohighlight">\(X_{i}\left( t_{k} \right)\)</span> angegeben werden. Für das oben verwendete Beispiel der Analyse einer Y-90-Abklingkurve wird folgendes eingegeben:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>X1 = (1. - exp(-log(2.)*tmess/HwzY90)) / (log(2.)*tmess/HwzY90) \*
 exp(-log(2.)*tstart/HwzY90)
 
@@ -231,13 +188,8 @@ X3 = (1. - exp(-log(2.)*tmess/HwzAc228)) / (log(2.)*tmess/HwzAc228) \*
 exp(-log(2.)*tstart/HwzAc228)
 </pre></div>
 </div>
-<p>Here, tmess and tstart are counting time and the time durations between
-Y-90/Sr-90 separation and the starts of the measurements, respectively.
-In fact, both variables are arrays and their values for each single
-measurement may be defined in a special dialog. Hwzxxx are the
-radionuclide specific half-lives. <strong>The formulae given above take
-radioactive decay during the measurements into account</strong>.</p>
-<p>With using the new decay function fd() the above equations are shorter:</p>
+<p>Hierin sind tmess die Messdauer(n) und tstart die Zeitdauer(n) zwischen Y-90/Sr-90-Trennung und dem Start der Messung(en). Beide Variablen stellen tatsächlich Felder dar, so dass Werte dafür in einem dafür ausgelegten Windows-Dialog für jede Einzelmessung eingegeben werden können. Hwzxxx sind die Radionuklid-bezogenen Halbwertszeiten. <strong>Die Formeln berücksichtigen auch den radioaktiven Zerfall während der Messungen.</strong></p>
+<p>Unter Verwendung der neuen Abklingfunktion fd() verkürzen sich die Gleichungen:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>X1 = fd(tstart, tmess, log(2)/HwzY90)
 
 X2 = fd(tstart, tmess, log(2)/Hwzlong)
@@ -247,36 +199,22 @@ X3 = fd(tstart, tmess, log(2)/HwzAc228)
 </div>
 </section>
 <section id="extension-to-two-or-three-output-quantities">
-<h2><span class="section-number">5.11.2. </span>Extension to two or three output quantities<a class="headerlink" href="#extension-to-two-or-three-output-quantities" title="Link to this heading">¶</a></h2>
-<p><strong>Extension to two or three output quantities</strong></p>
-<p>By the simultaneous measurement of for instance Sr-90, Sr-89, and may be
-also of Sr-85, with a LSC counter the contributions of these
-radionuclides to the counting rates in two or three counting channels
-(energy regions), designated as A, B and C, are determined. Further
-details may be taken from the report AKU (2008), which is dealing with
-modern methods of the Sr-89/Sr-90 determination.</p>
-<p>The number of counting channels (nchs) can be selected in the dialog. In
-the present case up to three decay curves
-<span class="math notranslate nohighlight">\(Y_{A}\left( t_{k} \right)\)</span>, <span class="math notranslate nohighlight">\(Y_{B}\left( t_{k} \right)\)</span> and
-<span class="math notranslate nohighlight">\(Y_{C}\left( t_{k} \right)\)</span> have to be considered. Then up to
-three model equations are used instead of only one:</p>
+<h2><span class="section-number">5.11.2. </span>Erweiterung auf zwei oder drei Ergebnisgrößen<a class="headerlink" href="#extension-to-two-or-three-output-quantities" title="Link to this heading">¶</a></h2>
+<p><strong>Erweiterung auf zwei oder drei Ergebnisgrößen</strong></p>
+<p>Bei der gleichzeitigen Messung von z. B. Sr-90, Sr-89 und möglicherweise auch Sr-85 mit einem LSC-Zähler werden die Beiträge dieser Radionuclide zu den Zählraten in zwei oder drei Zählkanälen (Energiebereichen), bezeichnet als A, B und C, bestimmt. Weitere Einzelheiten sind dem Bericht AKU (2008) zu entnehmen, der sich mit modernen Methoden der Sr-89/Sr-90-Bestimmung befasst.</p>
+<p>Die Anzahl der Zählkanäle (nchs) kann im Dialog gewählt werden. Im vorliegenden Fall sind bis zu drei Abklingkurven <span class="math notranslate nohighlight">\(Y_{A}\left( t_{k} \right)\)</span>, <span class="math notranslate nohighlight">\(Y_{B}\left( t_{k} \right)\)</span> und <span class="math notranslate nohighlight">\(Y_{C}\left( t_{k} \right)\)</span> zu berücksichtigen. Dann werden bis zu drei Modellgleichungen verwendet statt nur einer:</p>
 <p><span class="math notranslate nohighlight">\(Y_{A}\left( t_{k} \right) = a_{1} \cdot X_{A1}\left( t_{k} \right) + \ a_{2} \cdot X_{A2}\left( t_{k} \right) + \ a_{3} \cdot X_{A3}\left( t_{k} \right)\)</span></p>
 <p><span class="math notranslate nohighlight">\(Y_{B}\left( t_{k} \right) = a_{1} \cdot X_{B1}\left( t_{k} \right) + \ a_{2} \cdot X_{B2}\left( t_{k} \right) + \ a_{3} \cdot X_{B3}\left( t_{k} \right)\)</span></p>
 <p><span class="math notranslate nohighlight">\(Y_{C}\left( t_{k} \right) = a_{1} \cdot X_{C1}\left( t_{k} \right) + \ a_{2} \cdot X_{C2}\left( t_{k} \right) + \ a_{3} \cdot X_{C3}\left( t_{k} \right)\)</span></p>
-<p>Now, the fitting parameters <span class="math notranslate nohighlight">\(a_{i}\ \)</span>represent activities
-instead of counting rates in the first example; see above: one single
-output quantity. These are automatically inserted by the program into
-the list of symbols as new symbols FITP1, FITP2 and FITP3.</p>
-<p>Within the program, this case is reduced to that of one single decay
-curve by concatenating the three fields of counting rates (in the order
-A, B and C). The same applies to the independent decay functions.</p>
-<p>Counting rates:</p>
+<p>In diesem Falle stellen die Fitparameter <span class="math notranslate nohighlight">\(a_{i}\ \)</span> Aktivitäten dar, nicht Zählraten wie in dem einfachen Beispiel ganz oben. Diese Parameter werden vom Programm selbständig als neue Symbole FITP1, FITP2 und FITP3 in die Liste der Symbole eingefügt.</p>
+<p>Programmtechnisch wird dieser Fall auf den einer einzigen Abklingkurve reduziert, indem man die drei Zählratenfelder aneinanderhängt (Reihenfolge A, B und C), desgleichen die unabhängigen Abklingfunktionen:</p>
+<p>Zählraten:</p>
 <p><span class="math notranslate nohighlight">\(Y\left( t_{k} \right) = \left\{ \begin{array}{r}
 Y_{A}\left( t_{k} \right) \\
 Y_{B}\left( t_{k} \right) \\
 Y_{C}\left( t_{k} \right)
 \end{array} \right\}\)</span></p>
-<p>Decay functions: Input within the dialog field for the terms:</p>
+<p>Abklingfunktionen: Eingabe in das Dialogfeld für die Terme:</p>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><div class="math notranslate nohighlight">
@@ -346,11 +284,7 @@ Y_{C}\left( t_{k} \right)
 </tr>
 </tbody>
 </table>
-<p>For a better understanding of this application, the reader is referred
-to the example project <code class="file docutils literal notranslate"><span class="pre">DWD-LSC-3kanal-V2.txp</span></code>, which corresponds to a
-quite detailed presentation of the equations in the report AKU (2008;
-page 160). For this application, the nine decay functions are defined as
-follows:</p>
+<p>Zum besseren Verständnis der Anwendung wird auf das Beispiel-Projekt <code class="file docutils literal notranslate"><span class="pre">DWD-LSC-3kanal-V2_DE.txp</span></code> verwiesen, das einer sehr ausführlichen Darstellung der Bestimmungsgleichungen des Reports AKU (2008; Seite 160) entspricht. Für diesen Fall lauten die neun Abklingfunktionen:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X1</span> <span class="o">=</span> <span class="n">eSr89A</span> \<span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">lamSr89</span><span class="o">*</span><span class="n">tmess</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">lamSr89</span><span class="o">*</span><span class="n">tmess</span><span class="p">)</span> \<span class="o">*</span>
 <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">lamSr89</span><span class="o">*</span><span class="p">(</span><span class="n">tAS</span><span class="o">+</span><span class="n">tstart</span><span class="p">))</span>
 
@@ -394,10 +328,8 @@ follows:</p>
 <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">lamSr85</span><span class="o">*</span><span class="p">(</span><span class="n">tAS</span><span class="o">+</span><span class="n">tstart</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>Herein, decay constants lamNuclide instead of half-lives are used. The
-symbols beginning with e represent for the considered radionuclides
-their detection probabilities in the counting channels A, B and C.</p>
-<p>Using the new decay function <code class="xref py py-func docutils literal notranslate"><span class="pre">fd()</span></code>, the above equations are shorter:</p>
+<p>Hierin werden anstelle der Halbwertszeiten die Zerfallskonstanten lamNuklid verwendet. Die mit einem kleinen e beginnenden Symbole bezeichnen Nachweiswahrscheinlichkeiten der verschiedenen Radionuklide in den Zählkanälen A, B und C.</p>
+<p>Unter Verwendung der neuen Abklingfunktion <code class="xref py py-func docutils literal notranslate"><span class="pre">fd()</span></code> verkürzen sich die Gleichungen:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X1</span> <span class="o">=</span> <span class="n">eSr89A</span> \<span class="o">*</span> <span class="n">fd</span><span class="p">(</span><span class="n">tAS</span><span class="o">+</span><span class="n">tstart</span><span class="p">,</span><span class="n">tmess</span><span class="p">,</span><span class="n">lamSr89</span><span class="p">)</span>
 
 <span class="n">X2</span> <span class="o">=</span> <span class="n">eSr90A</span> \<span class="o">*</span> <span class="n">fd</span><span class="p">(</span><span class="n">tAS</span><span class="o">+</span><span class="n">tstart</span><span class="p">,</span><span class="n">tmess</span><span class="p">,</span><span class="n">lamSr90</span><span class="p">)</span> <span class="o">+</span> <span class="o">&amp;</span>
@@ -426,52 +358,36 @@ their detection probabilities in the counting channels A, B and C.</p>
 <span class="n">X9</span> <span class="o">=</span> <span class="n">eSr85C</span> \<span class="o">*</span> <span class="n">fd</span><span class="p">(</span><span class="n">tAS</span><span class="o">+</span><span class="n">tstart</span><span class="p">,</span><span class="n">tmess</span><span class="p">,</span><span class="n">lamSr85</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The contribution of the fourth radionuclide, Y-90, which is in-growing
-from the decay of Sr-90, is attributed for by additional terms with
-eY90X in the expressions for X2, X5 and X8.</p>
-<p>If the same calibration activity <em>A</em><sub>cal</sub> of a radionuclide was
-used for the efficiency calibration of the two to three energy windows,
-these efficiencies are correlated. Their covariances, pair-wise given by</p>
+<p>Der Beitrag des vierten anwesenden Radionuklids, Y-90, welches aus dem Zerfall von Sr-90 nachwächst, wird hier durch zusätzliche Terme mit eY90X in den Ausdrücken für X2, X5 und X8 berücksichtigt.</p>
+<p>Wurde für die Effizienzkalibrierierung der zwei bis drei Energiefenster dieselbe Kalibrieraktivität <em>A</em><sub>cal</sub> eines Radionuklids verwendet, so sind diese Effizienzen korreliert. Ihre Kovarianzen, paarweise gegeben durch</p>
 <p><span class="math notranslate nohighlight">\(cov\left( \varepsilon_{N},\ \varepsilon_{M} \right) = \varepsilon_{N}\ \varepsilon_{M}\ u_{rel}^{2}(A_{cal})\)</span></p>
-<p>are to be inserted for each pair of energy windows N and M, separately
-for the present radionuclides, in the covariance grid under the TAB
-„Values, uncertainties“.</p>
+<p>sind für jedes Paar von Energiefenstern N und M, getrennt für die betreffenden Radionuklide, im Kovarianzraster unter dem TAB „Values, uncertainties” einzutragen.</p>
 </section>
 <section id="organizing-of-the-xi-functions">
-<h2><span class="section-number">5.11.3. </span>Organizing of the Xi Functions<a class="headerlink" href="#organizing-of-the-xi-functions" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">5.11.3. </span>Organisation der Xi-Funktionen<a class="headerlink" href="#organizing-of-the-xi-functions" title="Link to this heading">¶</a></h2>
 <ol class="loweralpha">
-<li><p>number of Xi formulae =
-(number of counting channels) x (number of applied output quantities)</p>
-<p>(applied output quantities: fitting parameters, for which “fit“ or
-“fixed“ was selected)</p>
+<li><p>Anzahl der Xi-Formeln = (Anzahl der Messkanäle) x (Anzahl der angewandten Ergebnisgrößen)</p>
+<p>(angewandte Ergebnisgrößen: Anpassungsparameter, für die „fit” oder „fixed” gewählt wurde)</p>
 </li>
 </ol>
 <p>or</p>
 <ol class="loweralpha" start="2">
-<li><p>number of Xi formulae =
-(number of measurements) x (number of Xi formulae) x
-x (number of counting channels)</p>
-<p>(if a formulae (Xi) is defined explicitly for each of the measurements)</p>
+<li><p>Anzahl der Xi-Formeln = (Anzahl der Messungen) x (Anzahl der verwendeten Ergebnisgrößen) x (Anzahl der Zählkanäle)</p>
+<p>(falls eine Xi-Formel explizit für jede einzelne Messung definiert wird)</p>
 </li>
 </ol>
 <div class="admonition important">
 <p class="admonition-title">Wichtig</p>
-<p>The <strong>prescribed sequence</strong> of the Xi formulae is indicated in the
-following two examples. It formally corresponds to the sequence which
-would be obtained by an SQL statement:</p>
-<p>“ORDER BY counting channel, number of measurements, number of output
-quantity”.</p>
+<p>Die <strong>einzuhaltende Reihenfolge</strong> der Xi-Formeln ist in den beiden folgenden Beispielen angedeutet. Sie entspricht formal der Reihenfolge, die sich aus einem SQL-Statement ergäbe:</p>
+<p>„ORDER BY counting channel, number of measurements, number of output quantity”.</p>
 </div>
-<p>Example 1: Case a): 2 counting channels, 4 measurements, 3 output
-quantities; the Xi(t) differ between measurements</p>
+<p>Beispiel 1: Fall a): 2 Messkanäle, 4 Messungen, 3 Ergebnisgrößen; die Xi(t) unterscheiden sich zwischen den Messungen</p>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>counting
-channel</p></th>
-<th class="head"><p>measurement No.</p></th>
-<th class="head"><p>index of X
-i (t)</p></th>
-<th class="head"><p>running No.</p></th>
+<tr class="row-odd"><th class="head"><p>Messkanal</p></th>
+<th class="head"><p>Nr. der Messung</p></th>
+<th class="head"><p>Index von Xi(t)</p></th>
+<th class="head"><p>laufende Nr.</p></th>
 </tr>
 </thead>
 <tbody>
@@ -597,17 +513,13 @@ i (t)</p></th>
 </tr>
 </tbody>
 </table>
-<p>Example 2: case b), like example 1, but the Xi(t) do NOT differ between
-measurements:</p>
+<p>Beispiel 2: Fall b), wie Beispiel 1, aber die Xi(t) unterscheiden sich NICHT zwischen den Messungen:</p>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>counting
-channel</p></th>
-<th class="head"><p>measurement No.</p></th>
-<th class="head"><p>index of X i
-(t)</p></th>
-<th class="head"><p>running
-No.</p></th>
+<tr class="row-odd"><th class="head"><p>Messkanal</p></th>
+<th class="head"><p>Nr. der Messung</p></th>
+<th class="head"><p>Index von Xi(t)</p></th>
+<th class="head"><p>laufende Nr.</p></th>
 </tr>
 </thead>
 <tbody>
@@ -645,52 +557,25 @@ No.</p></th>
 </table>
 </section>
 <section id="one-parameter-excluded-from-fitting">
-<h2><span class="section-number">5.11.4. </span>One parameter excluded from fitting<a class="headerlink" href="#one-parameter-excluded-from-fitting" title="Link to this heading">¶</a></h2>
-<p>There are three options for the terms
-<span class="math notranslate nohighlight">\(a_{j} \cdot X_{j}\left( t_{k} \right)\)</span> :</p>
+<h2><span class="section-number">5.11.4. </span>Einen Fitparameter fixieren<a class="headerlink" href="#one-parameter-excluded-from-fitting" title="Link to this heading">¶</a></h2>
+<p>Für die Terme <span class="math notranslate nohighlight">\(a_{j} \bullet X_{j}\left( t_{k} \right)\)</span> gibt es drei Möglichkeiten der Berücksichtigung:</p>
 <img alt="../../_images/fit_quantity_options.de.png" class="align-center" src="../../_images/fit_quantity_options.de.png" />
-<p>The option “fixed“ became necessary by using a Sr-85 tracer within the
-Sr-90/Sr-89 analysis such that the Sr-85 activity is not subject to
-fitting but the chemical Sr yield is determined by an independent gamma
-measurement of Sr-85. This means that the Sr-85 contribution to the beta
-counting rates can be calculated separately. Select the Sr-85 option to
-“fix“ for enabling this case.</p>
-<p>As the fitting routine cannot include the uncertainty of the Sr-85
-activity (or its count rate), a special treatment was inferred. At
-first, for each of the gross count rate measurements the Sr-85 beta
-counting rate (and its uncertainty) is calculated and subtracted from
-the already available net counting rate
-<span class="math notranslate nohighlight">\(R_{n}\left( t_{i} \right)\)</span>.</p>
+<p>Die Option „fixieren” wurde nötig, um auch solche Projekte bearbeiten zu können, bei denen Sr-85 als Tracer verwendet wird, aber in der Weise, dass die Sr-85-Aktivität nicht Fitparameter ist. In solch einem Fall wird die Sr-Ausbeute durch eine separate Gamma-Messung bestimmt, so dass die bei der Betamessung auftretende Sr-85-Zählrate unabhängig vom Fitten berechnet werden kann. Dazu stellt man für die Sr-85-Komponente die Auswahl auf „fixieren” ein.</p>
+<p>Da die Fitroutine in diesem Fall die Unsicherheit der Sr-85-Aktivität bzw. -zählrate nicht einbeziehen kann, wurde eine Sonderbehandlung eingeführt. Zunächst wird für jede der Bruttomessungen die Sr-85-Beta-Zählrate (und ihre Unsicherheit) berechnet und von den schon erhaltenen Nettozählraten <span class="math notranslate nohighlight">\(R_{n}\left( t_{i} \right)\)</span> abgezogen.</p>
 <div class="math notranslate nohighlight">
 \[R_{nk}\left( t_{i} \right) = R_{n}\left( t_{i} \right) - X_{3}
             \left( t_{i}, A_{85g}, \varepsilon_{85b}, \lambda_{85} \right)\]</div>
-<p>The symbols are: <span class="math notranslate nohighlight">\(A_{85g},\)</span> the Sr-85 activity obtained by
-gamma-spectrometry;<span class="math notranslate nohighlight">\(\varepsilon_{85b}\)</span> , the Sr-85 beta counting
-efficiency and <span class="math notranslate nohighlight">\(\lambda_{85}\)</span> the Sr-85 decay constant.</p>
-<p>The function <span class="math notranslate nohighlight">\(X_{3}\)</span> is determined by that equation, which the
-user defines as equation for X3 within the dialog for setting up a decay
-curve model. An example:</p>
+<p>Hierin bedeuten: <span class="math notranslate nohighlight">\(A_{85g}\)</span> die gammaspektrometrisch bestimmte Sr-85-Aktivität; <span class="math notranslate nohighlight">\(\varepsilon_{85b}\)</span> die Sr-85-Beta-Zählausbeute und <span class="math notranslate nohighlight">\(\lambda_{85}\)</span> die Sr-85-Zerfallskonstante.</p>
+<p>Die Funktion <span class="math notranslate nohighlight">\(X_{3}\)</span> wird vom Anwender selbst durch diejenige Gleichung definiert, die im Dialog für das Modell der Abklingkurve als Gleichung für X3 eingegeben wird. Ein Beispiel dafür:</p>
 <p><code class="docutils literal notranslate"><span class="pre">X3</span> <span class="pre">=</span> <span class="pre">ASr85_Gam</span> <span class="pre">*</span> <span class="pre">eSr85</span> <span class="pre">*</span> <span class="pre">(1.</span> <span class="pre">-</span> <span class="pre">exp(-lamSr85*tmess))</span> <span class="pre">/</span> <span class="pre">(lamSr85*tmess)</span> <span class="pre">*</span> <span class="pre">exp(-lamSr85*(tAS+tstart))</span></code></p>
-<p>The associated fitting parameter <span class="math notranslate nohighlight">\(a_{3}\)</span> (to be fixed) is
-internally set to the value 1. Collecting the input quantities
-<span class="math notranslate nohighlight">\(A_{85g}\)</span>, <span class="math notranslate nohighlight">\(\varepsilon_{85b}\)</span> and <span class="math notranslate nohighlight">\(\lambda_{85}\)</span> into
-a vector <span class="math notranslate nohighlight">\(z\)</span>, i.e.
-<span class="math notranslate nohighlight">\(z = \left( A_{85g},\varepsilon_{85b},\lambda_{Sr85} \right)^{T}\)</span>,
-allows to calculate the covariance matrix components needed for
-uncertainty propagation as follows:</p>
-<p>diagonal values:</p>
+<p>Der dazugehörige festzuhaltende Fitparameter <span class="math notranslate nohighlight">\(a_{3}\)</span> wird dabei intern auf den Wert 1 gesetzt. Fasst man hierin die Eingangsgrößen <span class="math notranslate nohighlight">\(A_{85g}\)</span>, <span class="math notranslate nohighlight">\(\varepsilon_{85b}\)</span> und <span class="math notranslate nohighlight">\(\lambda_{85}\)</span> in einem Vektor <span class="math notranslate nohighlight">\(z\)</span> zusammen, <span class="math notranslate nohighlight">\(z = \left( A_{85g},\varepsilon_{85b},\lambda_{Sr85} \right)^{T}\)</span>, ist die für die Unsicherheitsfortpflanzung benötigte Kovarianzmatrix wie folgt zu berechnen:</p>
+<p>diagonale Werte:</p>
 <p><span class="math notranslate nohighlight">\(u^{2}\left( R_{nk}\left( t_{i} \right) \right) = u^{2}\left( R_{n}\left( t_{i} \right) \right) + \sum_{j = 1}^{3}\left( \frac{\partial R_{nk}\left( t_{i} \right)}{\partial z_{j}} \right)^{2}u^{2}\left( z_{j} \right)\)</span></p>
-<p>non-diagonal values:</p>
+<p>nicht-diagonale Werte:</p>
 <p><span class="math notranslate nohighlight">\(u\left( R_{nk}\left( t_{i} \right),R_{nk}\left( t_{k} \right) \right) = {u\left( R_{nk}\left( t_{k} \right),R_{nk}\left( t_{i} \right) \right) = u}^{2}\left( R_{BG} \right) + \sum_{j = 1}^{3}{\frac{\partial R_{nk}\left( t_{i} \right)}{\partial z_{j}}\ \frac{\partial R_{nk}\left( t_{k} \right)}{\partial z_{j}}}u^{2}\left( z_{j} \right)\)</span></p>
-<p>The first term within the last equation does only occur if for
-calculating the net count rates <span class="math notranslate nohighlight">\(R_{n}\left( t_{i} \right)\)</span> always
-the same value of the background contribution is used (abbreviated here
-as <span class="math notranslate nohighlight">\(R_{BG}\)</span>). The partial derivatives are calculated numerically.</p>
-<p>The remaining unknown components for Sr-90 and Sr-89 are fitted to these
-Sr-85-corrected net counting rates (including their covariance matrix).</p>
-<p>The symbols collected above into the vector <span class="math notranslate nohighlight">\(z\)</span> must be included
-in the list of arguments of the call to Linfit, for example (note, that
-the equation for cSr85 is a dummy, i.e. only a place-holder):</p>
+<p>Der erste Term innerhalb der letzten Gleichung tritt nur auf, wenn für die Berechnung der Nettozählraten <span class="math notranslate nohighlight">\(R_{n}\left( t_{i} \right)\)</span> immer derselbe Wert des Untergrundbeitrags verwendet wird (hier abgekürzt als <span class="math notranslate nohighlight">\(R_{BG}\)</span>). Die partiellen Ableitungen werden numerisch berechnet.</p>
+<p>An die derart nachträglich <strong>korrigierten Nettozählraten</strong> (einschließlich ihrer Kovarianzmatrix) werden die verbleibenden Komponenten für Sr-90, Sr-89 angepasst.</p>
+<p>Die oben im Vektor <span class="math notranslate nohighlight">\(z\)</span> zusammengefassten Symbole müssen direkt in der Argumentliste des Linfit-Aufrufs erscheinen, z.B. (die Gleichung für cSr85 ist ein „dummy”, d.h. nur ein Platzhalter):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cSr90</span> <span class="o">=</span> <span class="n">Fitp1</span> \<span class="o">*</span> <span class="n">PhiSr90</span>
 
 <span class="n">cSr89</span> <span class="o">=</span> <span class="n">Fitp2</span> \<span class="o">*</span> <span class="n">PhiSr89</span>
@@ -724,7 +609,7 @@ the equation for cSr85 is a dummy, i.e. only a place-holder):</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
-<p>Since version 2.4.24 the equation for rd shall be shortened to:</p>
+<p>Die Gleichung für rd <strong>soll verkürzt eingegeben</strong> werden:</p>
 <p><code class="docutils literal notranslate"><span class="pre">rd</span> <span class="pre">=</span> <span class="pre">Linfit(1,</span> <span class="pre">Rbl,</span> <span class="pre">tmess,</span> <span class="pre">tstart)</span></code></p>
 </div>
 </section>

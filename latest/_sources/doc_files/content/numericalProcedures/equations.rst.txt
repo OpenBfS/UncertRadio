@@ -83,7 +83,7 @@ Non-linear dependence
 There may exist cases in which the dependence between output quantity
 and net counting rate, or, when using linear unfolding, between output
 quantity and the activity, is not linear. Consequently, the values :math:`F_C`
-und :math:`F_L` in Eq. :eq:`struct_eq1` are only approximate ones and the inversion given by
+and :math:`F_L` in Eq. :eq:`struct_eq1` are only approximate ones and the inversion given by
 Eq. :eq:`struct_eq3` is no longer correct.
 
 Therefore, in addition to Eq. :eq:`struct_eq1` and Eq. :eq:`struct_eq3`, two new internal
@@ -98,4 +98,4 @@ functions are used in UncertRadio:
    numerically working secant method; it requires initial guess values
    for the lower and upper limit of the net counting rate values to be
    searched for, which are easily derived from the values of :math:`y'`, :math:`F_C`
-   und :math:`F_L`.
+   and :math:`F_L`.
