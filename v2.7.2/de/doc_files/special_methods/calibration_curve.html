@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="de" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4.4. Verwendung einer Kalibrierkurve &#8212; UncertRadio  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../_static/documentation_options.js?v=245627df"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/translations.js?v=9bf55d28"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../genindex.html" />
+    <link rel="search" title="Suche" href="../../search.html" />
+    <link rel="next" title="4.5. Aktivitätsbestimmung mit mehreren Gammalinien" href="gamma_lines.html" />
+    <link rel="prev" title="4.3. Lineares Least squares-Verfahren" href="linear_least_square.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../v2.7.2/de/doc_files/special_methods/calibration_curve.html"  selected  >v2.7.2</option>
+            
+                <option value="../../../../v2.7.1/de/doc_files/special_methods/calibration_curve.html"  >v2.7.1</option>
+            
+                <option value="../../../../v2.7.0/de/doc_files/special_methods/calibration_curve.html"  >v2.7.0</option>
+            
+                <option value="../../../../v2.6.2/de/doc_files/special_methods/calibration_curve.html"  >v2.6.2</option>
+            
+                <option value="../../../../latest/de/doc_files/special_methods/calibration_curve.html"  >latest</option>
+            
+                <option value="../../../../develop/de/doc_files/special_methods/calibration_curve.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../doc_files/special_methods/calibration_curve.html"  >en</option>
+            
+                <option value="#"  selected  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../content/content_index.html">1. Inhalt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="special_methods_index.html">4. Einzelne Methoden</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="unc_prop/uncertainty_propagation_index.html">4.1. Unsicherheitsfortpflanzung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="best_estimate.html">4.2. Beste Schätzwerte nach Bayes und Vertrauensgrenzen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linear_least_square.html">4.3. Lineares Least squares-Verfahren</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.4. Verwendung einer Kalibrierkurve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gamma_lines.html">4.5. Aktivitätsbestimmung mit mehreren Gammalinien</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monte_carlo.html">4.6. Monte Carlo Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="low_level_applications.html">4.7. Low-Level-Anwendungen, (N+x)-Regel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="confidence_ellipses.html">4.8. Konfidenz-Ellipsen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_sets_mean.html">4.9. Verwendung von Datensätzen für Mittelwert und Varianz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="short-lived_nuclide.html">4.10. Messung eines kurzlebigen Radionuklids mit vergleichsweise langer Messdauer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="special_distributions.html">4.11. Spezielle Verteilungen und ihre Eigenschaften</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gross_quantity.html">4.12. Bruttogröße: Varianzinterpolation für einen Mittelwert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aggregating_activities.html">4.13. Zusammenfassung der Aktivitäten mehrerer Aliquots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decay_chains.html">4.14. Anwendung von Zerfallsreihen</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/misc_index.html">5. Verschiedenes</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="utilizing-a-calibration-curve">
+<h1><span class="section-number">4.4. </span>Verwendung einer Kalibrierkurve<a class="headerlink" href="#utilizing-a-calibration-curve" title="Link to this heading">¶</a></h1>
+<p>Es bestand der Bedarf, den Wert einer bestimmten für die Auswertung benötigten Eingangsgröße (z.B. die Nachweiswahrscheinlichkeit) nicht direkt einzugeben, sondern in Abhängigkeit von einer weiteren Eingangsgröße (z.B. Massenbelegungsdichte, oder ein Externstandard-Kanalverhältnis) aus einer „Kalibrierkurve abzulesen”, d. h. in einer entsprechend als Polynom aufbereiteten Kurvendarstellung zu interpolieren.</p>
+<p>Dazu wurde eine neue Funktion KALFIT geschaffen, die mittels eines Dialogs die Eingabe der Messwerte x (unabhängige Größe) und y (abhängige Größe) der Kalibrierkurve (max. 40 Werte) erlaubt. x und y repräsentieren (zusammen mit ihren Standardunsicherheiten) die Werte der abhängigen und unabhängigen Messgröße. Es wird ein Polynom bis maximal 3. Grades (maximal 4 anzupassende Koeffizienten) als Kurvenmodell zugrunde gelegt. Die Polynomkoeffizienten werden mit gewichteter oder ungewichteter (multi-) <strong>linearer Least squares</strong>-Anpassung berechnet.</p>
+<div class="math notranslate nohighlight">
+\[Y(x) = a_{1} + \ a_{2} \cdot x + \ a_{3} \cdot x^{2} + a_{4} \cdot x^{3}\]</div>
+<p>Nicht besetzte Spalten der Unsicherheiten der x- oder y-Werte werden intern auf 1 gesetzt. Werden die Standardabweichungen der Werte jeweils gleich 1 gesetzt, entspricht dies einer ungewichteten LSQ-Anpassung.</p>
+<p>Wählt man als Polynom-Grad 0, wird aus der Spalte der y-Werte formal ein <strong>gewichteter Mittelwert (Unsicherheiten angegeben) oder ein arithmetischer Mittelwert</strong> berechnet; dessen Standard-Unsicherheit bezieht sich auf den Mittelwert, ist also durch <span class="math notranslate nohighlight">\(\sqrt{n}\)</span> geteilt.</p>
+<p><strong>Aktivierung des Kalibrierkurven-Tools:</strong></p>
+<div class="math notranslate nohighlight" id="equation-cali-curve-eq2">
+<span class="eqno">(4.4.1)<a class="headerlink" href="#equation-cali-curve-eq2" title="Link to this equation">¶</a></span>\[eps = \text{KALFIT}(1, eskv)\]</div>
+<p>In diesem Beispiel werden Wert und Unsicherheit der Nachweiswahrscheinlichkeit <strong>eps</strong> <strong>als Funktion</strong> des Externstandard-Kanalverhältnisses <strong>eskv</strong> durch Interpolation des damit verbundenen (angepassten) Polynoms berechnet.</p>
+<p>Der zweite Parameter (hier eskv) stellt das Symbol für denjenigen Wert der <strong>unabhängigen Größe X</strong> dar, aus dem der Wert und die Standardunsicherheit der abhängigen Größe Y (hier: <strong>eps</strong>) berechnet werden soll.</p>
+<p>Der erste Parameter der Funktion (hier: 1) liefert die Information, wie der Wert der Größe, die auf der linken Seite der Gl. <a class="reference internal" href="#equation-cali-curve-eq2">(4.4.1)</a> mit KALFIT steht, berechnet wird. Der Wert 1 bedeutet, dass der Wert von Y so aus dem Polynom der Kurve berechnet wird („abgelesen”), wie oben gezeigt. Beim Wert 2 hingegen wird der Wert der Größe Y aus der Umkehrung der Polynomgleichung berechnet. Ein Beispiel für diesen zweiten Fall zeigt das UR-Projekt <code class="file docutils literal notranslate"><span class="pre">Beispiel_8_mit_KALFIT_DE.txp</span></code>, indem die obige Gl. <a class="reference internal" href="#equation-cali-curve-eq2">(4.4.1)</a> durch die folgende Gleichung ersetzt wird:</p>
+<div class="math notranslate nohighlight" id="equation-cali-curve-eq3">
+<span class="eqno">(4.4.2)<a class="headerlink" href="#equation-cali-curve-eq3" title="Link to this equation">¶</a></span>\[Cx = \text{KALFIT}(2, Rnet)\]</div>
+<p>Sie bedeutet, dass Rnet Zählraten bezeichnet, die in einem ersten Schritt als Polynomfunktion in Abhängigkeit von bekannten Konzentrationswerten x kalibriert werden: Rnet = Polynomial(x). Im zweiten Schritt wird eine Zählrate Rnetx einer anderen Probe gemessen und daraus die zugehörige Konzentration Cx bestimmt. Bei einem Polynom 1. Grades würde man die Konzentration Cx zu (Rnetx-a<sub>1</sub>)/a<sub>2</sub> berechnen; für Polynome höheren Grades wird für die Umkehrung ein numerisches Bisektionsverfahren verwendet. Im genannten UR-Projekt bezieht sich die Konzentration auf diejenige von Kalium in g/L.</p>
+<p>Der KALFIT-Aufruf hat die Bearbeitung eines neuen Dialogs zur Folge (s. auch neuer Punkt im Hauptmenü), in dem die x- und y-Werte einer Kalibrierkurve (inkl. ihrer Standardunsicherheiten) eingegeben werden und die Anpassung gerechnet wird.</p>
+<p>Die Standardunsicherheit des gesuchten Y-Werts (eps) wird durch numerische Unsicherheitsfortpflanzung mit den angepassten Parametern <span class="math notranslate nohighlight">\(a_{i}\)</span> und ihrer Kovarianzmatrix und mit der Unsicherheit des vorgegeben x-Werts <span class="math notranslate nohighlight">\(x_{0}\)</span> (eskv) berechnet.</p>
+<div class="math notranslate nohighlight">
+\[u^{2}(Y) = {\left( \frac{\partial Y}{\partial x_{0}} \right)^{2}u}^{2}\left( x_{0} \right) + \left\lbrack \sum_{1}^{m}\left( \frac{\partial Y}{\partial a_{i}} \right)^{2}u^{2}\left( a_{i} \right) + 2\sum_{i = 1}^{m - 1}{\sum_{j = i + 1}^{m}{\frac{\partial Y}{\partial a_{i}}\frac{\partial Y}{\partial a_{j}}}u\left( a_{i},a_{j} \right)} \right\rbrack\]</div>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../../_images/dialog_cali_example.de.png"><img alt="KALFIT example" height="488" src="../../_images/dialog_cali_example.de.png" width="800" />
+</a>
+<figcaption>
+<p><span class="caption-number">Abb. 4.4.1 </span><span class="caption-text">KALFIT example</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Obwohl das so wie oben definierte eps formal als eine „abhängige Größe” zu betrachten ist, wird es programmintern (z.B. Unsicherheits-Budget) wie eine unabhängige Größe behandelt.</p>
+<p>Derzeit wird davon ausgegangen, dass KALFIT nur für eine einzige Größe in einem UR-Projekt verwendet wird.</p>
+<p>Die Unsicherheiten der x-Werte werden derzeit nicht berücksichtigt.</p>
+<p>Ein Beispiel für eine Mittelwertberechnung (Polynomgrad gleich null), die zu mittelnden Werte stehen in der Spalte für y(i):</p>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="../../_images/dialog_cali_average.de.png"><img alt="Example mean value from KALFIT" height="488" src="../../_images/dialog_cali_average.de.png" width="800" />
+</a>
+<figcaption>
+<p><span class="caption-number">Abb. 4.4.2 </span><span class="caption-text">Example mean value from KALFIT</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.2.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/doc_files/special_methods/calibration_curve.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

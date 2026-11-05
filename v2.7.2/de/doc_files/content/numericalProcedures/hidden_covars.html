@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html lang="de" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1.2.5. Vermeidung von „verdeckten” Kovarianzen &#8212; UncertRadio  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../../_static/documentation_options.js?v=245627df"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/translations.js?v=9bf55d28"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../../genindex.html" />
+    <link rel="search" title="Suche" href="../../../search.html" />
+    <link rel="next" title="1.2.6. Verwendung von Schaltvariablen in Gleichungen" href="switch_variables.html" />
+    <link rel="prev" title="1.2.4. Bestimmung von Erkennungsgrenze und Nachweisgrenze (iterativ)" href="iterative_char_values.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../../v2.7.2/de/doc_files/content/numericalProcedures/hidden_covars.html"  selected  >v2.7.2</option>
+            
+                <option value="../../../../../v2.7.1/de/doc_files/content/numericalProcedures/hidden_covars.html"  >v2.7.1</option>
+            
+                <option value="../../../../../v2.7.0/de/doc_files/content/numericalProcedures/hidden_covars.html"  >v2.7.0</option>
+            
+                <option value="../../../../../v2.6.2/de/doc_files/content/numericalProcedures/hidden_covars.html"  >v2.6.2</option>
+            
+                <option value="../../../../../latest/de/doc_files/content/numericalProcedures/hidden_covars.html"  >latest</option>
+            
+                <option value="../../../../../develop/de/doc_files/content/numericalProcedures/hidden_covars.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../doc_files/content/numericalProcedures/hidden_covars.html"  >en</option>
+            
+                <option value="#"  selected  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../content_index.html">1. Inhalt</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../intro.html">1.1. Einleitung</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="numericalProcedures_index.html">1.2. Numerische Verfahren</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="equations.html">1.2.1. Struktur der Gleichungen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model_types.html">1.2.2. Typen von Modellen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="combined_std.html">1.2.3. Kombinierte Standardunsicherheit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="iterative_char_values.html">1.2.4. Bestimmung von Erkennungsgrenze und Nachweisgrenze (iterativ)</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.2.5. Vermeidung von „verdeckten” Kovarianzen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="switch_variables.html">1.2.6. Verwendung von Schaltvariablen in Gleichungen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="physical_units_test.html">1.2.7. Berechnung physikalischer Einheiten für abhängige Variable</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../equation_topology.html">1.3. Gleichungen als Baum-Topologie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../additions.html">1.4. Zusatzhinweise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html">1.5. Release Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Literature.html">1.6. Literature</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../first_steps/first_steps_index.html">2. Erste Schritte</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../special_methods/special_methods_index.html">4. Einzelne Methoden</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc_index.html">5. Verschiedenes</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="preventing-hidden-covariances">
+<h1><span class="section-number">1.2.5. </span>Vermeidung von „verdeckten” Kovarianzen<a class="headerlink" href="#preventing-hidden-covariances" title="Link to this heading">¶</a></h1>
+<p>Im Folgenden wird nun angenommen, dass der analytische Ausdruck für die Ergebnisgröße <span class="math notranslate nohighlight">\(y\)</span> mehrere Ausdrücke enthält, z. B. <span class="math notranslate nohighlight">\({\ a}_{1},\ a_{2},a_{3}\)</span>, die jeweils Funktionen von Eingangsgrößen <span class="math notranslate nohighlight">\(x_{i}\)</span> sind. Oft werden zunächst die Unsicherheiten <span class="math notranslate nohighlight">\({u(a}_{1}),\ \ u(a_{2}),{\ u(a}_{3})\)</span> berechnet, aus denen dann <span class="math notranslate nohighlight">\(u(y\left( {\ a}_{1},\ a_{2},a_{3} \right))\)</span> abgeleitet wird. Befinden sich jedoch einige der Eingangsgrößen <span class="math notranslate nohighlight">\(x_{i}\)</span> in mehr als einem der Ausdrücke <span class="math notranslate nohighlight">\({\ a}_{1},\ a_{2},a_{3}\)</span>, so existieren „verdeckte” oder „übersehene” Kovarianzen zwischen einigen der <span class="math notranslate nohighlight">\({\ a}_{1},\ a_{2},a_{3}\)</span>, die nachträglich zu berücksichtigen wären.</p>
+<p>Dieses Problem tritt bei den Berechnungen in UncertRadio dadurch nicht auf, dass sich die partiellen Ableitungen in dessen Unsicherheitsfortpflanzung immer auf die Ergebnisgröße beziehen. Warum das funktioniert, wird im Folgenden gezeigt.</p>
+<p>Der Ansatz für die Unsicherheitsfortpflanzung mit partiellen Ableitungen, die auf die Ergebnisgröße <span class="math notranslate nohighlight">\(y = y({\ a}_{1}(\mathbf{x}),\ a_{2}(\mathbf{x}),a_{3}(\mathbf{x}))\)</span> bezogen werden, wird mit dem Vektor <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> der Eingangsvariablen wie folgt formuliert:</p>
+<p>Zunächst wird das Quadrat der Summe ausgeführt:</p>
+<div class="math notranslate nohighlight">
+\[u^{2}(y) = \sum_{i = 1}^{ni}{\left( \frac{\partial y}{\partial x_{i}} \right)^{2}u^{2}\left( x_{i} \right)}\]</div>
+<div class="math notranslate nohighlight">
+\[u^{2}(y) = \sum_{i = 1}^{ni}{\left( \sum_{j = 1}^{3}{\frac{\partial y}{\partial a_{j}}\frac{\partial a_{j}}{\partial x_{i}}} \right)^{2}u^{2}\left( x_{i} \right)}\]</div>
+<div class="math notranslate nohighlight">
+\[\sum_{i = 1}^{ni}{\left( \frac{\partial y}{\partial a_{1}}\frac{\partial a_{1}}{\partial x_{i}} + \frac{\partial y}{\partial a_{2}}\frac{\partial a_{2}}{\partial x_{i}} + \frac{\partial y}{\partial a_{3}}\frac{\partial a_{3}}{\partial x_{i}} \right)^{2}u^{2}\left( x_{i} \right)}\]</div>
+<p>Nun wird die Summation über <span class="math notranslate nohighlight">\(i\)</span> für jeden der sechs Terme ausgeführt, gleichzeitig werden die partiellen Ableitungen von <span class="math notranslate nohighlight">\(y\)</span> nach <span class="math notranslate nohighlight">\(a_{j}\)</span> jeweils vor die Summen gezogen:</p>
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+    u^{2}(y) = \sum_{i = 1}^{n_i} &amp; &amp; \left( \frac{\partial y}{\partial a_{1}}\frac{\partial a_{1}}{\partial x_{i}} \right)^{2}u^{2}\left( x_{i} \right) + \\
+    &amp;&amp; \left( \frac{\partial y}{\partial a_{2}}\frac{\partial a_{2}}{\partial x_{i}} \right)^{2}u^{2}\left( x_{i} \right) + \\
+    &amp;&amp; \left( \frac{\partial y}{\partial a_{3}}\frac{\partial a_{3}}{\partial x_{i}} \right)^{2}u^{2}\left( x_{i} \right) + \\
+
+    &amp;&amp; 2\left( \frac{\partial y}{\partial a_{1}}\frac{\partial a_{1}}{\partial x_{i}} \right)\left( \frac{\partial y}{\partial a_{2}}\frac{\partial a_{2}}{\partial x_{i}} \right)u^{2}\left( x_{i} \right) + \\
+    &amp;&amp; 2\left( \frac{\partial y}{\partial a_{1}}\frac{\partial a_{1}}{\partial x_{i}} \right)\left( \frac{\partial y}{\partial a_{3}}\frac{\partial a_{3}}{\partial x_{i}} \right)u^{2}\left( x_{i} \right) + \\
+    &amp;&amp; 2\left( \frac{\partial y}{\partial a_{2}}\frac{\partial a_{2}}{\partial x_{i}} \right)\left( \frac{\partial y}{\partial a_{3}}\frac{\partial a_{3}}{\partial x_{i}} \right)u^{2}\left( x_{i} \right)
+\end{eqnarray}</div><p>Jede einzelne Summe über <span class="math notranslate nohighlight">\(i\)</span> stellt entweder eine Varianz oder eine Kovarianz der drei Ausdrücke <span class="math notranslate nohighlight">\({\ a}_{1},\ a_{2},a_{3}\)</span> dar:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}u^{2}(y) = &amp;\left( \frac{\partial y}{\partial a_{1}} \right)^{2}u^{2}\left( a_{1} \right) +
+           \left( \frac{\partial y}{\partial a_{2}} \right)^{2}u^{2}\left( a_{2} \right) +
+           \left( \frac{\partial y}{\partial a_{3}} \right)^{2}u^{2}\left( a_{3} \right) + \\
+           &amp;2\frac{\partial y}{\partial a_{1}}\frac{\partial y}{\partial a_{2}} cov(a_{1},a_{2}) +
+            2\frac{\partial y}{\partial a_{1}}\frac{\partial y}{\partial a_{3}}cov(a_{1},a_{3}) + \\
+           &amp; 2\frac{\partial y}{\partial a_{2}}\frac{\partial y}{\partial a_{3}}cov(a_{2},a_{3})\end{split}\]</div>
+<p>Üblicherweise beinhaltet bei einer Zerlegung von <span class="math notranslate nohighlight">\(y\)</span> in Ausdrücke oder Funktionen <span class="math notranslate nohighlight">\(a_{j}\)</span> eine per Hand ausgeführte Unsicherheitsfortpflanzung nur die ersten drei Terme in Gl. (6), da Kovarianzen zwischen den <span class="math notranslate nohighlight">\(a_{j}\)</span> meistens nicht vermutet werden; darauf geht die Bezeichnung „verdeckte“ Kovarianzen zurück.</p>
+<p>Der mit Gl. (6) entstandene Ausdruck ist genau derjenige, den man erwartet, wenn die verdeckten Kovarianzen zwischen den <span class="math notranslate nohighlight">\(a_{j}\)</span> mitberücksichtigt werden. Dieses Ergebnis demonstriert, dass die Unsicherheitsfortpflanzung in UncertRadio die verdeckten Kovarianzen berücksichtigt, quasi automatisch, da es nach Gl. (1) mit partiellen Ableitungen der Ergebnisgröße selbst arbeitet.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.2.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../../_sources/doc_files/content/numericalProcedures/hidden_covars.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

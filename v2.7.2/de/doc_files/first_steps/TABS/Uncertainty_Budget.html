@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html lang="de" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2.4.4. TAB „Unsicherheiten-Budget“ &#8212; UncertRadio  Dokumentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=b0ef843b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=59878c92" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/language_version_selector_styles.css?v=e907554d" />
+    <script src="../../../_static/documentation_options.js?v=245627df"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/translations.js?v=9bf55d28"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="../../../genindex.html" />
+    <link rel="search" title="Suche" href="../../../search.html" />
+    <link rel="next" title="2.4.5. TAB “Resultate”" href="Results.html" />
+    <link rel="prev" title="2.4.3. TAB “Values, Uncertainties”" href="Values_Uncertainties.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/ur2_symbol.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=OpenBfS&repo=UncertRadio&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<div class="switch-menus">
+
+    <div id="version-switch" >
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../../v2.7.2/de/doc_files/first_steps/TABS/Uncertainty_Budget.html"  selected  >v2.7.2</option>
+            
+                <option value="../../../../../v2.7.1/de/doc_files/first_steps/TABS/Uncertainty_Budget.html"  >v2.7.1</option>
+            
+                <option value="../../../../../v2.7.0/de/doc_files/first_steps/TABS/Uncertainty_Budget.html"  >v2.7.0</option>
+            
+                <option value="../../../../../v2.6.2/de/doc_files/first_steps/TABS/Uncertainty_Budget.html"  >v2.6.2</option>
+            
+                <option value="../../../../../latest/de/doc_files/first_steps/TABS/Uncertainty_Budget.html"  >latest</option>
+            
+                <option value="../../../../../develop/de/doc_files/first_steps/TABS/Uncertainty_Budget.html"  >develop</option>
+            
+        </select>
+    </div>
+    <div id="language-switch">
+        <select onchange="window.location.href=this.value">
+            
+                <option value="../../../../doc_files/first_steps/TABS/Uncertainty_Budget.html"  >en</option>
+            
+                <option value="#"  selected  >de</option>
+            
+        </select>
+    </div>
+</div><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../content/content_index.html">1. Inhalt</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../first_steps_index.html">2. Erste Schritte</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../config.html">2.1. Einstellungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../main_menue.html">2.2. Das Hauptmenü</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../open_project.html">2.3. Existierendes Projekt einsehen</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="tabs_index.html">2.4. Bedienung der einzelnen TABs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Procedures.html">2.4.1. TAB Verfahren</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Equations.html">2.4.2. TAB “Gleichungen”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Values_Uncertainties.html">2.4.3. TAB “Values, Uncertainties”</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.4.4. TAB „Unsicherheiten-Budget“</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Results.html">2.4.5. TAB “Resultate”</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../example_projects.html">2.5. Enthaltene Beispiele</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../options_dialog.html">2.6. Dialog Optionen - Voreinstellungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../problem_advice.html">2.7. Hinweise bei Problemen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../projectfile_structure.html">2.8. Struktur der Projektdatei</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../output_plots.html">2.9. Grafik-Fenster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../batch_test.html">2.10. Programm-Test</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../batch_mode/batch_mode_index.html">3. Automatisierung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../special_methods/special_methods_index.html">4. Einzelne Methoden</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../misc/misc_index.html">5. Verschiedenes</a></li>
+</ul>
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="tab-uncertainty-budget">
+<h1><span class="section-number">2.4.4. </span>TAB „Unsicherheiten-Budget“<a class="headerlink" href="#tab-uncertainty-budget" title="Link to this heading">¶</a></h1>
+<p>Unter diesem Tab - per Mausklick angezeigt - wird das sogenannte Unsicherheiten-Budget als eine Tabelle dargestellt. Es wird angezeigt, auf welche Ergebnisgröße sich das Unsicherheiten-Budget bezieht.</p>
+<p>Die <strong>Tabelle „Unsicherheiten-Budget”</strong> enthält wiederum die drei Spalten „Symbol”, „Typ” und „Einheit”.</p>
+<p>Unter den Spalten „Werte” und „Std.-Unsicherheit” werden die eingegebenen Werte und Standardunsicherheiten der unabhängigen Messgrößen sowie die für die abhängigen Größen (Hilfsgrößen und Ergebnisgröße) berechneten Werte und Standardunsicherheiten wiedergegeben.</p>
+<p>Die Spalte <strong>„Sensitivitäts-Koeffizient”</strong> enthält für die unabhängigen Größen ihre partiellen Ableitungen der Ergebnisfunktion (der über die Gleichungen bestimmten Funktion, mit der der Wert der Ergebnisgröße <strong>y</strong> berechnet wird).</p>
+<p>Aus den zeilenweise berechneten <strong>Produkten Unsicherheit *x* Sensitivitätskoeffizient</strong>, deren Werte in der folgenden Spalte in zwei Varianten dargestellt werden können, ergibt sich formal das Unsicherheitsbudget.</p>
+<p>Mit der Bezeichnung <strong>„relat. Beitrag(%)”</strong> in dieser Spalte werden für jede unabhängige Messgröße - soweit für sie Unsicherheiten eingegeben wurden - die prozentualen Anteile ihrer Varianz an der kombinierten Varianz der Ergebnisgröße dargestellt. An dieser Spalte lässt sich leicht ablesen, welche der Größen am meisten zur kombinierten Standardunsicherheit der Ergebnisgröße beiträgt. Die Angabe von 100% in dieser Spalte für die Ergebnisgröße ist lediglich die Kontrollsumme der einzelnen prozentualen Beiträge. Mit Hilfe des <strong>Buttons „Wechseln des Budget-Typs“</strong> kann in dieser Spalte die Anzeige absoluter Unsicherheitsbeiträge aktiviert werden, angegeben in der Einheit der Ergebnisgröße.</p>
+<p>Die vorstehende <strong>Definition des „relat. Beitrag(%)“</strong> für das Unsicherheiten-Budget erhält durch die jüngste <strong>Veröffentlichung von Kessel, Kacker und Berglund</strong> (2006) mit dem Titel „Coefficient of contribution to the combined standard uncertainty“ eine weitere plausible Bedeutung:</p>
+<p>Dieser relative Beitrag einer Eingangsgröße <span class="math notranslate nohighlight">\(x_{i}\)</span>, dividiert durch 100, ist im Fall unkorrelierter Eingangsgrößen identisch mit dem Quadrat des Korrelationskoeffizienten zwischen <span class="math notranslate nohighlight">\(x_{i}\)</span> und der Ergebnisgröße <strong>y</strong>! Diese Größe wird nun als „<strong>Beitrags-Koeffizient</strong>“ bezeichnet und durch das Symbol <span class="math notranslate nohighlight">\(h\left( y,x_{i} \right)\)</span> dargestellt.</p>
+<p>Die verallgemeinerte Definition des „Beitrags-Koeffizienten” lautet jetzt:</p>
+<div class="math notranslate nohighlight" id="equation-coeff-contrib-1">
+<span class="eqno">(2.4.2)<a class="headerlink" href="#equation-coeff-contrib-1" title="Link to this equation">¶</a></span>\[h\left( y,x_{i} \right) = \frac{\left( \partial y/\partial x_{i} \right) \cdot u\left( x_{i} \right)}{u(y)} \cdot r\left( y,x_{i} \right)\]</div>
+<p>Da für nicht-korrelierte Eingangs-Größen gilt:</p>
+<div class="math notranslate nohighlight" id="equation-coeff-contrib-2">
+<span class="eqno">(2.4.3)<a class="headerlink" href="#equation-coeff-contrib-2" title="Link to this equation">¶</a></span>\[r\left( y,x_{i} \right) = \frac{\left( \partial y/\partial x_{i} \right) \cdot u\left( x_{i} \right)}{u(y)}\]</div>
+<p>folgt damit aus Gleichung <a class="reference internal" href="#equation-coeff-contrib-1">(2.4.2)</a> die Gleichung <a class="reference internal" href="#equation-coeff-contrib-3">(2.4.4)</a>, was bisher schon, d.h. für nicht-korrelierte Eingangsgrößen, als stets positiver „relativer Beitrag zur Varianz der Ergebnisgröße” bekannt war:</p>
+<div class="math notranslate nohighlight" id="equation-coeff-contrib-3">
+<span class="eqno">(2.4.4)<a class="headerlink" href="#equation-coeff-contrib-3" title="Link to this equation">¶</a></span>\[h\left( y,x_{i} \right) = \left\lbrack \frac{\left( \partial y/\partial x_{i} \right) \cdot u\left( x_{i} \right)}{u(y)} \right\rbrack^{2}\]</div>
+<p>Bei Vorliegen von Korrelationen <span class="math notranslate nohighlight">\(r\left( x_{i},x_{j} \right)\)</span> zwischen den Eingangsgrößen werden diese in Gleichung <a class="reference internal" href="#equation-coeff-contrib-1">(2.4.2)</a> in dem nach folgender Gleichung zu berechnenden Faktor <span class="math notranslate nohighlight">\(r\left( y,x_{i} \right)\)</span>,</p>
+<div class="math notranslate nohighlight" id="equation-coeff-contrib-4">
+<span class="eqno">(2.4.5)<a class="headerlink" href="#equation-coeff-contrib-4" title="Link to this equation">¶</a></span>\[r\left( y,x_{i} \right) = \sum_{j}^{}{\left\lbrack \frac{\left( \partial y/\partial x_{j} \right) \cdot u\left( x_{j} \right)}{u(y)} \right\rbrack \cdot \left\lbrack r\left( x_{i},x_{j} \right) \right\rbrack}\]</div>
+<p>verwendet, so dass <span class="math notranslate nohighlight">\(h\left( y,x_{i} \right)\)</span> jetzt auch negative Werte annehmen kann.</p>
+<p><strong>Hinweise zu Auswirkungen von Kovarianzen:</strong></p>
+<p>Wenn Kovarianzen bei der Berechnung der Unsicherheiten berücksichtigt wurden, treten auch negative Werte in der Spalte „relat. Beitrag(%)” auf; dies ist also kein Fehler des Programms!</p>
+<p>Nach dem erwähnten Paper von Kessel et al. werden Korrelationen (Kovarianzen) zwischen Eingangsgrößen gemäß Gl. <a class="reference internal" href="#equation-coeff-contrib-1">(2.4.2)</a> in Kombination mit Gl. <a class="reference internal" href="#equation-coeff-contrib-4">(2.4.5)</a> zur Berechnung des „coefficient of contribution” berücksichtigt und die resultierenden Werte in der Spalte „relat. contribut(%)” der Unsicherheitsbudget-Tabelle dargestellt. Gl. <a class="reference internal" href="#equation-coeff-contrib-3">(2.4.4)</a> gilt dann nicht mehr.</p>
+<p>Mit UncertRadio wird dieses Verfahren nach Kessel et al. bereits seit Version 0.05 (2007/11) verwendet, d.h. die Werte, die UncertRadio in der Spalte „relat. Beitrag(%)” des Budgets ausgibt, entsprechen bereits dieser neuen Definition. Dies kann mit Hilfe der <strong>Beispiel-Projekte Kessel-2a-2006_DE.txp und Kessel-2b-2006_DE.txp</strong> demonstriert werden**,** die aus zwei Rechenbeispielen dieser Publikation editiert wurden.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &#169;2026, Günter Kanisch.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.2.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../../_sources/doc_files/first_steps/TABS/Uncertainty_Budget.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/OpenBfS/UncertRadio" class="github">
+        <img src="../../../_static/github-banner.svg" alt="Fork me on GitHub" class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>
