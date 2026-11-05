@@ -2,11 +2,11 @@
 [![Windows build](https://github.com/OpenBfS/UncertRadio/actions/workflows/msys2.yml/badge.svg?branch=develop)](https://github.com/OpenBfS/UncertRadio/actions/workflows/msys2.yml)
 [![Linux AppImage Build](https://github.com/OpenBfS/UncertRadio/actions/workflows/Appimage.yml/badge.svg?branch=develop)](https://github.com/OpenBfS/UncertRadio/actions/workflows/Appimage.yml)
 # UncertRadio
-<small>([german version](README.de.md))</small>
-## Software for determining characteristic limits in accordance to ISO 11929 for radioactivity measurements
+<small>([deutsche Version](https://openbfs.github.io/UncertRadio/de/))</small>
+## Software for determining characteristic limits in accordance with ISO 11929 for radioactivity measurements
 
 The software **UncertRadio** enables the automated calculation of characteristic
-threshold values of activity mesurements according to ISO 11929.
+threshold values of activity measurements according to ISO 11929.
 These include the activity concentration or specific activity and its combined
 standard measurement uncertainty, an uncertainty budget and values of
 decision threshold and the detection limit.
@@ -22,7 +22,7 @@ liquid scintillation measurement procedures of e.g. Strontium isotopes.
 
 ![UncertRadio Monte-Carlo result page](icons/UR2MC_EN.png)
 
-**Figure 1:** Example of results obtained with the Monte Carlo simulation using weighted linear least squares (WLS) in accordance with [ISO 11929-2:2025](https://www.iso.org/standard/90840.html). The three displayed distributions refer, top-down, to the output quantity, the decision threshold, and the detection limit. The curves shown in blue represent the Gaussians calculated analytically [ISO 11929-1:2025](https://www.iso.org/standard/90839.html). The vertical dashed lines indicate the lower and upper limits of the coverage interval, with the mean value shown between them (upper graph); the decision threshold (middle graph); and both the decision threshold and detection limit (lower graph).
+**Figure 1:** Example of results obtained with the Monte Carlo simulation using weighted linear least squares (WLS) in accordance with [ISO 11929-2:2025](https://www.iso.org/standard/90840.html). The three displayed distributions refer, top-down, to the output quantity, the decision threshold, and the detection limit. The curves shown in blue represent the Gaussian curves calculated analytically according to [ISO 11929-1:2025](https://www.iso.org/standard/90839.html). The vertical dashed lines indicate the lower and upper limits of the coverage interval, with the mean value shown between them (upper graph); the decision threshold (middle graph); and both the decision threshold and detection limit (lower graph).
 
 There are two main analytical approaches used within the software
 differing by the equations for the evaluation:
@@ -37,18 +37,18 @@ procedures for fitting e.g. for decay or build-up curves (Kanisch, 2016b).
 
 Alternatively, an evaluation by Monte Carlo simulation may be used within
 both approaches. This represents the method of propagating whole distributions
-and is in advantage in the case of significant deviations from the normal
+and is advantageous in the case of significant deviations from the normal
 distribution; see ISO GUM Supplements 1 and 2.
 
 Applying **UncertRadio** means that the user should be able to formulate the
-equations used for the calculating values of the output quantity. A special
+equations used for calculating the values of the output quantity. A special
 advantage is, however, that no partial derivatives are to be supplied. For a
 better understanding of the course of the software and of user-supplied
 equations and functions an extensive bundle of application examples as project
 files is included into the installation.
 
 Many of the application examples are from the working group "AK-SIGMA" of the
-"German-Suisse Association for Radiation Protection", from Measuring
+"German-Swiss Association for Radiation Protection", from Measuring
 Instructions of the German Co-ordinating Offices and from the literature.
 These examples including those of a German National Supplement 1 of DIN ISO
 11929 (2014) as well as the examples from the more recent
@@ -58,17 +58,17 @@ The UncertRadio HTML documentation is included in every release and can be acces
 the help buttons. Furthermore, it is available online on [GitHub Pages](https://openbfs.github.io/UncertRadio/).
 
 The author is grateful for the feedback and new requirements of the user-community,
-especially from federal coordination centres and the laboratiories of the
+especially from federal coordination centres and the laboratories of the
 German Federal States working after AVV-IMIS on monitoring of environmental
-radioavitiy, and significantly improved the quality and usability of **UncertRadio**.
+radioactivity, and significantly improved the quality and usability of **UncertRadio**.
 
-The actual version is 2.7.1.
+The current version is 2.7.1.
 
 Since version 2.5.1, the source code is available online and **UncertRadio** can be
 created from the sources. The associated installation guide is given below.
 Pre-compiled packages are still provided for Windows. These consist of a packed
 archive containing all required files. After unpacking, the program can be started
-with the "UncertRatio.exe" found within the "bin/" subdirectory.
+with the "UncertRadio.exe" found within the "bin/" subdirectory.
 
 Version 2.4.32 is the last version that can be installed with an installation program
 for Windows.
@@ -138,7 +138,7 @@ pacman -Syuu
 ```
 Restart the MSYS2 UCRT64 terminal if required
 
-Install required tools and programms
+Install required tools and programs
 ```bash
 pacman -S git make mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-toolchain mingw-w64-ucrt-x86_64-gcc-fortran mingw-w64-ucrt-x86_64-gtk3 mingw-w64-ucrt-x86_64-plplot mingw-w64-ucrt-x86_64-wxwidgets3.2-msw mingw-w64-ucrt-x86_64-lapack mingw-w64-ucrt-x86_64-python-sphinx mingw-w64-ucrt-x86_64-python-myst-parser
 ```
@@ -166,13 +166,13 @@ To build the documentation, the following additional tools are required:
 Most of these tools are available via the package manager of common Linux distributions.
 
 We were able to successfully compile **UncertRadio** using the following distributions:
- - Arch linux
+ - Arch Linux
    ```bash
    pacman -Syu
    pacman -S base-devel git cmake gcc-fortran lapack gtk3 python-sphinx python-myst-parser
    ```
    **Note:**
-   Arch linux is not providing plplot in their repositories.
+   Arch Linux is not providing plplot in their repositories.
    Thus, you have to compile it from the [source](https://plplot.sourceforge.net/documentation.php).
    You could also use the [AUR package](https://aur.archlinux.org/packages/plplot). Please read and understand the official information about the potential dangers of using software from the [AUR](https://wiki.archlinux.org/title/Arch_User_Repository):
    ```bash
@@ -183,7 +183,7 @@ We were able to successfully compile **UncertRadio** using the following distrib
 
  - Debian 13 (trixie) / Ubuntu 24.04
 
-   Just install the following programms:
+   Just install the following programs:
     ```bash
    apt-get update && apt-get upgrade
    apt-get install build-essential gfortran git libgtk-3-dev libplplot-dev plplot-driver-cairo liblapack-dev python3-sphinx python3-myst-parser
@@ -288,7 +288,7 @@ python make_docs.py
 We provide automatically pre‑compiled binaries – nightly builds and version‑tagged releases – via GitHub Actions (attached to each GitHub Release):
 
 - **Windows** – packaged in a `tar.gz` archive.
-- **Linux** – an AppImage (`UncertRadio_*.AppImage`). It is build on debian 12 and should run on any modern linux distro.
+- **Linux** – an AppImage (`UncertRadio_*.AppImage`). It is built on Debian 12 and should run on any modern Linux distro.
 
 Both binaries are attached to the corresponding GitHub release ([nightly](https://github.com/OpenBfS/UncertRadio/releases/tag/Nightly_develop) or tagged) and can be downloaded directly from the [*Releases* page](https://github.com/OpenBfS/UncertRadio/releases). No additional build steps are required to start the program. Please report any issues or suggestions via the GitHub [issues](https://github.com/OpenBfS/UncertRadio/issues) page or by creating a pull request.
 
@@ -306,17 +306,17 @@ chmod +x UncertRadio_*.AppImage
 ./UncertRadio_*.AppImage
 ```
 
-**Note:** The AppImage requires a compatible FUSE implementation. Install it with your distribution's package manager, e.g. `apt-get install libfuse2` (Debian/Ubuntu), `pacman -S fuse2` (Arch based), or `dnf install fuse` (Fedora).```
+**Note:** The AppImage requires a compatible FUSE implementation. Install it with your distribution's package manager, e.g. `apt-get install libfuse2` (Debian/Ubuntu), `pacman -S fuse2` (Arch based), or `dnf install fuse` (Fedora).
 
 
 ### Running the included tests
 
 There are about 70 examples in German and English language included
 in the `examples` directory. To check if UncertRadio is running correctly,
-you can start its included testsuite by selecting "Options/QC batch test" from the main menue.
+you can start its included testsuite by selecting "Options/QC-Batch-Test" from the main menu.
 By default, it opens all the included projects (defined in the included `BatListRef_v06.txt`)
 and compares their results. By default (and on the first start of this dialog), the file is already selected.
-The file for the output file can be left empty. UncertRadio will create an output file automatically.
+The output-file field can be left empty. UncertRadio will create an output file automatically.
 Any deviations that may occur are reported.
 
 In addition, all project tests mentioned above and some more internal tests can be run from the command line.
@@ -351,7 +351,7 @@ included in the description tab.
 
 - [x] create a sphinx documentation and migrate the (Windows-chm) help files
 
-- [ ] translate the documentatation (partly done)
+- [ ] translate the documentation (partly done)
 
 - [x] publish the documentation online
 
