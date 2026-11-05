@@ -84,27 +84,27 @@ msgstr "Für diejenigen Eingangsgrößen, denen Mittelwerte zugeordnet sind, wir
 
 #: ../../doc_files/special_methods/gross_quantity.rst:41
 msgid "Method A |br| “not being counts“"
-msgstr ""
+msgstr "Verfahren A |br| „nicht Impulsanzahl“"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:42
 msgid "Method B |br| “counts, with influence“"
-msgstr ""
+msgstr "Verfahren B |br| „Impulsanzahl, mit Einfluss“"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:43
 msgid "Method C |br| “classical“"
-msgstr ""
+msgstr "Verfahren C |br| „klassisch“"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:45
 msgid "t-distribution"
-msgstr ""
+msgstr "t-Verteilung"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:46
 msgid "distribution unclear"
-msgstr ""
+msgstr "t-Verteilung / Normalverteilung"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:47
 msgid "normal distribution"
-msgstr "Normalverteilung Normal"
+msgstr "Normalverteilung"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:48
 msgid ":math:`\\upsilon`"

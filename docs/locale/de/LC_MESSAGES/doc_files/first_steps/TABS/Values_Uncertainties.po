@@ -79,7 +79,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:27
 msgid "input of unit"
-msgstr ""
+msgstr "Eingabe der Einheit"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:29
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:209
@@ -95,11 +95,11 @@ msgstr ""
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:60
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:72
 msgid "number field"
-msgstr ""
+msgstr "Zahlenfeld"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:32
 msgid "value of measured quantity"
-msgstr ""
+msgstr "Wert der Messgröße"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:34
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:213
@@ -113,7 +113,7 @@ msgstr ""
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:36
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:66
 msgid "select. field"
-msgstr ""
+msgstr "Auswahlfeld"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:37
 msgid "selection of the quantity's distribution (normal / rectangular / triangular / others) The :ref:`Low-Level Applications, (N+x)-rule` may be selected here, implying Gamma distributions of the associated counting rate variables"

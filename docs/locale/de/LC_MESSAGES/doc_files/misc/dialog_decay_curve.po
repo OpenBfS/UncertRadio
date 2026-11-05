@@ -159,7 +159,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_decay_curve.rst:48
 msgid "Uncertainty of the gross counting rate"
-msgstr ""
+msgstr "Unsicherheit der Bruttozählrate"
 
 #: ../../doc_files/misc/dialog_decay_curve.rst:50
 msgid "6"
@@ -167,7 +167,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_decay_curve.rst:50
 msgid "Counting time of the `k`-th background measurement"
-msgstr ""
+msgstr "Messdauer der `k`-ten Nulleffektmessung"
 
 #: ../../doc_files/misc/dialog_decay_curve.rst:52
 msgid "7"
@@ -175,7 +175,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_decay_curve.rst:52
 msgid "Counts of the `k`-th background measurement"
-msgstr ""
+msgstr "Impulse der `k`-ten Nulleffektmessung"
 
 #: ../../doc_files/misc/dialog_decay_curve.rst:54
 msgid "8"
@@ -183,7 +183,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_decay_curve.rst:54
 msgid "Calculated background counting rate"
-msgstr ""
+msgstr "Berechnete Nulleffektzählrate"
 
 #: ../../doc_files/misc/dialog_decay_curve.rst:56
 msgid "9"
@@ -191,7 +191,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_decay_curve.rst:56
 msgid "Uncertainty of the background counting rate"
-msgstr ""
+msgstr "Unsicherheit der Nulleffektzählrate"
 
 #: ../../doc_files/misc/dialog_decay_curve.rst:58
 msgid "10"
@@ -203,7 +203,7 @@ msgstr ""
 
 #: ../../doc_files/misc/dialog_decay_curve.rst:58
 msgid "Calculated net counting rate"
-msgstr ""
+msgstr "Berechnete Nettozählrate"
 
 #: ../../doc_files/misc/dialog_decay_curve.rst:60
 msgid "11"

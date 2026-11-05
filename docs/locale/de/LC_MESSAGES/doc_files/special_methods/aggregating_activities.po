@@ -71,19 +71,19 @@ msgstr "Der Name des links vom Gleichheitszeichen stehenden Symbols kann frei ge
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:36
 msgid "*mode* integer number, withe values:"
-msgstr ""
+msgstr "*mode* ganze Zahl, mögliche Werte:"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:38
 msgid "1: calculate the mean value of the individual results,"
-msgstr ""
+msgstr "1: Berechnung des Mittelwerts der Einzelergebnisse,"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:40
 msgid "2: calculate the sum of the individual results,"
-msgstr ""
+msgstr "2: Berechnung der Summe der Einzelergebnisse,"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:42
 msgid "*np* integer, number of aliquot measurements"
-msgstr ""
+msgstr "*np* ganze Zahl, Anzahl der Aliquotmessungen"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:44
 msgid ""

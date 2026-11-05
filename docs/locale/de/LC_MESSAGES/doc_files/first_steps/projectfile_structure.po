@@ -155,31 +155,31 @@ msgstr ""
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "text"
-msgstr ""
+msgstr "Text"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "field"
-msgstr ""
+msgstr "feld"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "formula of the standard deviation of the"
-msgstr ""
+msgstr "Formel für die Standardabweichung der"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "quantity; no formula if (N+x) rule has been"
-msgstr ""
+msgstr "Messgröße; keine Formel, wenn die"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "selected;"
-msgstr ""
+msgstr "(N+x)-Regel selektiert wurde;"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "(the internal coverage factor is always 1);"
-msgstr ""
+msgstr "(der interne Erweiterungsfaktor ist immer 1);"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "always \".\" has to used for the decimal point"
-msgstr ""
+msgstr "als Dezimalpunkt ist immer \".\" zu verwenden"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "7"
@@ -191,31 +191,31 @@ msgstr ""
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "number"
-msgstr ""
+msgstr "Zahlen"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "value of the uncertainty for normal"
-msgstr ""
+msgstr "Wert der Unsicherheit für"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "distribution;"
-msgstr ""
+msgstr "Normalverteilung;"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "if the (N+x) rule has been selected,"
-msgstr ""
+msgstr "Bei Selektion der (N+x)-Regel ist in"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "**nothing** shall be entered in these"
-msgstr ""
+msgstr "diesen Zellen **nichts**"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "cells!"
-msgstr ""
+msgstr "einzutragen!"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "(the internal coverage factor is always 1)"
-msgstr ""
+msgstr "(der interne Erweiterungsfaktor ist immer 1)"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "8"
@@ -231,11 +231,11 @@ msgstr ""
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "Half width of rectangular/triangular"
-msgstr ""
+msgstr "Halbbreite der Rechteck-/Dreiecksverteilung"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "distribution"
-msgstr ""
+msgstr "verteilung"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "9"
@@ -251,19 +251,19 @@ msgstr ""
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "select whether the uncertainty from col. Sp."
-msgstr ""
+msgstr "Festlegung, ob die Unsicherheit aus"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "6, 7 or 8"
-msgstr ""
+msgstr "Sp. 6, 7 oder 8 als"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "are to be taken *absolute* or as *relative*"
-msgstr ""
+msgstr "*absoluter* oder als *relativer* Wert"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "value."
-msgstr ""
+msgstr "zu nehmen ist."
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "10"
@@ -279,19 +279,19 @@ msgstr ""
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "(combined) absolute standard uncertainty"
-msgstr ""
+msgstr "(kombinierte) absolute Standardunsicherheit"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "the columns 6, 7, 8 and 9;"
-msgstr ""
+msgstr "aus den Spalten 6, 7, 8 und 9;"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "Note: a value entered by the user will always"
-msgstr ""
+msgstr "Achtung: Ein vom Benutzer eingegebener"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst
 msgid "be over-written by the program!"
-msgstr ""
+msgstr "Wert wird immer vom Programm überschrieben!"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:125
 msgid ""

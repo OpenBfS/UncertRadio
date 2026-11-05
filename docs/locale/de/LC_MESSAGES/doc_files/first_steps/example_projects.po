@@ -647,11 +647,11 @@ msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "from 4 γ-lines of the radionuclide"
-msgstr ""
+msgstr "aus 4 γ-Linien des Radionuklids"
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "La-140"
-msgstr ""
+msgstr "La-140"
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "Ratel_Annex1_Beispiel_EN.txp"
@@ -659,19 +659,19 @@ msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "Measurement of the decay curve of"
-msgstr ""
+msgstr "Messung der Abklingkurve von"
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "Fluor-18 (half-live of 1.829 h);"
-msgstr ""
+msgstr "Fluor-18 (Halbwertszeit von 1,829 h);"
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "**example from Ratel et al., Metrologia, 2015**"
-msgstr ""
+msgstr "**Beispiel aus Ratel et al., Metrologia, 2015**"
 
 #: ../../doc_files/first_steps/example_projects.rst:235
 msgid "Example with more than 1 output quantity"
-msgstr ""
+msgstr "Beispiel mit mehr als einer Ergebnisgröße"
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "Janszen-Sr-89-Sr-90_V4_EN.txp"

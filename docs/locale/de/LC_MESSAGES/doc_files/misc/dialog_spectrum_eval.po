@@ -205,7 +205,7 @@ msgstr "**Hinweis:** Bis zur Version 2.4.18 standen sieben Radiobuttons zur Verf
 msgid ""
 "The activities *A*\\ :sub:`i` of the individual lines are calculated as "
 "follows:"
-msgstr ""
+msgstr "Die Aktivitäten *A*\\ :sub:`i` der einzelnen Linien werden nach der folgenden Gleichung berechnet:"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:76
 msgid ""

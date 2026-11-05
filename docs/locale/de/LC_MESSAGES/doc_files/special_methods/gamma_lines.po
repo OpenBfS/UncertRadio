@@ -225,7 +225,7 @@ msgstr "*E* Platzhalter für die Energien einzelner Gammalinien, in keV; dem Sym
 
 #: ../../doc_files/special_methods/gamma_lines.rst:84
 msgid "*tlive* counting time (duration) (live-time) , in :math:`s`;"
-msgstr ""
+msgstr "*tlive* Zählzeit (Messdauer) (live-time), in :math:`s`;"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:86
 msgid ""
@@ -252,7 +252,7 @@ msgstr "**Eingabe der Werte:**"
 msgid ""
 "for further information about input: :ref:`Dialog Values from spectrum "
 "evaluation <dialog values from spectrum evaluation>`"
-msgstr ""
+msgstr "Weitere Hinweise zur Eingabe: :ref:`Dialog Werte der Spektrums-Auswertung <dialog values from spectrum evaluation>`"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:104
 msgid ""
