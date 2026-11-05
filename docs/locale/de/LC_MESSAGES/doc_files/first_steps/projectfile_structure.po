@@ -45,7 +45,7 @@ msgstr "Zusätzlich zur bestehenden Version einer Projektdatei als .txp-Textdate
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:19
 msgid "Project file as text file in .TXP format"
-msgstr "Projektdatei im \\*.TXP-Format als Textdatei"
+msgstr "Projektdatei im .TXP-Format als Textdatei"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:21
 msgid ""
@@ -71,7 +71,7 @@ msgstr "Zahlen immer mit „.“ als Dezimaltrennzeichen (kein Komma)!"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:49
 msgid "Project file in the Excel-compatible .CSV format"
-msgstr "Projektdatei im Excel-kompatiblen \\*.CSV-Format"
+msgstr "Projektdatei im Excel-kompatiblen .CSV-Format"
 
 #: ../../doc_files/first_steps/projectfile_structure.rst:51
 msgid ""

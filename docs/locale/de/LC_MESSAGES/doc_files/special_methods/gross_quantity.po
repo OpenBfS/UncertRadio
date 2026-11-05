@@ -670,7 +670,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/gross_quantity.rst:358
 msgid "Application to Procedure A („not being counts“)"
-msgstr "**Anwendung auf Verfahren A („nicht Impulsanzahl”)**"
+msgstr "Anwendung auf Verfahren A („nicht Impulsanzahl”)"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:360
 msgid "If the variances :math:`u^{2}(x_{g})` and :math:`u^{2}(x_{b})` are taken as products :math:`f_{g}s_{g}^{2}` and :math:`f_{b}s_{b}^{2}` according to 6.12.1, for the model case :math:`y = w(x_{g} - x_{b} - xint)` the result for the interpolated variance of the gross quantity :math:`{\\widetilde{x}}_{g}` is:"
@@ -1026,7 +1026,7 @@ msgstr "Damit ist die Äquivalenz der beiden verglichenen Interpolationsverfahre
 
 #: ../../doc_files/special_methods/gross_quantity.rst:497
 msgid "Application to Procedure B („counts, with influence“)"
-msgstr "**Anwendung auf Verfahren B („Impulsanzahl, mit Einfluss”)**"
+msgstr "Anwendung auf Verfahren B („Impulsanzahl, mit Einfluss”)"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:499
 msgid ""

@@ -58,7 +58,7 @@ msgstr "Die Eingabe eines Werts in eine Zelle einer Tabelle soll mit der Eingabe
 
 #: ../../doc_files/content/additions.rst:29
 msgid "Column blocks in tables"
-msgstr "***Spaltenblöcke in Tabellen***"
+msgstr "Spaltenblöcke in Tabellen"
 
 #: ../../doc_files/content/additions.rst:31
 msgid ""

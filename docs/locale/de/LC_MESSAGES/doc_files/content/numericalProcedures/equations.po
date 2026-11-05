@@ -151,7 +151,7 @@ msgstr ""
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:81
 msgid "Non-linear dependence"
-msgstr "**Nicht-lineare Abhängigkeit**"
+msgstr "Nicht-lineare Abhängigkeit"
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:83
 msgid ""

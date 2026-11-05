@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:2
 msgid "Obtaining MC distributions and statistics derived of it in detail"
-msgstr "**Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail**"
+msgstr "Ermittlung der MC-Verteilungen und daraus abgeleiteter Kenngrößen im Detail"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:4
 msgid ""

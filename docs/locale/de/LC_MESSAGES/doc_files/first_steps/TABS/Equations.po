@@ -192,11 +192,7 @@ msgid ""
 "the gross counting rate is inapplicable**; the **net counting rate**, "
 "however, **has to be selected** **because it acts as placeholder for the "
 "source activity (Bq);**"
-msgstr ""
-"bei der Mittelung von Aktivitäten mehrerer Gammalinien eines Radionuklids "
-"(Aufruf von *Gamspk1*) entfällt die Angabe der Brutto-Zählrate; die Netto-"
-"Zählrate ist in diesem Falle Platzhalter für die Aktivität (Bq) des "
-"Messpräparats, dessen Symbol ausgewählt werden muss. "
+msgstr "bei der Mittelung von Aktivitäten mehrerer Gammalinien eines Radionuklids (Aufruf von **Gamspk1**) **entfällt die Angabe der Brutto-Zählrate**; die **Netto-Zählrate** ist in diesem Falle **Platzhalter für die Aktivität (Bq) des Messpräparats**, dessen Symbol **ausgewählt werden muss**."
 
 #: ../../doc_files/first_steps/TABS/Equations.rst:80
 msgid ""

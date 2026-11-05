@@ -266,7 +266,7 @@ msgid ""
 " (iterated) value of the gross counting rate.** It has, however, no "
 "meaning for the calculation of the combined uncertainty of the output "
 "quantity."
-msgstr "Eine Zelle in der Spalte „StdAbw-Formel” ist grün markiert. Hier ist die **Standardabweichungs-Formel der Bruttozählrate** vorzugeben. Diese Formel wird später für die numerisch-iterative Berechnung von Erkennungs- und Nachweisgrenze benötigt. Sie wird als „**Unsicherheits-Funktion** der Bruttozählrate (und implizit der (verfahrensbezogenen) Nettozählrate)**” betrachtet, „**die es erlaubt, ihre Unsicherheit für jeden variierten (iterierten) Wert der Bruttozählrate abzuschätzen.**” Für die Berechnung der kombinierten Unsicherheit der Ergebnisgröße hat sie jedoch keine Bedeutung."
+msgstr "Eine Zelle in der Spalte „StdAbw-Formel” ist grün markiert. Hier ist die **Standardabweichungs-Formel der Bruttozählrate** vorzugeben. Diese Formel wird später für die numerisch-iterative Berechnung von Erkennungs- und Nachweisgrenze benötigt. Sie wird als „**Unsicherheits-Funktion der Bruttozählrate (und implizit der (verfahrensbezogenen) Nettozählrate)**” betrachtet, „**die es erlaubt, ihre Unsicherheit für jeden variierten (iterierten) Wert der Bruttozählrate abzuschätzen.**” Für die Berechnung der kombinierten Unsicherheit der Ergebnisgröße hat sie jedoch keine Bedeutung."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:128
 msgid ""

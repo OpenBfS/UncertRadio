@@ -1031,7 +1031,7 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:435
 msgid "Note on the calculation of Decision threshold and Detection limit:"
-msgstr "**Hinweis zur Berechnung von Erkennungs- und Nachweisgrenze**:"
+msgstr "Hinweis zur Berechnung von Erkennungs- und Nachweisgrenze:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:437
 msgid ""
@@ -1104,7 +1104,7 @@ msgstr ""
 
 #: ../../doc_files/misc/math_lsq_fit.rst:478
 msgid "PMLE Literature"
-msgstr "**Literatur:**"
+msgstr "PMLE-Literatur"
 
 #: ../../doc_files/misc/math_lsq_fit.rst
 msgid "ISO 11929:2010, Appendix C.5.4"

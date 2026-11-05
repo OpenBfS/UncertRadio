@@ -975,7 +975,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst:340
 msgid "Example for a \"negative\" linear Model"
-msgstr "**Beispiel für ein „negativ“ lineares Modell**"
+msgstr "Beispiel für ein „negativ“ lineares Modell"
 
 #: ../../doc_files/first_steps/example_projects.rst:343
 msgid "Rn-222-Emanation_EN.txp"
