@@ -412,7 +412,7 @@ msgid ""
 "`SDECAY` calculates a value and a standard uncertainty by using the "
 "least-squares method outlined above, which are attributed to the variable"
 " named Symb0 (which is an activity in Bq)."
-msgstr "Diese Funktion berechnet mit dem oben angegebenen Least-squares-Verfahren einen Wert und eine Standardunsicherheit, die der Variablen auf der linken Seite der Gleichung, hierSymb0, zugewiesen wird."
+msgstr "Diese Funktion berechnet mit dem oben angegebenen Least-squares-Verfahren einen Wert und eine Standardunsicherheit, die der Variablen auf der linken Seite der Gleichung, hier Symb0, zugewiesen werden (eine Aktivität in Bq)."
 
 #: ../../doc_files/special_methods/decay_chains.rst:262
 msgid ""
@@ -593,7 +593,7 @@ msgstr "Im Falle der Sr-89/Sr-90-Messungen: ja, Abtrennung von Y-90 von Sr-90"
 
 #: ../../doc_files/special_methods/decay_chains.rst:356
 msgid "No. (1,2 or 3) of the radionuclide, which is build up since the separation"
-msgstr "Anzahl der Messkanäle: üblicherweise 1; bei LSC-Messungen ggf. mehr als 1 Messkanal"
+msgstr "Anzahl (1, 2 oder 3) des Radionuklids, das seit der Separation wieder angewachsen ist"
 
 #: ../../doc_files/special_methods/decay_chains.rst:363
 msgid "Common measurement of the decay chain members on the same detector?"

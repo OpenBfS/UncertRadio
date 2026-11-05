@@ -179,7 +179,7 @@ msgid ""
 "Here, the alpha self-absorption factor *f*, having a rather broad "
 "rectangular distribution and belonging to the denominator, causes this "
 "effect."
-msgstr "Darin verursacht der Selbstabsorptionsfaktor *f* der Alphastrahlung, dem eine vergleichsweise breite Rechteck-Verteilung zugeordnet wurde und der im Nenner steht, diesen Effekt. ISO-Beispiel-1b_DE.txp"
+msgstr "Darin verursacht der Selbstabsorptionsfaktor *f* der Alphastrahlung, dem eine vergleichsweise breite Rechteck-Verteilung zugeordnet wurde und der im Nenner steht, diesen Effekt."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:110
 msgid "Neutron-Dose-Cox-2006_EN.txp"

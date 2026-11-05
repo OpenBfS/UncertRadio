@@ -308,7 +308,7 @@ msgstr "Benutzung von Kommandozeilen-Argumenten"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:201
 msgid "The four command line arguments passed to UncertRadio are:"
-msgstr ""
+msgstr "Die vier Kommandozeilen-Argumente, die an UncertRadio übergeben werden, sind:"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:203
 msgid "**%1** - ``AUTO``: Specifies batch mode operation"
@@ -386,7 +386,7 @@ msgstr ""
 msgid ""
 "Since version 2.4.04, the string holding the filename for the CSV project"
 " output file has been changed (at two locations):"
-msgstr "Die vier Kommandozeilen-Argumente des UncertRadio-Aufrufs Im Makro **DoSingleRun_UncertRadio** sind:"
+msgstr "Seit Version 2.4.04 hat sich der String mit dem Dateinamen der CSV-Projekt-Ausgabedatei geändert (an zwei Stellen):"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:258
 msgid "**Previous behavior**:"

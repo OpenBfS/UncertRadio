@@ -35,13 +35,13 @@ msgstr "UncertRadio erlaubt im Batch-Modus die Auswertung aller Beispiel-Projekt
 msgid ""
 "This test is invoked by the main menu item **Options – QC batch test**. "
 "The following dialog is shown:"
-msgstr "Dieser Test wird mit dem Menüpunkt **Optionen -- QC-Batch -- Test** aufgerufen. Es wird der folgende Dialog geöffnet:"
+msgstr "Dieser Test wird mit dem Menüpunkt **Optionen -- QC-Batch-Test** aufgerufen. Es wird der folgende Dialog geöffnet:"
 
 #: ../../doc_files/batch_mode/run_all_tests.rst:14
 msgid ""
 "Two file names are pre-set which allow to directly start the test with "
 "the `Apply` button."
-msgstr "Hierin sind zwei Dateien voreingestellt, so dass dieser Test mit dem Button Anwenden sogleich gestartet werden kann. Die obere Datei enthält die Namen der Dateien und die Referenzwerte für die verschiedenen Beispielprojekte. Die untere Datei, deren Name frei wählbar ist, ist die Ausgabedatei. Bei festgestellten Abweichungen eines Projekts werden für die im Einzelnen verglichenen Kennwerte die Referenzwerte und die aktuell berechneten Werte aufgeführt und in Form von Verhältnissen miteinander verglichen."
+msgstr "Hierin sind zwei Dateien voreingestellt, so dass dieser Test mit dem Button Anwenden sogleich gestartet werden kann."
 
 #: ../../doc_files/batch_mode/run_all_tests.rst:17
 msgid ""

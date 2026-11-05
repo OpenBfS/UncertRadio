@@ -47,10 +47,7 @@ msgid ""
 "In 2023 and in 2024, all projects were checked with respect to the "
 "correct use of physical units. Only very few errors were found and "
 "corrected."
-msgstr ""
-"Zwischen 2023 und 2024 wurden alle Beispielprojekte so angepasst, dass "
-"sie die korrekten physikalischen Einheiten verwenden. Die dabei "
-"gefundenen Fehler wurden korrigiert"
+msgstr "2023 und 2024 wurden alle Beispielprojekte auf die korrekte Verwendung physikalischer Einheiten überprüft. Es wurden nur sehr wenige Fehler gefunden und korrigiert."
 
 #: ../../doc_files/first_steps/example_projects.rst:21
 msgid ""
@@ -566,7 +563,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "A set of projects"
-msgstr "Liste aller Beispielprojekte"
+msgstr "Eine Gruppe von Projekten"
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "i"
@@ -1022,7 +1019,7 @@ msgid ""
 " \"), while a second variable epsD_U was introduced, which as part of the"
 " calibration factor got the unit \"1/Bq/h\", but the measurement value "
 "was set equal to one (without uncertainty)."
-msgstr "In einem Fall, Ra226_U235-bei-186keV_DE.txp, kam es mit der Gleichung RRa = RS -- RU5 zur Differenz der Einheiten „1/s” und „Bq”; hier wurde die erste der beiden Einheiten als Einheit für RRa gesetzt."
+msgstr "Im Fall von Ac228_binomial_V2_EN.txp wird die Nachweiswahrscheinlichkeit epsD zwei Mal verwendet: als Teil des Parameters p, der als Parameter der Binomialverteilung dimensionslos sein sollte, und als Teil des Kalibrierfaktors. Dieses Dilemma wurde so gelöst, dass das innerhalb von p verwendete epsD die Einheit „1” (oder „ ”) erhielt, während eine zweite Variable epsD_U eingeführt wurde, die als Teil des Kalibrierfaktors die Einheit „1/Bq/h” bekam, deren Messwert aber auf 1 (ohne Unsicherheit) gesetzt wurde."
 
 #: ../../doc_files/first_steps/example_projects.rst:383
 msgid ""

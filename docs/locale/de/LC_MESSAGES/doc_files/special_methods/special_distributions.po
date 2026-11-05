@@ -104,7 +104,7 @@ msgstr ":ref:`siehe <measuring a short-lived radionuclide with comparably long c
 
 #: ../../doc_files/special_methods/special_distributions.rst
 msgid "Beta distribution, 2"
-msgstr "die Betaverteilung und"
+msgstr "Betaverteilung, 2"
 
 #: ../../doc_files/special_methods/special_distributions.rst
 msgid "parameters"
@@ -124,7 +124,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst
 msgid "Beta distribution, 4"
-msgstr "die Betaverteilung und"
+msgstr "Betaverteilung, 4"
 
 #: ../../doc_files/special_methods/special_distributions.rst
 msgid "Beta4Dist"
@@ -184,7 +184,7 @@ msgstr ""
 msgid ""
 "the properties of which are described in the following. Their application"
 " requires two or three specific parameters."
-msgstr "deren Eigenschaften nachfolgend beschrieben werden. Diese können zusätzlich zwei bis vier Parameter verwenden. Im Folgenden werden die Wahrscheinlichkeitsdichte-Funktionen (probability density function, pdf) und der Zusammenhang ihrer Parameter mit den Messwerten erläutert."
+msgstr "deren Eigenschaften nachfolgend beschrieben werden. Diese können zusätzlich zwei bis vier Parameter verwenden."
 
 #: ../../doc_files/special_methods/special_distributions.rst:50
 msgid ""

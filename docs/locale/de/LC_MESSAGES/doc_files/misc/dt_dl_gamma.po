@@ -83,7 +83,7 @@ msgstr "Ziel ist nun, die Unsicherheiten der :math:`R_{ni}^{'}` zu bestimmen, da
 #: ../../doc_files/misc/dt_dl_gamma.rst:36
 #, python-brace-format
 msgid "The following ansatz (a separation) is chosen for the uncertainties :math:`u\\left( R_{ni}^{'} \\right)\\ ` (see also :numref:`dialog values from spectrum evaluation`):"
-msgstr "Für die Unsicherheiten :math:`u\\left( R_{ni}^{'} \\right)\\ ` wird der folgende Ansatz gemacht (Separation; siehe auch):"
+msgstr "Für die Unsicherheiten :math:`u\\left( R_{ni}^{'} \\right)\\ ` wird der folgende Ansatz gemacht (Separation; siehe auch :numref:`dialog values from spectrum evaluation`):"
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:40
 msgid ""
@@ -137,7 +137,7 @@ msgid ""
 "be inferred if the correction :math:`C` and particularly its uncertainty "
 ":math:`u(C)` lead to a significant shift of the results compared to the "
 "arithmetic mean (uncorrected) or its uncertainty."
-msgstr "Im Falle des **gewichteten Mittels mit additiver Korrektur** kann dies daran erkannt werden, dass die Korrektur :math:`C` und insbesondere ihre Unsicherheit :math:`u(C)` zu einer signifikanten Verschiebung der Ergebnisse im Vergleich zum unkorrigierten arithmetischen Mittel oder dessen Unsicherheit führen."
+msgstr "Im Falle des **arithmetischen Mittels mit additiver Korrektur** kann dies daran erkannt werden, dass die Korrektur :math:`C` und insbesondere ihre Unsicherheit :math:`u(C)` zu einer signifikanten Verschiebung der Ergebnisse im Vergleich zum unkorrigierten arithmetischen Mittel oder dessen Unsicherheit führen."
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:73
 #, python-brace-format

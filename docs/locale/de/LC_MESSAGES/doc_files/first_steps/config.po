@@ -164,7 +164,7 @@ msgstr "(mögliche Werte: DE, EN, FR)"
 
 #: ../../doc_files/first_steps/config.rst:45
 msgid "ContrastMode=F"
-msgstr "KontrastModus=F"
+msgstr "ContrastMode=F"
 
 #: ../../doc_files/first_steps/config.rst:45
 msgid "The contrast mode can be activated"
@@ -176,7 +176,7 @@ msgstr "(mögliche Werte: F, T)"
 
 #: ../../doc_files/first_steps/config.rst:51
 msgid "Log and results files"
-msgstr "enthält alle Logfiles und Ergebnisse,"
+msgstr "Log- und Ergebnisdateien"
 
 #: ../../doc_files/first_steps/config.rst:53
 msgid ""
@@ -224,9 +224,7 @@ msgstr "Länderspezifische Parameter"
 msgid ""
 "The parameters found in the configuration file :file:`UR2_cfg.dat` under "
 "the item [Local] may be defined as follows."
-msgstr ""
-"Die Parameter in der Konfigurationsdatei :file:`UR2_cfg.dat` unter dem "
-"Abschnitt [Lokal] können wie folgt definiert werden."
+msgstr "Die Parameter in der Konfigurationsdatei :file:`UR2_cfg.dat` unter dem Abschnitt [Local] können wie folgt definiert werden."
 
 #: ../../doc_files/first_steps/config.rst:77
 msgid "one may omit the parameter values following the \"=\" character:"
@@ -314,13 +312,7 @@ msgid ""
 "German, English and French. This is controlled via the entry 'language=' "
 "in the above-mentioned configuration file :file:`UR2_cfg.dat`, which is "
 "read at every program start. The parameter values are:"
-msgstr ""
-"Der **Nutzer** von UncertRadio kann durch das Programm in verschiedenen "
-"Dialogen **auf Deutsch, Englisch und Französisch** geführt werden. Der "
-"Nutzer kann zwischen Deutsch, Englisch und Französisch wählen. Dies wird "
-"über den Eintrag 'Sprache=' in der oben genannten Konfigurationsdatei "
-":file:`UR2_cfg.dat` gesteuert, die bei jedem Programmstart gelesen wird. "
-"Die Parameterwerte sind:"
+msgstr "Der **Nutzer** von UncertRadio kann durch das Programm in verschiedenen Dialogen **auf Deutsch, Englisch und Französisch** geführt werden. Der Nutzer kann zwischen Deutsch, Englisch und Französisch wählen. Dies wird über den Eintrag 'language=' in der oben genannten Konfigurationsdatei :file:`UR2_cfg.dat` gesteuert, die bei jedem Programmstart gelesen wird. Die Parameterwerte sind:"
 
 #: ../../doc_files/first_steps/config.rst:123
 msgid "DE for German,"

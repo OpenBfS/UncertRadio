@@ -175,7 +175,7 @@ msgstr "Nach dem erwähnten Paper von Kessel et al. werden Korrelationen (Kovari
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:95
 msgid "With UncertRadio this procedure according to Kessel et al. is implemented since version 0.05 (2007/11), i.e. the values shown in the column “relat. contribut(%)“ of the uncertainty budget correspond to this new definition. This may be demonstrated with the **example** **projects** **Kessel-2a-2006_EN.txp and Kessel-2b-2006_EN.txp**, which were prepared from two examples from that publication."
-msgstr "Mit UncertRadio wird dieses Verfahren nach Kessel et al. bereits verwendet, d.h. die Werte, die UncertRadio in der Spalte „relat. Beitrag(%)” des Budgets ausgibt, entsprechen bereits dieser neuen Definition. Dies kann mit Hilfe der **Beispiel-Projekte Kessel-2a-2006_DE.txp und Kessel-2b-2006_DE.txp** demonstriert werden**,** die aus zwei Rechenbeispielen dieser Publikation editiert wurden."
+msgstr "Mit UncertRadio wird dieses Verfahren nach Kessel et al. bereits seit Version 0.05 (2007/11) verwendet, d.h. die Werte, die UncertRadio in der Spalte „relat. Beitrag(%)” des Budgets ausgibt, entsprechen bereits dieser neuen Definition. Dies kann mit Hilfe der **Beispiel-Projekte Kessel-2a-2006_DE.txp und Kessel-2b-2006_DE.txp** demonstriert werden**,** die aus zwei Rechenbeispielen dieser Publikation editiert wurden."
 
 #~ msgid ""
 #~ "The preceding **definition of the "

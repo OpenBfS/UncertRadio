@@ -156,7 +156,7 @@ msgid ""
 "selected by a new checkbox, all term functions for each measurement have "
 "to be input explicitly. This increases the length of the argument list of"
 " the Linfit Call by additional values of counting efficiencies;"
-msgstr "Wenn jedoch Nachweiswahrscheinlichkeiten in den Xi(t) enthalten sind, die sich von Messung zu Messung in ihren Werten unterscheiden, kann mit Hilfe einer Checkbox im Dialog der Modus ausgewählt werden, dass die Term-Funktionen für alle Messungen explizit vorgegeben werden. Siehe dazu das Beispiel-Projekt Sr89-Sr90_IAEA_AQ-27_2013_V2_EN.txp."
+msgstr "Die darin enthaltenen Werte der Zählausbeuten können sich jedoch nunmehr von Messung zu Messung unterscheiden. In diesem Fall, was über eine neue Checkbox selektiert werden kann, müssen alle Term-Funktionen für jede Messung explizit eingegeben werden. Dies verlängert die Argumentliste des Linfit-Aufrufs um zusätzliche Werte der Zählausbeuten;"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:81
 msgid ""
@@ -205,7 +205,7 @@ msgid ""
 "(energy regions), designated as A, B and C, are determined. Further "
 "details may be taken from the report AKU (2008), which is dealing with "
 "modern methods of the Sr-89/Sr-90 determination."
-msgstr "Die Anzahl der Zählkanäle (nchs) kann im Dialog gewählt werden. In diesem Fall liegen bis zu drei gemessene Abklingkurven :math:`Y_{A}\\left( t_{k} \\right)`, :math:`Y_{B}\\left( t_{k} \\right)` und :math:`Y_{C}\\left( t_{k} \\right)` vor. Damit erhält man bis zu drei Modell-Gleichungen anstatt nur einer:"
+msgstr "Bei der gleichzeitigen Messung von z. B. Sr-90, Sr-89 und möglicherweise auch Sr-85 mit einem LSC-Zähler werden die Beiträge dieser Radionuclide zu den Zählraten in zwei oder drei Zählkanälen (Energiebereichen), bezeichnet als A, B und C, bestimmt. Weitere Einzelheiten sind dem Bericht AKU (2008) zu entnehmen, der sich mit modernen Methoden der Sr-89/Sr-90-Bestimmung befasst."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:134
 #, python-brace-format
@@ -436,13 +436,13 @@ msgstr "sind für jedes Paar von Energiefenstern N und M, getrennt für die betr
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:287
 msgid "Organizing of the Xi Functions"
-msgstr "a) Anzahl der Xi-Formeln ="
+msgstr "Organisation der Xi-Funktionen"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:289
 msgid ""
 "number of Xi formulae = (number of counting channels) x (number of "
 "applied output quantities)"
-msgstr "(verwendete Ergebnisgrößen: Fitparameter, für die „fitten” oder „fixieren” selektiert wurde)"
+msgstr "Anzahl der Xi-Formeln = (Anzahl der Messkanäle) x (Anzahl der angewandten Ergebnisgrößen)"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:292
 msgid ""
@@ -462,14 +462,14 @@ msgstr "Anzahl der Xi-Formeln = (Anzahl der Messungen) x (Anzahl der verwendeten
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:301
 msgid "(if a formulae (Xi) is defined explicitly for each of the measurements)"
-msgstr "Die **einzuhaltende Reihenfolge** der Xi-Funktionen ist in den beiden folgenden Beispielen angedeutet. Sie entspricht formal der Reihenfolge, die sich aus dem SQL-Statement"
+msgstr "(falls eine Xi-Formel explizit für jede einzelne Messung definiert wird)"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:306
 msgid ""
 "The **prescribed sequence** of the Xi formulae is indicated in the "
 "following two examples. It formally corresponds to the sequence which "
 "would be obtained by an SQL statement:"
-msgstr "ORDER BY Zählkanal, Nr. der Messung, Nummer der Ergebnisgröße"
+msgstr "Die **einzuhaltende Reihenfolge** der Xi-Formeln ist in den beiden folgenden Beispielen angedeutet. Sie entspricht formal der Reihenfolge, die sich aus einem SQL-Statement ergäbe:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:310
 msgid ""
@@ -481,27 +481,27 @@ msgstr "„ORDER BY counting channel, number of measurements, number of output q
 msgid ""
 "Example 1: Case a): 2 counting channels, 4 measurements, 3 output "
 "quantities; the Xi(t) differ between measurements"
-msgstr "Beispiel 1: Fall a): 2 Messkanäle, 4 Messungen, 3 Ergebnisgrößen,"
+msgstr "Beispiel 1: Fall a): 2 Messkanäle, 4 Messungen, 3 Ergebnisgrößen; die Xi(t) unterscheiden sich zwischen den Messungen"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:318
 #: ../../doc_files/misc/dialog_def_curve_model.rst:374
 msgid "counting channel"
-msgstr ""
+msgstr "Messkanal"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:318
 #: ../../doc_files/misc/dialog_def_curve_model.rst:374
 msgid "measurement No."
-msgstr ""
+msgstr "Nr. der Messung"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:318
 #: ../../doc_files/misc/dialog_def_curve_model.rst:374
 msgid "index of X i (t)"
-msgstr ""
+msgstr "Index von Xi(t)"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:318
 #: ../../doc_files/misc/dialog_def_curve_model.rst:374
 msgid "running No."
-msgstr ""
+msgstr "laufende Nr."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:321
 #: ../../doc_files/misc/dialog_def_curve_model.rst:323
@@ -669,7 +669,7 @@ msgstr ""
 msgid ""
 "Example 2: case b), like example 1, but the Xi(t) do NOT differ between "
 "measurements:"
-msgstr "Mess-kanal Nr. der Messung Index von xi(t) laufende Nr."
+msgstr "Beispiel 2: Fall b), wie Beispiel 1, aber die Xi(t) unterscheiden sich NICHT zwischen den Messungen:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:391
 msgid "One parameter excluded from fitting"

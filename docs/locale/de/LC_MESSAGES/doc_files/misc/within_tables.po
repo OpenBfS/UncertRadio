@@ -30,7 +30,7 @@ msgid ""
 "equations, a **subsequent modification of the equations may result in new"
 " symbols or other symbols may become redundant**, which leads to changes "
 "in the symbol table."
-msgstr "Hat man mit dem Programm nach der Erstellung der Gleichungen schon eine (nahezu) fertige Symbollisten-Tabelle erstellt, kann ein **nachträgliches Verändern der Gleichungen, d.h. Symbole kommen neu hinzu oder können ganz wegfallen,** zu Verschiebungen innerhalb dieser beiden Tabellen führen."
+msgstr "Hat man mit dem Programm nach der Erstellung der Gleichungen schon eine (nahezu) fertige Symbollisten-Tabelle erstellt, kann ein **nachträgliches Verändern der Gleichungen, d.h. Symbole kommen neu hinzu oder können ganz wegfallen,** zu Verschiebungen innerhalb der Symbolliste führen."
 
 #: ../../doc_files/misc/within_tables.rst:9
 msgid ""

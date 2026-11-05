@@ -178,7 +178,7 @@ msgid ""
 " iteration step is initiated by determining the next iteration value "
 ":math:`y_{1}^{''}` from the pair :math:`y_{1}^{'}` and :math:`u\\left( "
 "y_{1}^{'} \\right)`."
-msgstr "Mit diesen geänderten Werten und Unsicherheiten der Nettozählraten wird die Auswertung für die Ergebnisgröße wiederholt, was den neuen Unsicherheitswert :math:`u\\left( y_{1}^{'} \\right)` liefert. Nun kann das Konvergenzkriterium geprüft werden; ist es noch nicht erfüllt, wird der nächste Iterationsschritt eingeleitet, indem aus dem Wertepaar :math:`y_{1}^{''}` und :math:`y_{1}^{'}` der nächste Iterationswert :math:`u\\left( y_{1}^{'} \\right)` bestimmt wird."
+msgstr "Mit diesen geänderten Werten und Unsicherheiten der Nettozählraten wird die Auswertung für die Ergebnisgröße wiederholt, was den neuen Unsicherheitswert :math:`u\\left( y_{1}^{'} \\right)` liefert. Nun kann das Konvergenzkriterium geprüft werden; ist es noch nicht erfüllt, wird der nächste Iterationsschritt eingeleitet, indem aus dem Wertepaar :math:`y_{1}^{'}` und :math:`u\\left( y_{1}^{'} \\right)` der nächste Iterationswert :math:`y_{1}^{''}` bestimmt wird."
 
 #~ msgid ""
 #~ "The so-called “general case” of "

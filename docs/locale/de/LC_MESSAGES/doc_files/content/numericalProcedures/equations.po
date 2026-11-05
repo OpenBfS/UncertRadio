@@ -35,7 +35,7 @@ msgid ""
 "input of values and uncertainties of primarily measured quantities a "
 "\"Function parser\" is used for interpretation of the equations and "
 "calculation of the value and uncertainty of the output quantity **y**."
-msgstr "Die Bestimmungsgleichungen zur Berechnung des Wertes der **Ergebnisgröße(n) *y,*** die das Auswertemodell definieren, können in einem Dialogtextfeld des Programms direkt eingegeben werden. Dabei können zur Verbesserung der Übersicht auch Gleichungen für Hilfsgrößen eingeführt werden. Aus den Gleichungen werden automatisch die verwendeten **Formelsymbole** extrahiert, die danach in einer Tabelle einzeln mit einer **Einheit** sowie ihrer **Bedeutung** ergänzt werden können. Nach der Eingabe von Werten der primär gemessenen Größen und ihrer Unsicherheiten wird ein sogenannter „Function Parser\" verwendet, um mit Hilfe der zuvor definierten Gleichungen den Wert der Ergebnisgröße ***y*** zu berechnen."
+msgstr "Die Bestimmungsgleichungen zur Berechnung des Wertes der **Ergebnisgröße(n) *y,*** die das Auswertemodell definieren, können in einem Dialogtextfeld des Programms direkt eingegeben werden. Dabei können zur Verbesserung der Übersicht auch Gleichungen für Hilfsgrößen eingeführt werden. Aus den Gleichungen werden automatisch die verwendeten **Formelsymbole** extrahiert, die danach in einer Tabelle einzeln mit einer **Einheit** sowie ihrer **Bedeutung** ergänzt werden können. Nach der Eingabe von Werten der primär gemessenen Größen und ihrer Unsicherheiten wird ein sogenannter „Function Parser\" verwendet, um mit Hilfe der zuvor definierten Gleichungen den Wert und die Unsicherheit der Ergebnisgröße ***y*** zu berechnen."
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:14
 msgid ""

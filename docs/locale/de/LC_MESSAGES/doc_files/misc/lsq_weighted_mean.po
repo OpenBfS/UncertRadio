@@ -29,7 +29,7 @@ msgid ""
 "UncertRadio applies a matrix-based procedure described in "
 ":numref:`mathematics of the linear lsq curve fitting with correlated "
 "measured values`:"
-msgstr "Für dieses Verfahren benutzt UncertRadio das im Abschnitt „:numref:`mathematics of the linear lsq curve fitting with correlated measured values`\" Matrix-basierte Verfahren **x** = **A** **y.**"
+msgstr "UncertRadio wendet ein matrix-basiertes Verfahren an, das in :numref:`mathematics of the linear lsq curve fitting with correlated measured values` beschrieben ist:"
 
 #: ../../doc_files/misc/lsq_weighted_mean.rst:6
 msgid "**x** = **A** **y.**"

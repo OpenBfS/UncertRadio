@@ -104,7 +104,7 @@ msgstr "**Erkennungs- und Nachweisgrenze:**"
 msgid ""
 "the value of the Decision threshold including the number of iterations "
 "(actually no iterations)"
-msgstr "der Wert der Erkennungsgrenze mit der Anzahl der dafür benötigten Iterationen"
+msgstr "der Wert der Erkennungsgrenze mit der Anzahl der dafür benötigten Iterationen (eigentlich keine Iterationen)"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:47
 msgid "the value of the Detection limit including the number of iterations"
@@ -116,7 +116,7 @@ msgid ""
 "the applied quantiles of the normal distribution, :math:`k_{1 - \\alpha}`"
 " and k_beta = :math:`k_{1 - \\beta}`, corresponding to the errors of "
 "first and second kind"
-msgstr "die dafür verwendeten Quantile der Normalverteilung k_alpha = :math:`k_{1 - \\alpha}` und k_beta = :math:`k_{1 - \\beta}`\\"
+msgstr "die dafür verwendeten Quantile der Normalverteilung k_alpha = :math:`k_{1 - \\alpha}` und k_beta = :math:`k_{1 - \\beta}`, entsprechend den Fehlern 1. und 2. Art"
 
 #: ../../doc_files/first_steps/TABS/Results.rst:53
 msgid ""
@@ -239,7 +239,7 @@ msgid ""
 "In the **menu Options** one can define the two values of the **normal "
 "Quantiles** corresponding to the errors of first and second kind, "
 "respectively. See also :ref:`changes within the options menu`."
-msgstr "In dem **Menü Optionen** können die beiden Werte der Quantile der Normalverteilung eingestellt werden, die den sog. Fehlern 1. und 2. Art, α und β, entsprechen. Dort kann auch das Verfahren für die Nachweisgrenzen-Berechnung ausgewählt werden - Standardeinstellung ist „ISO 11929:2010, iterativ”. Siehe auch :ref:`changes within the options menu`."
+msgstr "In dem **Menü Optionen** können die beiden Werte der Quantile der Normalverteilung eingestellt werden, die den sog. Fehlern 1. und 2. Art, α und β, entsprechen. Siehe auch :ref:`changes within the options menu`."
 
 #~ msgid ""
 #~ "`best estimates according to Bayes and"

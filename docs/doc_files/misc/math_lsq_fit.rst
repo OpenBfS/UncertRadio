@@ -122,7 +122,7 @@ the advantage that gross counts are always non-correlated, which may be
 different when working with net count rates.
 
 The PMLE method can be selected in the example project
-vTI-Y90-16748_BLW_V2_EN.txp.
+vTI-Y90-16748_Blw_V2_EN.txp.
 
 According to Baker & Cousins the application of the **PMLE method
 preserves the area under the curve to be fitted,** while PLSQ tends to

@@ -68,12 +68,7 @@ msgid ""
 "counts, where the counting time is a random variable, is also treated by "
 "the program, since program version 2.4.04 (see :ref:`treatment of numbers"
 " of counts and count rates`)."
-msgstr ""
-"In den meisten Messproblemen werden die Messungen von Impulsanzahlen bzw."
-" Zählraten durch Vorwahl der Messdauern beendet. Für den Fall der "
-"Begrenzung durch Vorwahl von Impulsanzahlen, bei dem die Messdauern zu "
-"Zufallsgrößen werden, wird auf :ref:`treatment of numbers of counts "
-"and count rates` verwiesen."
+msgstr "In den meisten Messproblemen werden die Messungen von Impulsanzahlen bzw. Zählraten durch Vorwahl der Messdauern beendet. Für den Fall der Begrenzung durch Vorwahl von Impulsanzahlen, bei dem die Messdauern zu Zufallsgrößen werden, wird seit Programmversion 2.4.04 auf :ref:`treatment of numbers of counts and count rates` verwiesen."
 
 #: ../../doc_files/content/intro.rst:27
 msgid ""

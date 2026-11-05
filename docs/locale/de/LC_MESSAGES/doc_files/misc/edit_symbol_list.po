@@ -50,7 +50,7 @@ msgid ""
 "the very beginning that covariances could otherwise be inferred between "
 "dependent symbols because they would share common (independent) "
 "symbols.**"
-msgstr "Die automatisch aus den Gleichungen extrahierten Symbole werden in der Spalte „Typ\" eingeteilt in die abhängigen (a) und unabhängigen Größen (u), die abhängigen werden zuerst aufgeführt. **Nur die unabhängigen Messgrößen sind diejenigen, deren Messunsicherheiten im Programm berücksichtigt werden. Damit werden von vornherein mögliche Kovarianzen zwischen solchen als abhängig eingestuften Größen vermieden, die gemeinsame unabhängige Größen enthalten.**"
+msgstr "Die automatisch aus den Gleichungen extrahierten Symbole werden in der Spalte „Typ\" eingeteilt in die abhängigen (a) und unabhängigen Größen (u), die unabhängigen werden zuerst aufgeführt. **Nur die unabhängigen Messgrößen sind diejenigen, deren Messunsicherheiten im Programm berücksichtigt werden. Damit werden von vornherein mögliche Kovarianzen zwischen solchen als abhängig eingestuften Größen vermieden, die gemeinsame unabhängige Größen enthalten.**"
 
 #: ../../doc_files/misc/edit_symbol_list.rst:23
 msgid ""

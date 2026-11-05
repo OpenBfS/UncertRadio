@@ -97,13 +97,13 @@ msgstr "Die nachfolgende Grafik zeigt im linken Bild eine solche Konfidenz-Ellip
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:51
 msgid "both axes have different scales"
-msgstr ""
+msgstr "beide Achsen haben unterschiedliche Skalen"
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:55
 msgid ""
 "*re-scale*: both axes have the same scale (5 scale units have the same "
 "length on both axes)"
-msgstr "beide Achsen haben unterschiedliche Skalen *re-scale*: beide Achsen haben gleiche Skalen (5 Skalenteile haben auf beiden Achsen dieselbe Länge)"
+msgstr "*re-scale*: beide Achsen haben gleiche Skalen (5 Skalenteile haben auf beiden Achsen dieselbe Länge)"
 
 #: ../../doc_files/special_methods/confidence_ellipses.rst:58
 msgid ""

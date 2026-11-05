@@ -28,7 +28,7 @@ msgstr "Starten der einzelnen Makros"
 msgid ""
 "Start buttons have been implemented in **Table7** for invoking the three "
 "important macros:"
-msgstr "Für das Starten einzelner Makros sind in **Tabelle7** Start-Buttons eingerichtet worden:"
+msgstr "Für das Starten der drei wichtigen Makros sind in **Tabelle7** Start-Buttons eingerichtet worden:"
 
 #: ../../doc_files/batch_mode/starting_macros.rst:7
 msgid "Excel macro main page"

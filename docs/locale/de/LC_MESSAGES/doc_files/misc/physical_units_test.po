@@ -157,7 +157,7 @@ msgid ""
 " of the input quantities are calculated in the subroutine "
 ":math:`load\\_unit\\_conv` and stored in the array "
 ":math:`unit\\_conv\\_factSV()`."
-msgstr "Die Einheit einer **Eingangsgröße**, die als :math:`k`-te Variable innerhalb der Gleichung für eine abhängige Größe verwendet wird, kann mehr als ein Einheiten-Element enthalten, sodass die vollständige Einheit eine kleine Formel darstellt. Für eine Nachweiswahrscheinlichkeit :math:`eps` könnte die Einheit als 1/mBq/min angegeben werden. Die Einheiten-Elemente werden in Basiseinheiten umgerechnet und die zugehörigen Umrechnungsfaktoren werden in gleicher Weise kombiniert, um die Umrechnung dieser Eingangsgröße zu bilden. Im Beispiel ist der Skalierungsfaktor der kombinierten Einheit: :math:`uconv\\left( nng(k \\right)) = 1/0,001/60\\  = \\ 16,66667` = 1/0,001/60\\  = \\ 16,66667, falls die gewünschte Einheit 1/Bq/s sein soll. Die Umrechnungsfaktoren der Eingangsgrößen werden in der Unterroutine :math:`load\\_unit\\_conv` berechnet und im Array :math:`unit\\_conv\\_factSV()` gespeichert."
+msgstr "Die Einheit einer **Eingangsgröße**, die als :math:`k`-te Variable innerhalb der Gleichung für eine abhängige Größe verwendet wird, kann mehr als ein Einheiten-Element enthalten, sodass die vollständige Einheit eine kleine Formel darstellt. Für eine Nachweiswahrscheinlichkeit :math:`eps` könnte die Einheit als 1/mBq/min angegeben werden. Die Einheiten-Elemente werden in Basiseinheiten umgerechnet und die zugehörigen Umrechnungsfaktoren werden in gleicher Weise kombiniert, um die Umrechnung dieser Eingangsgröße zu bilden. Im Beispiel ist der Skalierungsfaktor der kombinierten Einheit: :math:`uconv\\left( nng(k \\right)) = 1/0,001/60\\  = \\ 16,66667`, falls die gewünschte Einheit 1/Bq/s sein soll. Die Umrechnungsfaktoren der Eingangsgrößen werden in der Unterroutine :math:`load\\_unit\\_conv` berechnet und im Array :math:`unit\\_conv\\_factSV()` gespeichert."
 
 #: ../../doc_files/misc/physical_units_test.rst:168
 msgid ""
@@ -639,7 +639,7 @@ msgid ""
 "Test“, i.e., into the automatic evaluation run over all example projects."
 " This allowed to identify some projects exhibiting specially selected "
 "units, for example,"
-msgstr "Die Option zum Testen der physikalischen Einheiten konnte das erste Mal in den „QC-Batch-Test”, d.h. in den Lauf über die Beispielprojekte integriert werden. Dabei wurden einige Projekte identifiziert, die sich durch eine spezielle Wahl von Einheiten auszeichneten, z.B.,"
+msgstr "Mit der Version 2.4.21 konnten die Erfahrungen mit der Option zum Testen oder Berechnen physikalischer Einheiten verbessert werden. Dabei konnte diese Option das erste Mal in den „QC-Batch-Test”, d.h. in den automatisierten Auswertungslauf über alle Beispielprojekte integriert werden. Es konnten einige Projekte identifiziert werden, die sich durch eine spezielle Wahl von Einheiten auszeichneten, z.B.,"
 
 #: ../../doc_files/misc/physical_units_test.rst:490
 msgid "Wuebbeler_Ex2\\*.txp (Ohm, Volt, Ampere)"
@@ -672,7 +672,7 @@ msgid ""
 "new test modus. The new project version shown with the correct units, but"
 " output quantity values changed by the factor 100x100, has been saved, "
 "while still being in the test mode, as version V3 projects."
-msgstr "Ein echter Einheitenfehler wurde bei den insgesamt 4 Projekten sumEval\\*V2\\*.txp (DE+EN) gefunden. Bei der Version V2 wurde seinerzeit zwar die Einheit der Ergebnisgröße auf Bq/m² gesetzt, die dazugehörige Fläche von 400 cm² wurde jedoch nicht in 0,04 m² geändert. Dieser Fehler wurde bei den V2-Versionen dieser Projekte sofort angezeigt. Die vom Programm vorgeschlagenen korrekten Versionen wurde nun als Version V3-Projekte gespeichert."
+msgstr "Ein echter Einheitenfehler wurde bei den insgesamt 4 Projekten sumEval\\*V2\\*.txp (DE+EN) gefunden. Bei der Version V2 wurde seinerzeit zwar die Einheit der Ergebnisgröße auf Bq/m² gesetzt, die dazugehörige Fläche von 400 cm² wurde jedoch nicht in 0,04 m² geändert. Dieser Fehler wurde bei den V2-Versionen dieser Projekte sofort angezeigt. Die vom Programm mit korrekten Einheiten angezeigten neuen Projektversionen, deren Werte der Ergebnisgröße sich dabei um den Faktor 100x100 änderten, wurden noch im Testmodus als Version V3-Projekte gespeichert."
 
 #: ../../doc_files/misc/physical_units_test.rst:511
 msgid ""

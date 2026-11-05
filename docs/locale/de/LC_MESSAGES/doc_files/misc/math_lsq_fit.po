@@ -256,9 +256,7 @@ msgid ""
 msgstr "Werden mit den anderen Fitverfahren Nettozählraten angepasst, so erfordert das PMLE-Verfahren die Anpassung an Brutto-Impulsanzahlen. Dies wird intern in UncertRadio berücksichtigt. Dies hat den Vorteil, dass es zwischen Bruttoimpulsanzahlen keine Kovarianzen gibt, was bei der Verwendung von Nettozählraten jedoch der Fall ist."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:122
-msgid ""
-"The PMLE method can be selected in the example project "
-"vTI-Y90-16748_BLW_V2_EN.txp."
+msgid "The PMLE method can be selected in the example project vTI-Y90-16748_Blw_V2_EN.txp."
 msgstr "Das PMLE-Verfahren kann in dem Beispiel-Projekt vTI-Y90-16748_Blw_V2_DE.txp aktiviert werden."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:125

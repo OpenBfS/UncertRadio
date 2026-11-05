@@ -36,14 +36,14 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/run_within_excel.rst:12
 msgid "The data can be edited in Table4."
-msgstr "können die Daten darin angepasst/geändert werden."
+msgstr "können die Daten in Tabelle4 angepasst/geändert werden."
 
 #: ../../doc_files/batch_mode/run_within_excel.rst:14
 msgid ""
 "Then, the three steps of exporting Table4 into an external csv file, "
 "executing it with UR and re-importing the results record(s) can be "
 "invoked with a single Button in **Table7**:"
-msgstr "Danach können die Schritte des Exports der CSV-Datei, des Startens von UR zur Auswertung und das abschließende Importieren der Ergebnisse daraus mit einem Button in Tabelle7 veranlasst werden:"
+msgstr "Danach können die drei Schritte – Export von Tabelle4 in eine externe CSV-Datei, Starten von UR zur Auswertung und abschließender Import der Ergebnisdatensätze – mit einem Button in **Tabelle7** veranlasst werden:"
 
 #: ../../doc_files/batch_mode/run_within_excel.rst:18
 msgid "Excel export csv project"

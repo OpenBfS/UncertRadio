@@ -50,7 +50,7 @@ msgid ""
 "Before starting the batch processing with the button Start "
 "Autorun_UncertRadio the associated filenames have to be selected as a "
 "two-column block as shown in the screen shot above."
-msgstr "Bevor man mit dem Button Start Autorun_UncertRadio in **Tabelle7** den Batchbetrieb startet, werden die gewünschten Dateinamen und Sample_IDs als ein Spaltenblock wie in obiger Abbildung gezeigt markiert, die ausgewertet werden sollen."
+msgstr "Bevor man mit dem Button Start Autorun_UncertRadio in **Tabelle7** den Batchbetrieb startet, werden die gewünschten Dateinamen und Sample_IDs als zweispaltiger Block wie in obiger Abbildung gezeigt markiert, die ausgewertet werden sollen."
 
 #: ../../doc_files/batch_mode/example_Excel_batch.rst:26
 msgid ""

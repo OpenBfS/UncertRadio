@@ -43,7 +43,7 @@ msgstr ""
 msgid ""
 "time duration between the Y-90/Sr-90 separation and the start time of the"
 " i-th measurement, is given in this example in m"
-msgstr "Zeitdifferenz zw. Y-90/Sr-90-Separation und dem Start der i-ten Messung, wird hier in Stunden ausgegeben;"
+msgstr "Zeitdifferenz zw. Y-90/Sr-90-Separation und dem Start der i-ten Messung, wird hier in Minuten ausgegeben;"
 
 #: ../../doc_files/misc/lsq_fit_results.rst:41
 msgid ""

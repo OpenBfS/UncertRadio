@@ -148,7 +148,7 @@ msgid ""
 " their uncertainties for propagation**. However, **this cannot happen in "
 "UncertRadio**, because it uses only uncertainties from independent "
 "quantities."
-msgstr "Es können ausgiebig Hilfsgleichungen benutzt werden. **Es kann jedoch nicht passieren,** wie es sonst bei dem herkömmlichen Vorgehen leicht möglich wäre, **dass Korrelationen zwischen den eingeführten Hilfsgrößen auftreten**, wenn die den Hilfsgrößen zugeordneten Unsicherheiten auch zur Unsicherheitsfortpflanzung benutzt würden."
+msgstr "Es können ausgiebig Hilfsgleichungen benutzt werden. **Es kann jedoch nicht passieren,** wie es sonst bei dem herkömmlichen Vorgehen leicht möglich wäre, **dass Korrelationen zwischen den eingeführten Hilfsgrößen auftreten**, wenn die den Hilfsgrößen zugeordneten Unsicherheiten auch zur Unsicherheitsfortpflanzung benutzt würden. UncertRadio verwendet nämlich nur Unsicherheiten unabhängiger Größen."
 
 #: ../../doc_files/misc/text_fields_equations.rst:91
 msgid ""
@@ -177,7 +177,7 @@ msgstr "**Interne Funktionen und Operatoren:**"
 
 #: ../../doc_files/misc/text_fields_equations.rst:108
 msgid "All internal calculations are done with \"double precision\" arithmetic."
-msgstr "Folgende *intrinsische* arithmetische Funktionen können, ähnlich - aber nicht identisch - wie z.B. in MS Excel, benutzt werden:"
+msgstr "Alle internen Berechnungen erfolgen mit Arithmetik doppelter Genauigkeit („double precision“)."
 
 #: ../../doc_files/misc/text_fields_equations.rst:110
 msgid ""
@@ -239,7 +239,7 @@ msgid ""
 "constant value, x must not represent a gross count or gross count rate, "
 "because their values and uncertainties vary during calculating the "
 "decision threshold and the detection limit."
-msgstr "Neben den üblichen Operatoren +, -, \\* und / wird für das Potenzieren noch \\*\\* verwendet: a\\*\\*b heißt a hoch b, wofür man hier auch a^b schreiben darf, wie in Excel oder R."
+msgstr "Das Argument der Funktion uval() muss ein einzelnes, zur Symbolliste gehörendes existierendes Symbol sein. Ein arithmetischer Ausdruck mit mehr als einer Variablen ist nicht erlaubt; Letzteres, z. B. uval(a+b), würde bedeuten, eine Unsicherheitsfortpflanzung für einen solchen Ausdruck durchzuführen, wofür uval() nicht gedacht ist. Falls der Wert von uval(x) als konstanter Wert behandelt werden soll, darf x keine Bruttoimpulsanzahl bzw. Bruttozählrate darstellen, da sich deren Werte und Unsicherheiten bei der Berechnung von Erkennungs- und Nachweisgrenze ändern."
 
 #: ../../doc_files/misc/text_fields_equations.rst:155
 msgid ""

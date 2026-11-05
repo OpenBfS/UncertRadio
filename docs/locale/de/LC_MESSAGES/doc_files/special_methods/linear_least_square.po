@@ -136,7 +136,7 @@ msgstr "b) Im Herbst 2013 wurden drei verschiedene Optionen für das Anpassungsv
 msgid ""
 "**WLS**: Using the **Neyman Chi-square**; this procedure is identical to "
 "the previous procedure NLSQ; linear, without iterations;"
-msgstr "> **WLS**: Verwendung des **Neyman-Chi-Quadrat**; diese Verfahren ist identisch mit dem bisher als NLSQ abgekürzten Verfahren; linear, keine Iterationen; > > **PLSQ**: Verwendung des **Pearson-Chi-Quadrat**; linear / iterativ; > > **PMLE**: Poisson Maximum Likelihood Estimation (Poisson MLE); nicht-linear / iterativ."
+msgstr "**WLS**: Verwendung des **Neyman-Chi-Quadrat**; dieses Verfahren ist identisch mit dem bisher als NLSQ abgekürzten Verfahren; linear, keine Iterationen;"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:79
 msgid "**PLSQ**: Using the **Pearson Chi-square**; linear / iteratively;"
@@ -324,7 +324,7 @@ msgid ""
 "*1*   No. of the variant of this measurement evaluation task for which "
 "this type of fitting shall be used; at present not more than the present "
 "variant of the evaluation of an Y-90 decay curve analysis exists;"
-msgstr "*1*   Nr. der Variante dieser Messausgabe-Aufgabe, für die diese Art der Anpassung verwendet werden soll; derzeit existiert nicht mehr als die vorliegende Variante der Auswertung einer Y-90-Abklingkurven-Analyse;"
+msgstr "*1*   Nr. der Variante dieser Messauswertungs-Aufgabe, für die diese Art der Anpassung verwendet werden soll; derzeit existiert nicht mehr als die vorliegende Variante der Auswertung einer Y-90-Abklingkurven-Analyse;"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:184
 #, python-brace-format

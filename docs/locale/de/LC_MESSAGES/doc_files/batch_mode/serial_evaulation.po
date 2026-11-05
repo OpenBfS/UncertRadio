@@ -114,7 +114,7 @@ msgid ""
 " (=sets) of modified values. Up to 60 symbols/values can be used; the "
 "symbols must be ones being already defined in the project. The first line"
 " is to be interpreted as follows:"
-msgstr "Die erste Zeile enthält die Symbole der betreffenden Eingangsgrößen; darauf folgen Zeilen (=Sets) mit den geänderten Werten. Es können bis zu 60 Symbole/Werte verwendet werden. Die Symbole müssen im Projekt definiert sein."
+msgstr "Die erste Zeile enthält die Symbole der betreffenden Eingangsgrößen; darauf folgen Zeilen (=Sets) mit den geänderten Werten. Es können bis zu 60 Symbole/Werte verwendet werden. Die Symbole müssen im Projekt definiert sein. Die erste Zeile ist dabei wie folgt zu interpretieren:"
 
 #: ../../doc_files/batch_mode/serial_evaulation.rst:35
 msgid "Symbol the modified value associated with Symbol"
