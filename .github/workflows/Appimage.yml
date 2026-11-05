@@ -74,8 +74,13 @@ jobs:
       - name: Smoke test AppImage
         run: |
           APP=$(ls UncertRadio_*.AppImage)
-          xvfb-run -a "./$APP" --appimage-extract-and-run run_tests > run_tests.log 2>&1 || true
-          cat run_tests.log
+          ./"$APP" --appimage-extract >/dev/null
+          echo "--- loader deps (bookworm libs expected): ---"
+          ldd squashfs-root/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-png.so || true
+          echo "--- runtime smoke test with GDK_DEBUG: ---"
+          GDK_DEBUG=loaders xvfb-run -a "./$APP" --appimage-extract-and-run run_tests > run_tests.log 2>&1 || true
+          grep -iE "pixbuf|loader|module" run_tests.log | head -40
+          cat run_tests.log | tail -40
           grep -q "BA-Test finished: no deviations!" run_tests.log && \
           grep -q "STOP 0" run_tests.log
 

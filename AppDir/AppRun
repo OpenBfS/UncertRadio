@@ -1,5 +1,6 @@
 #!/bin/bash
-APPDIR="$(dirname "$(readlink -f "$0")")"
+# prefer the root exported by the AppImage runtime; fall back to deriving it
+APPDIR="${APPDIR:-$(dirname "$(readlink -f "$0")")}"
 
 LOADERS_CACHE="${APPDIR}/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache"
 TMP_LOADERS_CACHE="$(mktemp)"  # Create a temporary file
