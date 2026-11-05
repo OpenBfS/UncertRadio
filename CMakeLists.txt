@@ -215,7 +215,6 @@ install(FILES
         UR2_cfg.dat
         COPYING
         README.md
-        README.de.md
         UR2_SingleAutoRun.xlsm DESTINATION ${CMAKE_INSTALL_DATADIR}/UncertRadio)
 
 
