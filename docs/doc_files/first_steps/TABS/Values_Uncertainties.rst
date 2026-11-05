@@ -34,7 +34,7 @@ quantities (input quantities). The columns are:
     * - 5:
       - **distribut.**
       - select. field
-      - selection of the quantity`s distribution
+      - selection of the quantity's distribution
         (normal / rectangular / triangular / others)
         The :ref:`Low-Level Applications, (N+x)-rule`
         may be selected here, implying Gamma distributions of the associated

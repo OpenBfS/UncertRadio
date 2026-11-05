@@ -107,7 +107,7 @@ msgid ""
 "of the involved normal distribution. The first term in the bracket of Eq."
 " :eq:`data_sets_eq2` , :math:`\\overline{n}` , represents the Poisson-"
 "related part of the variance."
-msgstr ""
+msgstr "als bester Schätzwert für den Parameter :math:`\\sigma^{2}` der beteiligten Normalverteilung betrachtet. Der erste Term in der Klammer von Gl. :eq:`data_sets_eq2`, :math:`\\overline{n}`, stellt den Poisson-bezogenen Teil der Varianz dar."
 
 #: ../../doc_files/special_methods/data_sets_mean.rst:49
 msgid ""
@@ -148,7 +148,7 @@ msgid ""
 msgstr ""
 
 #: ../../doc_files/special_methods/data_sets_mean.rst:67
-msgid "by which Eq. Gl. :eq:`data_sets_eq4` turns into:"
+msgid "by which Eq. :eq:`data_sets_eq4` turns into:"
 msgstr "Dann wird aus Gl. :eq:`data_sets_eq4`:"
 
 #: ../../doc_files/special_methods/data_sets_mean.rst:69
@@ -200,19 +200,8 @@ msgid "Dialog for variable average"
 msgstr ""
 
 #: ../../doc_files/special_methods/data_sets_mean.rst:103
-msgid ""
-"The id values for the data sets are already known here. In the dialog "
-"shown, the id ref_data (belonging to the input quantity ref) is selected "
-"for data input. Besides, the type of mean and variance can be selected "
-"from equations :eq:`data_sets_eq1` and :eq:`data_sets_eq3`. For the "
-"extreme case that there are not more than only 3 single values, or the "
-"data shall be evaluated in a classical sense, the variance according to "
-"Eq. :eq:`data_sets_eq5` can be chosen as third option. The latter can "
-"also be used for more than 3 single values. In the dialog shown, the "
-"standard deviations sx and s0x correspond to equations "
-":eq:`data_sets_eq1` und :eq:`data_sets_eq2` in :numref:`mathematical "
-"background`."
-msgstr ""
+msgid "The id values for the data sets are already known here. In the dialog shown, the id ref_data (belonging to the input quantity ref) is selected for data input. Besides, the type of mean and variance can be selected from equations :eq:`data_sets_eq1` and :eq:`data_sets_eq3`. For the extreme case that there are not more than only 3 single values, or the data shall be evaluated in a classical sense, the variance according to Eq. :eq:`data_sets_eq5` can be chosen as third option. The latter can also be used for more than 3 single values. In the dialog shown, the standard deviations sx and s0x correspond to equations :eq:`data_sets_eq1` and :eq:`data_sets_eq2` in :numref:`mathematical background`."
+msgstr "Die Bezeichner der Datensätze sind hier schon voreingestellt. Im gezeigten Dialog ist ref_data (gehörend zur Eingangsgröße ref) für die Dateneingabe ausgewählt. Außerdem kann der Typ des Mittelwerts und seiner Varianz nach den Gleichungen :eq:`data_sets_eq1` und :eq:`data_sets_eq3` gewählt werden. Für den Extremfall, dass höchstens 3 Einzelwerte vorliegen oder die Daten im klassischen Sinne ausgewertet werden sollen, kann als dritte Option die Varianz nach Gl. :eq:`data_sets_eq5` gewählt werden; Letztere ist auch für mehr als 3 Einzelwerte verwendbar. Im gezeigten Dialog entsprechen die Standardabweichungen sx und s0x den Gleichungen :eq:`data_sets_eq1` und :eq:`data_sets_eq2` in :numref:`mathematical background`."
 
 #: ../../doc_files/special_methods/data_sets_mean.rst:113
 msgid ""

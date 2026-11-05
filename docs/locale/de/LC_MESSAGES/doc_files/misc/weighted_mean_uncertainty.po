@@ -97,7 +97,7 @@ msgid ""
 "2.4.05. The values :math:`u^{2}\\left( A_{i} \\right)` may only be "
 "recalculated within the iterations for calculating the decision threshold"
 " and the detection limit, once per single iteration step."
-msgstr ""
+msgstr "Die Faktoren :math:`1/u^{2}\\left( A_{i} \\right)` innerhalb der in den Gleichungen (1-3) enthaltenen Summen stellen statistische Gewichte dar. Diese sind als konstant zu betrachten. Dennoch werden sie vor ihrer Anwendung aus anderen veränderlichen Werten :math:`x_{in}(j)` berechnet, die auch zu den :math:`A_{i}` beitragen. Wenn, nachdem Gl. (1) berechnet wurde, eine numerische Unsicherheitsfortpflanzung für :math:`\\overline{A}` bezüglich der :math:`x_{in}(j)` durch Anwendung von Differenzenquotienten folgt, dürfen die Werte :math:`u^{2}\\left( A_{i} \\right)` nicht geändert werden. Unter dieser Nebenbedingung liefert die Unsicherheitsfortpflanzung für Gl. (1) direkt die durch Gl. (2) gegebene Unsicherheit. Diese Bedingung wird seit Version 2.4.05 berücksichtigt. Die Werte :math:`u^{2}\\left( A_{i} \\right)` dürfen nur innerhalb der Iterationen zur Berechnung von Erkennungsgrenze und Nachweisgrenze neu berechnet werden, einmal pro Einzel-Iterationsschritt."
 
 #: ../../doc_files/misc/weighted_mean_uncertainty.rst:46
 msgid ""

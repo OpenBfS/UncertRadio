@@ -116,7 +116,7 @@ msgid ""
 "equation defining the net counting rate, or, another symbol in the latter"
 " equation points to a further auxiliary equation in which then contains "
 "it."
-msgstr ""
+msgstr "Hinweis: Das Symbol der Bruttozählrate muss direkt in der Gleichung enthalten sein, die die Nettozählrate definiert, oder ein weiteres Symbol in dieser Gleichung verweist auf eine weitere Hilfsgleichung, die es dann enthält."
 
 #: ../../doc_files/misc/text_fields_equations.rst:70
 msgid "Example: *Rn = Rn1 - Rblank*; *Rn1 = Rg - R0*."
@@ -223,7 +223,7 @@ msgid ""
 "introduced by extending the function parser. As an example, the relative "
 "uncertainty :math:`u_{rel}(w)` can be introduced as a variable urelw as "
 "follows:"
-msgstr ""
+msgstr "Bei manchen Projekten ist es erforderlich, die Unsicherheit u(x) eines Eingangsgrößenwerts x als eigenen Wert zu verwenden. Dazu wurde durch Erweiterung des Funktions-Parsers eine **Funktion uval(x)** eingeführt. Als Beispiel kann die relative Unsicherheit :math:`u_{rel}(w)` als Variable urelw wie folgt eingeführt werden:"
 
 #: ../../doc_files/misc/text_fields_equations.rst:144
 msgid "urelw = uval(w) / w"

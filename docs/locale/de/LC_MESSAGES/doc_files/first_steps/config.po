@@ -42,7 +42,7 @@ msgid ""
 "The `UR2_cfg.dat` file found in the `/share/UncertRadio` directory is "
 "copied at first start to the users local data directory. The location of "
 "the config file depends on the operating system:"
-msgstr ""
+msgstr "Die Datei `UR2_cfg.dat` im Verzeichnis `/share/UncertRadio` wird beim ersten Start in das lokale Datendateiverzeichnis des Benutzers kopiert. Der Speicherort der Config-Datei hängt vom Betriebssystem ab:"
 
 #: ../../doc_files/first_steps/config.rst:14
 msgid ""
@@ -184,7 +184,7 @@ msgid ""
 "file under [Path] as :file:`log_path` and :file:`results_path`. If these "
 "entries are left empty, default locations are used depending on the "
 "operating system:"
-msgstr ""
+msgstr "Die Pfade für Log- und Ergebnisdateien werden in der Config-Datei unter [Path] als :file:`log_path` und :file:`results_path` angegeben. Wenn diese Einträge leer gelassen werden, werden vom Betriebssystem abhängige Standard-Speicherorte verwendet:"
 
 #: ../../doc_files/first_steps/config.rst:57
 msgid "On **Linux**, the default locations are:"
@@ -214,7 +214,7 @@ msgstr ""
 msgid ""
 "The special value ``current`` can be used for either path to store the "
 "files in the current working directory (e.g., ``log_path=current``)."
-msgstr ""
+msgstr "Der spezielle Wert ``current`` kann für beide Pfade verwendet werden, um die Dateien im aktuellen Arbeitsverzeichnis zu speichern (z. B. ``log_path=current``)."
 
 #: ../../doc_files/first_steps/config.rst:72
 msgid "Country specific parameters"
@@ -433,7 +433,7 @@ msgid ""
 "spreadsheet applications are not supported**. The Excel file is provided "
 "as an example to demonstrate the possibility of batch processing, not as "
 "a required component for using UncertRadio."
-msgstr ""
+msgstr "**Plattform-Kompatibilität**: Der in diesem Abschnitt beschriebene Excel-Batch-Modus ist **nur unter Windows** verfügbar. Er erfordert **Microsoft Excel** (32- oder 64-Bit) und nutzt Windows-spezifische VBA-APIs. **LibreOffice Calc und andere Tabellenkalkulations-Anwendungen werden nicht unterstützt**. Die Excel-Datei wird als Beispiel bereitgestellt, um die Möglichkeit der Batch-Verarbeitung zu demonstrieren, nicht als erforderliche Komponente für die Nutzung von UncertRadio."
 
 #: ../../doc_files/first_steps/config.rst:189
 msgid ""

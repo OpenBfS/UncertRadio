@@ -103,7 +103,7 @@ msgid ""
 "procedure cannot differentiate between this contribution and that of "
 ":math:`\\left( R_{0,i} + R_{bl} \\right)t_{m}`. In such a case the PMLE-"
 "procedure cannot be used."
-msgstr ""
+msgstr "Dieses Verfahren benötigt einen Anpassungsparameter mehr als die anderen Verfahren zur Anpassung von Nettozählraten-Abklingkurven. In UncertRadio kann es daher nur angewendet werden, wenn nicht mehr als zwei physikalische Komponenten zu bestimmen sind. Beide diese zwei Komponenten sollten die Eigenschaft haben, dass ihre zugehörigen Kurven sich von konstant oder quasi-konstant über die Zeit unterscheiden. Wenn eine dieser Komponenten den Beitrag eines Radionuklids mit eher großer Halbwertszeit darstellt, sodass die Abklingkurve keinen Abfall zeigt, kann das Anpassungsverfahren nicht zwischen diesem Beitrag und dem von :math:`\\left( R_{0,i} + R_{bl} \\right)t_{m}` unterscheiden. In einem solchen Fall kann das PMLE-Verfahren nicht verwendet werden."
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:51
 msgid ""
@@ -338,7 +338,7 @@ msgid ""
 "This step was repeated :math:`10^6` times. This allowed to extract "
 "statistical information, separately for :math:`(y^{'}_1)` and  "
 ":math:`(y^{'}_2)`:"
-msgstr ""
+msgstr ":math:`X_1(t_i)` bedeutet die Y-90-Abkorrektur für 9 mal :math:`t_i`. Für Startwerte der Impulsanzahlen :math:`(y_1,y_2) = (1040,1344)` wurden 9 „wahre” Werte von :math:`N_{b,i}` gemäß der letzten Gleichung berechnet. Nach deren Ersetzung durch Poisson-verteilte zufällige Impulsanzahlen wurden diese angepasst und lieferten Werte :math:`(y^{'}_1,y^{'}_2)`. Dieser Schritt wurde :math:`10^6` mal wiederholt. Dadurch konnten statistische Informationen, getrennt für :math:`(y^{'}_1)` und :math:`(y^{'}_2)`, entnommen werden:"
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:167
 msgid "true"
@@ -372,7 +372,7 @@ msgstr ""
 msgid ""
 "mean of the standard deviations estimated by the fitting routine for each"
 " of the :math:`10^6` fits"
-msgstr ""
+msgstr "Mittelwert der von der Anpassungsroutine für jede der :math:`10^6` Fits geschätzten Standardabweichungen"
 
 #: ../../doc_files/misc/notes_pmle_linear_unfold.rst:177
 msgid ""
@@ -388,7 +388,7 @@ msgid ""
 "consistent for lower count numbers. The evaluation of this test also "
 "demonstrates that the PMLE method yields lower but statistically "
 "consistent estimates of the parameters describing counts."
-msgstr ""
+msgstr "Die bisher beschriebene Schrittfolge wird 8-mal wiederholt, indem die Startwerte jeweils durch zwei geteilt werden. All dies wurde jeweils dreimal für die Anpassungsmethoden PMLE (nichtlinear) sowie PLSQ und WLS (linear) ausgeführt. Die erhaltenen statistischen Daten sind in der folgenden Tabelle dargestellt. Insgesamt werden die vorgegebenen wahren Werte recht gut durch meanp wiedergegeben; nur für kleine Impulsanzahlen werden für das WLS-Verfahren einige Abweichungen beobachtet. Eine gute Übereinstimmung der Werte für sdp („real dispersion”) und meansd (Standardabweichung geschätzt durch das Anpassungsverfahren) bedeutet statistische Konsistenz. Es wird beobachtet, dass das WLS-Verfahren für niedrige Impulsanzahlen wiederum weniger konsistent ist. Die Auswertung dieses Tests zeigt auch, dass die PMLE-Methode niedrigere, aber statistisch konsistente Schätzungen der die Impulsanzahlen beschreibenden Parameter liefert."
 
 #~ msgid ""
 #~ ":math:`N_{b,i} = \\left( R_{b,i} + "

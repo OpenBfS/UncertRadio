@@ -54,7 +54,7 @@ msgid ""
 "<calculation of the weighted mean and its standard uncertainty>`. The "
 "matrix **U\\ y** consists of only one element, the variance associated "
 "with weighted mean."
-msgstr ""
+msgstr "Zur Anwendung dieses Verfahrens wird die quadratische Kovarianzmatrix **U\\ x** benötigt. UncertRadio stellt alle Daten zu den entsprechenden algebraischen Elementen zusammen und berechnet auch die erforderlichen Elemente der Kovarianzmatrix, wie bereits :ref:`described for the weighted mean <calculation of the weighted mean and its standard uncertainty>` beschrieben. Die Matrix **U\\ y** besteht aus nur einem Element, der zum gewichteten Mittel gehörigen Varianz."
 
 #~ msgid ""
 #~ "UncertRadio applies a matrix-based "

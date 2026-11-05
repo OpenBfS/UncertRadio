@@ -64,7 +64,7 @@ msgstr "relat. Standardunsicherheit, in %"
 msgid ""
 ":math:`LinFit`, the value obtained from fitting the model for the net "
 "counting rate, in 1/s"
-msgstr ""
+msgstr ":math:`LinFit`, der aus der Anpassung des Modells für die Nettozählrate erhaltene Wert, in 1/s"
 
 #: ../../doc_files/misc/lsq_fit_results.rst:52
 msgid ""
@@ -96,7 +96,7 @@ msgid ""
 "edited** under the menu item “Edit->Decay curve->model of the decay "
 "curve” or with corresponding icon |preferences-system| if the first "
 "result is considered for improvement."
-msgstr ""
+msgstr "**Nach dem Schließen** des Editor-Fensters kann **das Modell selbst wieder editiert werden** über den Menüpunkt „Bearbeiten->Zerfallskurve->Modell der Zerfallskurve” oder mit dem entsprechenden Icon |preferences-system|, falls das erste Ergebnis als verbesserungsbedürftig angesehen wird."
 
 #: ../../doc_files/misc/lsq_fit_results.rst:72
 msgid "preferences-system"

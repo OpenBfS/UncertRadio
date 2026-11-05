@@ -78,7 +78,7 @@ msgid ""
 "and, finally, with the chosen method for the mean to derive the "
 "uncertainty :math:`u(A')` of the (iterated or fictive) mean value "
 ":math:`A'`."
-msgstr ""
+msgstr "Ziel ist nun, die Unsicherheiten der :math:`R_{ni}^{'}` zu bestimmen, dann, über Unsicherheitsfortpflanzung gemäß :eq:`eq_gamspk1_1`, die Unsicherheiten der Einzelaktivitätswerte :math:`A_{i} = A'\\ `\\ \\ und schließlich, mit der gewählten Methode für den Mittelwert, die Unsicherheit :math:`u(A')` des (iterierten oder fiktiven) Mittelwerts :math:`A'` abzuleiten."
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:36
 #, python-brace-format
@@ -129,7 +129,7 @@ msgid ""
 "This effect can be found with the **weighted mean** if the “external” is "
 "significantly larger than the “internal” standard uncertainty or the "
 "value of the “reduced Chi-square” significantly larger than one is."
-msgstr ""
+msgstr "Dieser Effekt kann beim **gewichteten Mittelwert** auftreten, wenn die „externe” Standardunsicherheit deutlich größer als die „interne” Standardunsicherheit oder der Wert des „reduzierten Chi-Quadrat” deutlich größer als eins ist."
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:68
 msgid ""
@@ -137,7 +137,7 @@ msgid ""
 "be inferred if the correction :math:`C` and particularly its uncertainty "
 ":math:`u(C)` lead to a significant shift of the results compared to the "
 "arithmetic mean (uncorrected) or its uncertainty."
-msgstr ""
+msgstr "Im Falle des **gewichteten Mittels mit additiver Korrektur** kann dies daran erkannt werden, dass die Korrektur :math:`C` und insbesondere ihre Unsicherheit :math:`u(C)` zu einer signifikanten Verschiebung der Ergebnisse im Vergleich zum unkorrigierten arithmetischen Mittel oder dessen Unsicherheit führen."
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:73
 #, python-brace-format
@@ -152,7 +152,7 @@ msgid ""
 ":math:`R_{ni}^{'}` single activity values result from :eq:`eq_gamspk1_1` "
 "having all the same identical value :math:`A'`, i.e. their spreading is "
 "equal to zero!"
-msgstr ""
+msgstr "Diese Einflüsse werden im Auswertemodell gegeben durch :eq:`eq_gamspk1_1` üblicherweise nicht betrachtet. Die Bestimmung von Erkennungsgrenze und Nachweisgrenze erfordert eine Iteration der Aktivitätswerte. Die Umkehrung dieser Gleichung, d. h. die Berechnung der Nettozählraten :math:`R_{ni}^{'}` gemäß :eq:`eq_gamspk1_2b`, die für einen gegebenen (iterierten) Wert der Aktivität :math:`A'` zu erwarten sind, führt direkt zur Eliminierung dieses „externen” Einflusses. Dann folgen aus den erhaltenen Nettozählraten :math:`R_{ni}^{'}` Einzelaktivitätswerte aus :eq:`eq_gamspk1_1`, die alle denselben identischen Wert :math:`A'` haben, d. h. ihre Spreizung ist gleich null!"
 
 #: ../../doc_files/misc/dt_dl_gamma.rst:84
 msgid ""

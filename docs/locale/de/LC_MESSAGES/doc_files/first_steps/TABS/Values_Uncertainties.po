@@ -66,7 +66,7 @@ msgid ""
 "Parameter type: **a** for dependent, **u** for independent, **m** for a "
 "quantity mean, **p** for a parameter to be calculated, without "
 "uncertainty"
-msgstr ""
+msgstr "Parametertyp: **a** für abhängig, **u** für unabhängig, **m** für eine Mittelwertgröße, **p** für eine zu berechnende Größe ohne Unsicherheit"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:24
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:205
@@ -116,12 +116,8 @@ msgid "select. field"
 msgstr ""
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:37
-msgid ""
-"selection of the quantity`s distribution (normal / rectangular / "
-"triangular / others) The :ref:`Low-Level Applications, (N+x)-rule` may be"
-" selected here, implying Gamma distributions of the associated counting "
-"rate variables"
-msgstr ""
+msgid "selection of the quantity's distribution (normal / rectangular / triangular / others) The :ref:`Low-Level Applications, (N+x)-rule` may be selected here, implying Gamma distributions of the associated counting rate variables"
+msgstr "Auswahl der Verteilung der Größe (normal / rechteckig / dreieckig / andere). Hier kann die :ref:`Low-Level Applications, (N+x)-rule` ausgewählt werden, was Gamma-Verteilungen der zugehörigen Zählraten-Variablen impliziert"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:43
 msgid "6:"
@@ -136,7 +132,7 @@ msgid ""
 "formula of the standard deviation of the quantity; no formula if (N+x) "
 "rule has been selected; (the internal coverage factor is always 1); "
 "always \".\" has to used for the decimal point"
-msgstr ""
+msgstr "Formel der Standardabweichung der Größe; keine Formel, wenn die (N+x)-Regel ausgewählt wurde; (der interne Erweiterungsfaktor ist immer 1); als Dezimalpunkt muss immer „.“ verwendet werden"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:51
 msgid "7:"
@@ -151,7 +147,7 @@ msgid ""
 "value of the uncertainty for normal distribution if the (N+x) rule has "
 "been selected, **nothing** shall be entered these cells!(the internal "
 "coverage factor is always 1)"
-msgstr ""
+msgstr "Wert der Unsicherheit bei Normalverteilung, wenn die (N+x)-Regel ausgewählt wurde; in diese Zellen soll **nichts** eingegeben werden! (der interne Erweiterungsfaktor ist immer 1)"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:58
 msgid "8:"
@@ -165,7 +161,7 @@ msgstr ""
 msgid ""
 "Half width of rectangular/triangular distribution (the internal coverage "
 "factor is always 1)"
-msgstr ""
+msgstr "Halbbreite der Rechteck-/Dreiecksverteilung (der interne Erweiterungsfaktor ist immer 1)"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:64
 msgid "9:"
@@ -179,7 +175,7 @@ msgstr ""
 msgid ""
 "select whether the uncertainty from col. Sp. 6, 7 or 8 are to be taken "
 "*absolute* or as *relative* value."
-msgstr ""
+msgstr "Auswahl, ob die Unsicherheit aus Sp. 6, 7 oder 8 *absolut* oder als *relativer* Wert zu nehmen ist."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:70
 msgid "10:"
@@ -194,7 +190,7 @@ msgid ""
 "(combined) absolute standard uncertainty calculated by the program form "
 "the values of the columns 6, 7, 8 and 9; Note: a value entered by the "
 "user will always be over-written by the program!"
-msgstr ""
+msgstr "(kombinierte) absolute Standardunsicherheit, vom Programm aus den Werten der Spalten 6, 7, 8 und 9 berechnet; Hinweis: Ein vom Benutzer eingegebener Wert wird immer vom Programm überschrieben!"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:78
 msgid ""
@@ -436,7 +432,7 @@ msgid ""
 "actually selected output quantity, if more than one output quantities "
 "have been defined for the project. Under the menu item “Edit – Select "
 "output quantity” another output quantity may be selected;"
-msgstr ""
+msgstr "Hinweis: Alle Berechnungen in diesem TAB und den folgenden beziehen sich auf die tatsächlich ausgewählte Ergebnisgröße, wenn für das Projekt mehr als eine Ergebnisgröße definiert wurde. Über den Menüpunkt „Edit – Select output quantity” kann eine andere Ergebnisgröße ausgewählt werden;"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:237
 msgid ""
@@ -445,13 +441,13 @@ msgid ""
 "Formulae for standard deviations in the column “StdDev formula” are "
 "evaluated; standard uncertainties of independent quantities are evaluated"
 " into column “abs. std.Unc.“;"
-msgstr ""
+msgstr "**Unsicherheitstabelle**: Werte der abhängigen Größen (rot eingefärbte Felder) werden berechnet und in die entsprechenden Zellen eingefügt; Formeln für Standardabweichungen in der Spalte „StdDev formula” werden ausgewertet; Standardunsicherheiten der unabhängigen Größen werden in die Spalte „abs. std.Unc.“ ausgewertet;"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:242
 msgid ""
 "**Covariance table:** evaluation of covariance formulae as numerical "
 "values into column “(or) Value”;"
-msgstr ""
+msgstr "**Kovarianztabelle:** Auswerten der Kovarianz-Formeln als numerische Werte in die Spalte „(or) Value”;"
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:245
 msgid ""
@@ -462,7 +458,7 @@ msgid ""
 "deviations of the dependent quantities (red colored) are exclusively "
 "calculated from the uncertainties/covariances of the independent "
 "quantities (white colored)."
-msgstr ""
+msgstr "**Unsicherheitstabelle:** Nun sind alle Varianzen/Kovarianzen für die vollständige Unsicherheitsfortpflanzung bekannt; Berechnung der Standardunsicherheiten der abhängigen Größen (a) unterhalb der Ergebnisgröße und der Ergebnisgröße (Zeile 1 in dieser Tabelle); die kombinierten Standardabweichungen der abhängigen Größen (rot eingefärbt) werden ausschließlich aus den Unsicherheiten/Kovarianzen der unabhängigen Größen (weiß eingefärbt) berechnet."
 
 #: ../../doc_files/first_steps/TABS/Values_Uncertainties.rst:254
 msgid ""
@@ -487,7 +483,7 @@ msgstr "**Hinweis:** :ref:`changes within the options menu`"
 msgid ""
 "**For working with tables**: see :ref:`Menu Edit - Table <within tables: "
 "delete rows, working with column blocks>`"
-msgstr ""
+msgstr "**Arbeiten mit Tabellen**: siehe :ref:`Menü Bearbeiten - Tabelle <within tables: delete rows, working with column blocks>`"
 
 #~ msgid ""
 #~ "selection of the quantity`s distribution "

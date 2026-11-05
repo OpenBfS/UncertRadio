@@ -57,7 +57,7 @@ msgid ""
 " procedure dependent calibration factor. FC considers further "
 "interference contributions, as e.g. one originating from the addition of "
 "a tracer activity before beginning with the radiochemical analysis."
-msgstr ""
+msgstr "In Gl. :eq:`struct_eq1` repräsentiert der Proportionalitätsfaktor FL den verfahrensabhängigen Kalibrierfaktor. FC berücksichtigt weitere Störbeiträge, wie z. B. einen aus der Zugabe einer Traceraktivität vor Beginn der radiochemischen Analyse."
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:26
 msgid ""
@@ -87,7 +87,7 @@ msgid ""
 "on the net counting rate. This representation allows UncertRadio to solve"
 " Eq. :eq:`struct_eq1` for a modified net counting rate value if the "
 "output quantity value were changed to y':"
-msgstr ""
+msgstr "Die Konstanten :math:`F_L` und :math:`F_C` können im Programm leicht für beliebige Gleichungstypen bestimmt werden, wenn diese linear von der Nettozählrate abhängen. Diese Darstellung erlaubt es UncertRadio, Gl. :eq:`struct_eq1` nach einem geänderten Nettozählraten-Wert aufzulösen, falls der Ergebnisgrößen-Wert auf y' geändert würde:"
 
 #: ../../doc_files/content/numericalProcedures/equations.rst:46
 msgid ""

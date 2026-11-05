@@ -36,7 +36,7 @@ msgid ""
 "The evaluation model :math:`\\mathbf{M}` is formulated in the following "
 "form (according to Weise & Wöger; *note: the meaning of X and Y is just "
 "interchanged compared to Weise & Wöger)*:"
-msgstr ""
+msgstr "Das Auswertemodell :math:`\\mathbf{M}` wird in folgender Form formuliert (entsprechend Weise & Wöger; *Hinweis: Die Bedeutung von X und Y ist im Vergleich zu Weise & Wöger gerade vertauscht)*:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:11
 #, python-brace-format
@@ -184,12 +184,8 @@ msgid ""
 msgstr "worin :math:`R_{0,i}` und :math:`R_{bl}` die Nulleffekt- und die Netto-Blindwert-Zählrate darstellen."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:81
-msgid ""
-"As this function value can only be calculated from the value of **y** "
-"which is to be fitted, the minimization of the chi-square expression "
-"requires an iterative procedure. The iteration can be written in analogy "
-"to the Eq. (5.63), with (m) and (m‑1) being two consecutive steps:"
-msgstr "Da dieser Funktionswert nur mit Hilfe der dabei anzupassenden Parameter **y** berechnet werden kann, ist zur Minimierung dieses Chi-Quadrat-Ausdrucks ein iteratives Vorgehen erforderlich. Die Iteration lässt sich in der zu Gl. (5.63) analogen Schreibweise, mit (m) und (m‑1) als aufeinander folgender Iterationsschritte, wie folgt ausführen (m=3):"
+msgid "As this function value can only be calculated from the value of **y** which is to be fitted, the minimization of the chi-square expression requires an iterative procedure. The iteration can be written in analogy to Eq. :eq:`eq:lsq_solution`, with (m) and (m‑1) being two consecutive steps (m=3):"
+msgstr "Da dieser Funktionswert nur mit Hilfe der dabei anzupassenden Parameter **y** berechnet werden kann, ist zur Minimierung dieses Chi-Quadrat-Ausdrucks ein iteratives Vorgehen erforderlich. Die Iteration lässt sich in der zu Gl. :eq:`eq:lsq_solution` analogen Schreibweise, mit (m) und (m‑1) als aufeinander folgender Iterationsschritte, wie folgt ausführen (m=3):"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:86
 msgid ""
@@ -503,7 +499,7 @@ msgstr ""
 msgid ""
 "Similarly, as for non-linear fitting, the results for the PLSQ method "
 "show a better consistency than for the WLS method."
-msgstr ""
+msgstr "Ebenso zeigen wie beim nichtlinearen Fit die Ergebnisse für die PLSQ-Methode eine bessere Konsistenz als für die WLS-Methode."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:231
 msgid "Export of input data to R"
@@ -522,7 +518,7 @@ msgid ""
 "the decision threshold. The data required for this refer to counting "
 "rates only, not to the result for the output quantity. For the case of "
 "the output quantity (see URExport-to-R.txt) one obtains:"
-msgstr ""
+msgstr "Seit dieser Version von UncertRadio ist es möglich, die Eingangsdaten, abhängig vom gewählten Anpassungsverfahren (außer WTLS: **R** unterstützt dies noch nicht!), in einem Format, das mit der entsprechenden R-Routine kompatibel ist, in eine Textdatei zu exportieren (URExport-to-R.txt oder ähnlich). Diese Datei(en) können leicht vom **Statistikpaket R** importiert werden. Dies erlaubt einen Vergleich der Ergebnisse zwischen UR und R. Diese Option wird über den Menüpunkt „options – LSQ export to R” aufgerufen und kann für die Fälle Berechnung der Ergebnisgröße und der Erkennungsgrenze verwendet werden. Die dafür benötigten Daten beziehen sich nur auf Zählraten, nicht auf das Ergebnis der Ergebnisgröße. Für den Fall der Ergebnisgröße (siehe URExport-to-R.txt) erhält man:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:245
 msgid "(Note: the covariance shown below is truncated at the right hand)"
@@ -991,7 +987,7 @@ msgstr ""
 msgid ""
 "(in this case, only the uncertainty associated with X1 is value of "
 "interest; the value of X1 should be close to zero):"
-msgstr ""
+msgstr "(in diesem Fall ist nur die Unsicherheit zu X1 von Interesse; der Wert von X1 sollte nahe null liegen):"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:406
 msgid "``> covmat <- read.table(\"covmat2.txt\")``"
@@ -1046,7 +1042,7 @@ msgid ""
 ":math:`\\mathbf{U}_{\\mathbf{x}}^{\\mathbf{'}}`. For this purpose, at "
 "first new values are attributed to the **gross counting rates** of the "
 "decay curve:"
-msgstr ""
+msgstr "Diese speziellen Ergebnisgrößen beziehen sich auf die Komponente :math:`y_{1}` des Ergebnisvektors :math:`\\mathbf{y}` und deren Unsicherheit :math:`u\\left( y_{1} \\right)`, die iteriert wird, bis :math:`y_{1}` und :math:`u\\left( y_{1} \\right)` die Abbruchbedingung der Iteration erfüllen. :math:`y_{1}` wird durch einen neuen, von der Iteration bestimmten Wert :math:`y_{1}^{'}` ersetzt. Daraus erhält man gemäß dem Modell :math:`\\mathbf{x}^{\\mathbf{'}}\\mathbf{= A\\ }\\mathbf{y}^{\\mathbf{'}}`, woraus eine geänderte Kovarianzmatrix :math:`\\mathbf{U}_{\\mathbf{x}}^{\\mathbf{'}}` resultiert. Dazu werden zunächst den **Bruttozählraten** der Zerfallskurve neue Werte zugewiesen:"
 
 #: ../../doc_files/misc/math_lsq_fit.rst:450
 #, python-brace-format
@@ -1094,13 +1090,8 @@ msgstr "während die nicht-diagonalen Elemente unverändert bleiben."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:470
 #, python-brace-format
-msgid ""
-"From the right-hand formula of Eq. (5.63) above the uncertainty "
-":math:`u\\left( y_{1}^{'} \\right)` is determined. With the pair "
-":math:`y_{1}^{'}` and :math:`u\\left( y_{1}^{'} \\right)` the next "
-"iteration step can be started; this iteration may be repeated if the "
-"convergence criterion is not yet met."
-msgstr ""
+msgid "From the right-hand formula of Eq. :eq:`eq:lsq_solution` the uncertainty :math:`u\\left( y_{1}^{'} \\right)` is determined. With the pair :math:`y_{1}^{'}` and :math:`u\\left( y_{1}^{'} \\right)` the next iteration step can be started; this iteration may be repeated if the convergence criterion is not yet met."
+msgstr "Aus der rechten Formel von Gl. :eq:`eq:lsq_solution` wird die Unsicherheit :math:`u\\left( y_{1}^{'} \\right)` bestimmt. Mit dem Wertepaar :math:`y_{1}^{'}` und :math:`u\\left( y_{1}^{'} \\right)` kann der nächste Iterationsschritt gestartet werden; diese Iteration kann wiederholt werden, falls das Konvergenzkriterium noch nicht erfüllt ist."
 
 #: ../../doc_files/misc/math_lsq_fit.rst:478
 msgid "PMLE Literature"

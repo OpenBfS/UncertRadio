@@ -79,7 +79,7 @@ msgid ""
 "rate is also Gamma distributed. This also means, that a count rate to be "
 "treated in UncertRadio as Gamma distributed, always requires defining it "
 "by an equation like :math:`R = n/t`."
-msgstr ""
+msgstr "In UncertRadio wird der beschriebene Schritt wie folgt behandelt. Wie bereits durch Gl. :eq:`number_count_rates_eq1` gegeben, wird der Impulsanzahl :math:`n` die Gamma-Verteilung zugewiesen, indem der Verteilungstyp „(N+x) rule” für :math:`n` gewählt wird (dies entspricht einer Prior-Verteilung :math:`\\rho^{- 1}`). Durch Berechnung der zugehörigen Zählrate :math:`R`, die eine Gleichung wie :math:`R = n/t` erfordert, ist auch die Zählrate Gamma-verteilt. Dies bedeutet auch, dass eine in UncertRadio als Gamma-verteilt zu behandelnde Zählrate immer durch eine Gleichung wie :math:`R = n/t` definiert werden muss."
 
 #: ../../doc_files/misc/number_count_rates.rst:43
 msgid "When measuring an activity, two variants are to be considered,"
@@ -253,17 +253,11 @@ msgid ""
 "If another prior is used for the Poisson distribution, :math:`\\rho^{- "
 "1/2}`, again a Gamma distribution is obtained, but a different one: "
 ":math:`Ga\\left( \\rho|n + 1/2,t \\right)`."
-msgstr ""
+msgstr "Wird für die Poisson-Verteilung ein anderer Prior verwendet, :math:`\\rho^{- 1/2}`, so erhält man wieder eine Gamma-Verteilung, aber eine andere: :math:`Ga\\left( \\rho|n + 1/2,t \\right)`."
 
 #: ../../doc_files/misc/number_count_rates.rst:125
-msgid ""
-"**In the case of pre-set counts** (math:`t` variable), **the Erlang "
-"distribution must be assigned to** :math:`t` by selecting the "
-"distribution type “Npreset“ **for** :math:`t`. By an also required "
-"equation like :math:`R = n/t`, the Gamma distribution\\ :math:`\\ "
-"Ga\\left( \\rho|n,t \\right)` is thereby internally assigned to the count"
-" rate :math:`R`."
-msgstr ""
+msgid "**In the case of pre-set counts** (:math:`t` variable), **the Erlang distribution must be assigned to** :math:`t` by selecting the distribution type “Npreset“ **for** :math:`t`. By an also required equation like :math:`R = n/t`, the Gamma distribution\\ :math:`\\ Ga\\left( \\rho|n,t \\right)` is thereby internally assigned to the count rate :math:`R`."
+msgstr "**Im Falle vorgegebener Impulsanzahlen** (:math:`t` Variable), **muss der Variablen** :math:`t` **die Erlang-Verteilung zugewiesen werden**, indem der Verteilungstyp „Npreset” für :math:`t` gewählt wird. Durch eine ebenfalls erforderliche Gleichung wie :math:`R = n/t`, wird damit die Gamma-Verteilung\\ :math:`\\ Ga\\left( \\rho|n,t \\right)` intern der Zählrate :math:`R` zugewiesen."
 
 #: ../../doc_files/misc/number_count_rates.rst:132
 msgid "Example project: **PresetCounts_EN.txp**"

@@ -37,7 +37,7 @@ msgid ""
 "then \"hidden\" or \"overlooked\" covariances exist between some of the "
 ":math:`{\\ a}_{1},\\ a_{2},a_{3}`, which would have to be considered "
 "afterwards."
-msgstr ""
+msgstr "Im Folgenden wird nun angenommen, dass der analytische Ausdruck für die Ergebnisgröße :math:`y` mehrere Ausdrücke enthält, z. B. :math:`{\\ a}_{1},\\ a_{2},a_{3}`, die jeweils Funktionen von Eingangsgrößen :math:`x_{i}` sind. Oft werden zunächst die Unsicherheiten :math:`{u(a}_{1}),\\ \\ u(a_{2}),{\\ u(a}_{3})` berechnet, aus denen dann :math:`u(y\\left( {\\ a}_{1},\\ a_{2},a_{3} \\right))` abgeleitet wird. Befinden sich jedoch einige der Eingangsgrößen :math:`x_{i}` in mehr als einem der Ausdrücke :math:`{\\ a}_{1},\\ a_{2},a_{3}`, so existieren „verdeckte” oder „übersehene” Kovarianzen zwischen einigen der :math:`{\\ a}_{1},\\ a_{2},a_{3}`, die nachträglich zu berücksichtigen wären."
 
 #: ../../doc_files/content/numericalProcedures/hidden_covars.rst:16
 msgid ""

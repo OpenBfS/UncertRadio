@@ -29,7 +29,7 @@ msgid ""
 "In 2024 it turned out, that the (N+x)-rule is not clearly state in ISO "
 "11929. Thus, the described implementation in UR might not be correct. "
 "Therefore, it is up to the user to decide to use it."
-msgstr ""
+msgstr "Im Jahr 2024 stellte sich heraus, dass die (N+x)-Regel in ISO 11929 nicht klar formuliert ist. Somit könnte die beschriebene Implementierung in UR inkorrekt sein. Daher liegt die Entscheidung über ihre Anwendung beim Benutzer."
 
 #: ../../doc_files/special_methods/low_level_applications.rst:10
 msgid ""
@@ -44,7 +44,7 @@ msgid ""
 "numbers, to replace :math:`N` by\\ :math:`\\ N + x`, **being designated "
 "as the** :math:`\\left( \\mathbf{N + x} \\right)` **Rule here** which is "
 "long known from the literature."
-msgstr ""
+msgstr "Sehr niedrige Impulsanzahlen N sind Poisson-verteilt statt gaußverteilt. Mit Bayes-Methoden lässt sich zeigen, dass die aus ihnen abgeleiteten Zählraten dann Gamma-verteilt sind. Ein als uniform angenommener Prior (Weise et al., 2009) führt für die Zählrate :math:`R\\ ` zu einem Erwartungswert, der durch :math:`\\widehat{R} = (N + x)/t_{m}\\ `\\ \\ charakterisiert ist, mit dem Wert :math:`u^{2}\\left( \\widehat{R} \\right) = (N + x)/(t_{m}^{2}\\ ) = \\widehat{R}/t_{m}\\ `\\ \\ für ihre Varianz. Daraus folgt die Empfehlung, für den Fall sehr niedriger Impulsanzahlen :math:`N` durch\\ :math:`\\ N + x` zu ersetzen, **was hier als die** :math:`\\left( \\mathbf{N + x} \\right)` **Rule bezeichnet wird** und aus der Literatur lange bekannt ist."
 
 #: ../../doc_files/special_methods/low_level_applications.rst:22
 msgid ""
@@ -53,7 +53,7 @@ msgid ""
 "(count number) associated with this rule, which from a Bayesian view "
 "results from a prior which is proportional to 1/ρ (GamDistAdd=0.0), to "
 "ρ\\ :sup:`-1/2` (GamDistAdd=0.5) or which is constant (GamDistAdd=1)."
-msgstr ""
+msgstr "Das Symbol x in (N+x) kann als Variable aufgefasst werden, die in UR als GamDistAdd bezeichnet ist. Dies führt zu einer Gamma-Verteilung der mit dieser Regel verknüpften Variable (Impulsanzahl), die aus Bayes-Sicht aus einem Prior folgt, der proportional zu 1/ρ ist (GamDistAdd=0.0), zu :sup:`-1/2` (GamDistAdd=0.5) oder der konstant ist (GamDistAdd=1)."
 
 #: ../../doc_files/special_methods/low_level_applications.rst:29
 msgid "*c*\\ =GamDistAdd"
@@ -104,13 +104,13 @@ msgid ""
 "gross and background counting numbers, *N*\\ :sub:`b` and *N*\\ :sub:`0`,"
 " respectively. Within the program code the following replacement rule is "
 "applied:"
-msgstr ""
+msgstr "Hier wird angenommen, dass sich diese Regel nur auf die Bruttozählrate *R*\\ :sub:`g` und die Untergrundzählrate *R*\\ :sub:`0` bezieht, weil andere Arten von Zählraten üblicherweise auf andere, weniger direkte als eine Messung Weise bestimmt werden. Innerhalb des UncertRadio-Dialogs erfordern die Werte dieser beiden Zählraten keine Änderung, wenn die :math:`(N + x)` Rule direkt auf die Brutto- und Untergrund-Impulsanzahlen *N*\\ :sub:`b` bzw. *N*\\ :sub:`0` angewendet wird. Innerhalb des Programm-Codes wird folgende Ersetzungsregel angewendet:"
 
 #: ../../doc_files/special_methods/low_level_applications.rst:47
 msgid ""
 "*Directly before* a program part which is doing calculations with the "
 "counting numbers:"
-msgstr ""
+msgstr "*Direkt vor* einem Programmteil, der Berechnungen mit den Impulsanzahlen durchführt:"
 
 #: ../../doc_files/special_methods/low_level_applications.rst:50
 msgid "*N*\\ :sub:`b` is replaced by the term (*N*\\ :sub:`b`\\ + GamDistAdd),"
@@ -133,7 +133,7 @@ msgid ""
 "The application of the (*N*\\ +x) rule to the two mentioned counting "
 "numbers is made available within the TAB “Values, Uncertainties” by "
 "selecting “(*N*\\ +x) rule” as type of distribution."
-msgstr ""
+msgstr "Die Anwendung der (*N*\\ +x)-Regel auf die beiden genannten Impulsanzahlen wird innerhalb des TABs „Values, Uncertainties“ dadurch verfügbar, dass „(*N*\\ +x) rule” als Typ der Verteilung gewählt wird."
 
 #: ../../doc_files/special_methods/low_level_applications.rst:62
 msgid ""
@@ -146,34 +146,25 @@ msgid ""
 " by the user, while the field for the uncertainty must be left empty; "
 "this uncertainty obtained by the gamma-distribution is then calculated "
 "internally."
-msgstr ""
+msgstr "**Hinweis: Nur für Impulsanzahlen-Variablen darf die (N\\ +x) Regel gewählt werden; sie darf nicht für die zugehörigen Zählraten-Variablen gewählt werden.** Letztere werden intern in dieser Weise behandelt und sind dadurch ebenfalls gamma-verteilt. Dies bedeutet, dass diese Regel korrekt nur anwendbar ist, wenn eine Zählrate R durch eine Gleichung R=N/t definiert ist, die die zugehörige Impulsanzahl N enthält. Für N wird nur ein Wert vom Benutzer angegeben, während das Feld für die Unsicherheit leer zu lassen ist; diese, durch die Gamma-Verteilung erhaltene Unsicherheit wird dann intern berechnet."
 
 #: ../../doc_files/special_methods/low_level_applications.rst:72
 msgid ""
 "Two example projects (Gamma-Dist_EN.txp and Lira_gammdist_EN.txp) "
 "demonstrate the application of the (*N*\\ +x) rule for the case of very "
 "low counting numbers."
-msgstr ""
+msgstr "Zwei Beispiel-Projekte (Gamma-Dist_EN.txp und Lira_gammdist_EN.txp) demonstrieren die Anwendung der (*N*\\ +x) Regel für den Fall sehr niedriger Impulsanzahlen."
 
 #: ../../doc_files/special_methods/low_level_applications.rst:77
-msgid ""
-"In anticipation of the new version of ISO 11929:2019 the application of "
-"the (N+x) rule has been modified as follows. Apart from a single "
-"exception, x=0 is used in (N+x). The exception is N=0: then x=1 is used. "
-"This requires that the variable GamDistAdd must be set to zero ( Options "
-"– Presettings). Under this prerequisite, x=GamDistAdd=0, UncertRadio "
-"internally adds 1 to N only if N=0 (this means “0+1”). This means that "
-"for N>0 a Gamma distribution is applied for the associated count rate R "
-"with a prior(R) ~ 1/R. In contrast, for N=0 a uniform prior(R) is "
-"assumed.**"
-msgstr ""
+msgid "In anticipation of the new version of ISO 11929:2019 the application of the (N+x) rule has been modified as follows. Apart from a single exception, x=0 is used in (N+x). The exception is N=0: then x=1 is used. This requires that the variable GamDistAdd must be set to zero ( Options – Presettings). Under this prerequisite, x=GamDistAdd=0, UncertRadio internally adds 1 to N only if N=0 (this means “0+1”). This means that for N>0 a Gamma distribution is applied for the associated count rate R with a prior(R) ~ 1/R. In contrast, for N=0 a uniform prior(R) is assumed."
+msgstr "In Erwartung der neuen Version von ISO 11929:2019 wurde die Anwendung der (N+x)-Regel wie folgt geändert. Abgesehen von einer einzelnen Ausnahme wird in (N+x) x=0 verwendet. Die Ausnahme ist N=0: dann wird x=1 verwendet. Dies erfordert, dass die Variable GamDistAdd auf null gesetzt sein muss (Optionen – Voreinstellungen). Unter dieser Voraussetzung, x=GamDistAdd=0, addiert UncertRadio intern nur dann 1 zu N, wenn N=0 (dies bedeutet „0+1”). Dies bedeutet, dass für N>0 für die zugehörige Zählrate R eine Gamma-Verteilung mit prior(R) ~ 1/R angewendet wird. Im Gegensatz dazu wird für N=0 ein uniformer prior(R) angenommen."
 
 #: ../../doc_files/special_methods/low_level_applications.rst:87
 msgid ""
 "If, however, x=GamDistAdd has been set a value > 0, which may be true for"
 " already existing UR projects, it will always be added to N, also for "
 "N>0."
-msgstr ""
+msgstr "Wurde jedoch x=GamDistAdd auf einen Wert > 0 gesetzt, was für bereits existierende UR-Projekte zutreffen kann, so wird er immer zu N addiert, auch für N>0."
 
 #: ../../doc_files/special_methods/low_level_applications.rst:92
 msgid ""
@@ -184,14 +175,14 @@ msgid ""
 "questionable; in that case where the Poisson distribution has to be used,"
 " the least squares method would be biased and e.g. the Poisson-Maximum-"
 "Likelihood-Estimation would have to be applied."
-msgstr ""
+msgstr "Es wird angenommen, dass die (*N*\\ +x) Regel nur bei Messverfahren verwendet werden darf, die keine Methode der kleinsten Quadrate erfordern – und nur bei sehr niedrigen Impulsanzahlen. **Für Verfahren mit der Methode der kleinsten Quadrate** auf niedrige Impulsanzahlen wäre das Anpassungsergebnis fragwürdig; in diesem Fall, in dem die Poisson-Verteilung verwendet werden muss, wäre die Methode der kleinsten Quadrate verzerrt und es müsste z. B. die Poisson-Maximum-Likelihood-Estimation angewendet werden."
 
 #: ../../doc_files/special_methods/low_level_applications.rst:100
 msgid ""
 "With the following example, based on Gamma-Dist_EN.txp, it shall be "
 "demonstrated that applying the MC simulation may result in asymmetric "
 "distributions deviating substantially from the normal distribution."
-msgstr ""
+msgstr "Mit dem folgenden Beispiel, basierend auf Gamma-Dist_EN.txp, soll demonstriert werden, dass die Anwendung der MC-Simulation zu asymmetrischen, wesentlich von der Normalverteilung abweichenden Verteilungen führen kann."
 
 #: ../../doc_files/special_methods/low_level_applications.rst:104
 msgid "The equations may be as follows:"
@@ -224,7 +215,7 @@ msgid ""
 "(8+1)/100=0,09 s\\ :sup:`-1` and R0 = (6+1)/500=0,014 s\\ :sup:`-1`. The "
 "MC-Simulation leads to the following triple graph, showing a slight "
 "asymmetry of the simulated (green) distributions:"
-msgstr ""
+msgstr "Der Ausgangsfall sei gegeben durch: Phi = 1, urel(Phi) = 0,1, t =100 s und t0 = 500 s sowie ng = 8 Impulse und n0 = 6 Impulse, d. h. Rg = (8+1)/100=0,09 s\\ :sup:`-1` und R0 = (6+1)/500=0,014 s\\ :sup:`-1`. Die MC-Simulation führt zu der folgenden Triple-Grafik, die eine leichte Asymmetrie der simulierten (grünen) Verteilungen zeigt:"
 
 #: ../../doc_files/special_methods/low_level_applications.rst:124
 msgid "Starting case of the MC simulation based on Gamma-Dist_EN.txp"
@@ -262,7 +253,7 @@ msgid ""
 "distribution is quite different from what one is usually dealing with, "
 "e.g., shown under :ref:`obtaining mc distributions and statistics derived"
 " of it in detail`."
-msgstr ""
+msgstr "Als dritter Fall wird gegenüber dem Ausgangsfall nur die Untergrund-Zähldauer t0 auf einen Wert von t0 = 60t = 10000 s erhöht (ein in der Praxis selten anzutreffender Fall), was die Untergrundzählrate R0 sehr klein macht; insbesondere für die Erkennungsgrenze erhält man eine sehr asymmetrische Verteilung, von der nur ein sehr kleiner Teil im negativen Bereich liegt. Diese aus der Gamma-Verteilung entstehende Form unterscheidet sich erheblich von dem, was man üblicherweise hat, wie z. B. gezeigt unter :ref:`obtaining mc distributions and statistics derived of it in detail`."
 
 #: ../../doc_files/special_methods/low_level_applications.rst:156
 msgid "t0 enlarged to t0=60 t, based on Gamma-Dist_EN.txp"
@@ -279,7 +270,7 @@ msgid ""
 "affected by the gross counting rate for which the Gamma distribution for "
 "very low counting numbers is very asymmetric and always has positive "
 "possible values."
-msgstr ""
+msgstr "Der Grund liegt in der Tatsache, dass bei einer so kleinen Untergrundzählrate die Verteilung der Erkennungsgrenze hauptsächlich von der Bruttozählrate bestimmt wird, für die die Gamma-Verteilung für sehr niedrige Impulsanzahlen sehr asymmetrisch ist und immer positive mögliche Werte hat."
 
 #~ msgid "|MCplotfile_a_EN.png| Starting case"
 #~ msgstr ""

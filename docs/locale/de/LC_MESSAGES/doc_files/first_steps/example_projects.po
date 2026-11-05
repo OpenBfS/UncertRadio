@@ -33,7 +33,7 @@ msgid ""
 "In most cases the associated literature for an example project is cited "
 "within the projects; see TAB \"Procedure\" after loading a project. See "
 "also Help topic \"Used literature\"."
-msgstr ""
+msgstr "In den meisten Fällen ist die zugehörige Literatur zu einem Beispielprojekt im Projekt zitiert; siehe TAB „Procedure” nach dem Laden eines Projekts. Siehe auch Help-Thema „Used literature”."
 
 #: ../../doc_files/first_steps/example_projects.rst:11
 msgid ""
@@ -58,7 +58,7 @@ msgid ""
 "left column can be considered as being evaluated, because they originate "
 "from associated publications, or they were confirmed by colleagues "
 "through independent intercomparison calculations."
-msgstr ""
+msgstr "Alle Beispiel-Projektdateien, die in der linken Spalte mit dem Symbol :math:`\\surd` gekennzeichnet sind, können als ausgewertet betrachtet werden, da sie aus zugehörigen Publikationen stammen oder von Kollegen durch unabhängige Vergleichsrechnungen bestätigt wurden."
 
 #: ../../doc_files/first_steps/example_projects.rst:28
 msgid "Examples with 1 output quantity"
@@ -94,7 +94,7 @@ msgstr ""
 msgid ""
 "Alpha activity concentration in liquid material: measurement with an "
 "Alpha detector; corresponds to example 1a, section D.2.1, ISO 11929:2010"
-msgstr ""
+msgstr "Alpha-Aktivitätskonzentration in flüssigem Material: Messung mit einem Alpha-Detektor; entspricht Beispiel 1a, Abschnitt D.2.1, ISO 11929:2010"
 
 #: ../../doc_files/first_steps/example_projects.rst:38
 msgid "ISO-Example-1b_EN.txp"
@@ -104,7 +104,7 @@ msgstr ""
 msgid ""
 "Alpha activity concentration in liquid material: measurement with a rate "
 "meter; corresponds to Example 1b, Section D.2.2, ISO 11929:2010"
-msgstr ""
+msgstr "Alpha-Aktivitätskonzentration in flüssigem Material: Messung mit einem Zählratenmesser; entspricht Beispiel 1b, Abschnitt D.2.2, ISO 11929:2010"
 
 #: ../../doc_files/first_steps/example_projects.rst:43
 msgid "ISO-Example-2a_EN.txp"
@@ -170,7 +170,7 @@ msgstr ""
 msgid ""
 "Activity concentration with peak evaluation (Ge-Detector); corresponds to"
 " Example 4, Section D.5.1, ISO 11929:2010"
-msgstr ""
+msgstr "Aktivitätskonzentration mit Peak-Auswertung (Ge-Detektor); entspricht Beispiel 4, Abschnitt D.5.1, ISO 11929:2010"
 
 #: ../../doc_files/first_steps/example_projects.rst:70
 msgid "ISO-Example-5_EN.txp"
@@ -208,7 +208,7 @@ msgstr ""
 msgid ""
 "Measuring neutron dose in a mixed radiation field; replaces AKS-Neutron-"
 "Dose_EN.txp"
-msgstr ""
+msgstr "Messung der Neutronendosis in einem gemischten Strahlungsfeld; ersetzt AKS-Neutron-Dose_EN.txp"
 
 #: ../../doc_files/first_steps/example_projects.rst:88
 msgid "ISO-Photon-Dose_EN.txp"
@@ -218,7 +218,7 @@ msgstr ""
 msgid ""
 "Measuring neutron dose in a mixed radiation field; replaces AKS-Photon-"
 "Dose_EN.txp"
-msgstr ""
+msgstr "Messung der Neutronendosis in einem gemischten Strahlungsfeld; ersetzt AKS-Photon-Dose_EN.txp"
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "Moreno-Sr90_IAEA-135_V4_EN.txp"
@@ -494,7 +494,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "Measuring a short-lived radionuclide"
-msgstr ""
+msgstr "Messung eines kurzlebigen Radionuklids"
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "with long counting: binomial"
@@ -883,7 +883,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/example_projects.rst:308
 msgid "Other examples from the literature, evaluated, without detection limits"
-msgstr ""
+msgstr "Weitere Beispiele aus der Literatur, ausgewertet, ohne Nachweisgrenzen"
 
 #: ../../doc_files/first_steps/example_projects.rst
 msgid "Neutron-Dose-Cox-2006_V2_EN.txp"
@@ -999,7 +999,7 @@ msgid ""
 "modifications were found to be necessary. They mean, that not all units "
 "introduced earlier by the author of this program were correct or "
 "functional."
-msgstr ""
+msgstr "Mit der Version 2.4.13 von UncertRadio wurde eine Option eingeführt, mit der die physikalischen Einheiten der abhängigen Größen rechnerisch abgeleitet werden können; siehe Abschnitte 2.27, 2.26 und :numref:`treatment of physical units`. Im Rahmen der Anwendung dieser Option wurden die in den Beispielprojekten des Abschnitts :numref:`list of example projects` verwendeten Einheiten auf Korrektheit geprüft. Mehrere Änderungen wurden als notwendig festgestellt. Sie bedeuten, dass nicht alle Einheiten, die früher vom Autor dieses Programms eingeführt wurden, korrekt oder funktionstüchtig waren."
 
 #: ../../doc_files/first_steps/example_projects.rst:360
 msgid "In some cases notes about the modifications were documented within the project file, TAB \"Procedure\". In most of the cases, it was necessary to change the existing unit \"1\" (or \" \") for detection probability variables (often called eps…) to \"1/Bq/s\". This helps the output variable to receive the unit part \"Bq\" instead of \"1/s\". These latter changes were only seldom documented within the project files. In the example J-ALUFT-Sr89-Sr-90_V2_EN.txp, two parameters, a and b, used for calculating eps2, got the new units \"1/Bq/s/mg\" and \"1/Bq/s\", respectively."
@@ -1010,7 +1010,7 @@ msgid ""
 "In another case, Ra226_U235-at-186keV_EN.txp, the equation RRa = RS – RU5"
 " resulted in a difference of the units \"1/s\" and \"Bq\"; in this case, "
 "in the program the first one was then applied as the unit name for RRa."
-msgstr ""
+msgstr "In einem anderen Fall, Ra226_U235-at-186keV_EN.txp, führte die Gleichung RRa = RS – RU5 zu einer Differenz der Einheiten „1/s” und „Bq”; in diesem Fall wurde im Programm dann die erste als Einheitenname für RRa angewendet."
 
 #: ../../doc_files/first_steps/example_projects.rst:374
 msgid ""
@@ -1036,7 +1036,7 @@ msgstr "In solchen Beispielen, die in den Gleichungen explizit Umrechnungsfaktor
 msgid ""
 "For a group of projects their version number (\\_Vx\\_) in the file name "
 "was increased:"
-msgstr ""
+msgstr "Bei einer Gruppe von Projekten wurde die Versionsnummer (\\_Vx\\_) im Dateinamen erhöht:"
 
 #: ../../doc_files/first_steps/example_projects.rst:391
 msgid ":file:`Ac228_binomial_V2_EN.txp`"

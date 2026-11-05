@@ -32,13 +32,13 @@ msgid ""
 "with **b^1** or **to deactivate it by b^0**. In UncertRadio, these "
 "variables can be declared by attaching the string \"Trigger\" to the "
 "symbol name. They are, therefore, also called **\"trigger variables\"**."
-msgstr ""
+msgstr "Der in UncertRadio verwendete Funktions-Parser (fparser) erlaubt die Verwendung von **Schaltvariablen**, die **nur die zwei Werte 0 und 1 annehmen** können. Eine solche Variable erlaubt es, **eine weitere Variable b** mit **b^1** zu **aktivieren** oder **sie durch b^0 zu deaktivieren**. In UncertRadio werden diese Variablen durch Anhängen des Strings „Trigger” an den Symbolnamen deklariert; sie werden daher auch **„Trigger-Variablen”** genannt."
 
 #: ../../doc_files/content/numericalProcedures/switch_variables.rst:11
 msgid "Examples are: \"min_Trigger\", \"kilo_Trigger\"; with \"60^min_Trigger\" or with \"1000^kilo_Trigger\" scaling factors of 60 (for minutes) or 1000 can be switched; see :numref:`treatment of physical units`."
-msgstr ""
+msgstr "Beispiele sind: „min_Trigger”, „kilo_Trigger”; mit „60^min_Trigger” oder „1000^kilo_Trigger” können Skalierungsfaktoren von 60 (für Minuten) bzw. 1000 geschaltet werden; siehe :numref:`treatment of physical units`."
 
 #: ../../doc_files/content/numericalProcedures/switch_variables.rst:15
 msgid "If a switching variable is to be used for count rate variables, it must contain the part \"Trigger\" attached to e.g. \"min\"; then they can be identified by the program which in turn helps to prevent them from disturbing the process of finding such count rates which directly contribute to the net count rate (see :numref:`tab “values, uncertainties”`)."
-msgstr ""
+msgstr "Soll eine Schaltvariable für Zählraten-Variablen verwendet werden, muss sie den Teil „Trigger” enthalten, angehängt z. B. an „min”; dann können sie vom Programm identifiziert werden, was wiederum hilft zu verhindern, dass sie die Suche nach solchen Zählraten stören, die direkt zur Nettozählrate beitragen (siehe :numref:`tab “values, uncertainties”`)."
 

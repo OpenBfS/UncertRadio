@@ -36,7 +36,7 @@ msgstr ""
 msgid ""
 "For the use of the (multi-) linear least squares fitting (LSQ analysis) "
 "the following model of a decay curve is assumed:"
-msgstr ""
+msgstr "Für die Verwendung der (multi-)linearen Least-Squares-Anpassung (LSQ-Analyse) wird folgendes Modell einer Abklingkurve angenommen:"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:11
 #, python-brace-format
@@ -140,13 +140,13 @@ msgstr "> **WLS**: Verwendung des **Neyman-Chi-Quadrat**; diese Verfahren ist id
 
 #: ../../doc_files/special_methods/linear_least_square.rst:79
 msgid "**PLSQ**: Using the **Pearson Chi-square**; linear / iteratively;"
-msgstr ""
+msgstr "**PLSQ**: Verwendung des **Pearson-Chi-Quadrat**; linear / iterativ;"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:81
 msgid ""
 "**PMLE**: Poisson Maximum Likelihood Estimation (Poisson MLE); non-linear"
 " / iteratively."
-msgstr ""
+msgstr "**PMLE**: Poisson Maximum Likelihood Estimation (Poisson MLE); nicht-linear / iterativ."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:84
 #, python-brace-format
@@ -161,7 +161,7 @@ msgid ""
 "derivatives with respect to the symbols contained in the "
 ":math:`X_{i}\\left( t_{k} \\right)` functions; they need not to be "
 "supplied by the user."
-msgstr ""
+msgstr "der **„allgemeine Fall“** der Methode der kleinsten Quadrate (WTLS, weighted total least squares), der zusätzlich Unsicherheiten der :math:`X_{i}\\left( t_{k} \\right)` und mögliche Kovarianzen zwischen ihnen berücksichtigt. Dabei wird ein iteratives, d. h. nichtlineares, Matrixverfahren verwendet, das wegen der Iterationen eine aufwändigere Methode ist. Die möglichen Kovarianzen zwischen den :math:`X_{i}\\left( t_{k} \\right)`-Werten werden vom Programm intern bestimmt, indem partielle Ableitungen nach den in den :math:`X_{i}\\left( t_{k} \\right)`-Funktionen enthaltenen Symbolen angewendet werden; sie müssen nicht vom Benutzer geliefert werden."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:95
 msgid ""
@@ -191,14 +191,14 @@ msgid ""
 "corresponding gross counting rates. These covariances - they can be "
 "calculated internally from a formula - need to be considered especially "
 "in the case of quite low net counting rates."
-msgstr ""
+msgstr "**Korrelationen zwischen Messwerten** :math:`Y\\left( t_{k} \\right)` **können auftreten.** Dies ist beispielsweise der Fall, wenn die Messwerte :math:`Y\\left( t_{k} \\right)` Nettozählraten sind, bei denen von den entsprechenden Bruttozählraten derselbe Wert einer Untergrundzählrate :math:`R_{0}` sowie die Netto-Blankzählrate :math:`R_{bl}` subtrahiert wurden. Diese Kovarianzen – sie können intern aus einer Formel berechnet werden – sind besonders im Falle recht niedriger Nettozählraten zu berücksichtigen."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:113
 #, python-brace-format
 msgid ""
 "In the case of the net counting rates (:math:`Y\\left( t_{k} \\right)`) "
 "the covariance formula between two of its values is given by:"
-msgstr ""
+msgstr "Im Falle der Nettozählraten (:math:`Y\\left( t_{k} \\right)`) ist die Kovarianzformel zwischen zwei ihrer Werte gegeben durch:"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:116
 #, python-brace-format
@@ -215,7 +215,7 @@ msgid ""
 "matrix to be used by the fitting routine. In this equation, "
 ":math:`var\\left( R_{0,i} \\right)` must be set equal to zero if either "
 ":math:`R_{0,i}` and :math:`R_{0,k}` are different or their uncertainties."
-msgstr ""
+msgstr "Dies wird im Programm intern verwendet, um die vollständige, von der Anpassungsroutine zu verwendende Kovarianzmatrix abzuleiten. In dieser Gleichung ist :math:`var\\left( R_{0,i} \\right)` gleich null zu setzen, falls entweder :math:`R_{0,i}` und :math:`R_{0,k}` verschieden sind oder deren Unsicherheiten."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:125
 #, python-brace-format
@@ -227,7 +227,7 @@ msgid ""
 " LSC measurements –, or one single value of the background counting rate "
 "(:math:`R_{0}`) may be used for the whole curve. :math:`R_{0}` must "
 "contain only the detector-related background component."
-msgstr ""
+msgstr "Hierbei ist zu erwähnen, dass für dieses Verfahren die Untergrundzählrate im speziellen :ref:`input dialog for decay curves <dialog definition of the decay curve model>` definiert werden kann: Für die Kurve kann eine individuelle Untergrundzählrate angegeben werden – dies kommt z. B. bei LSC-Messungen vor –, oder es kann ein einzelner Wert der Untergrundzählrate (:math:`R_{0}`) für die ganze Kurve verwendet werden. :math:`R_{0}` darf nur die detektorbezogene Untergrundkomponente enthalten."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:134
 #, python-brace-format
@@ -240,7 +240,7 @@ msgid ""
 "uncertainty, is part of the table under the TAB “Values, uncertainties”, "
 "the values of which are transferred by the Linfit Call (c.f. further down"
 " in this theme) to this numeric routine."
-msgstr ""
+msgstr "Außerdem wird eine Zählrate :math:`R_{bl}` benötigt, die sich auf eine chemische Blankanalyse bezieht, bei der die Detektor-Untergrundkomponente bereits subtrahiert ist. Daher wird :math:`R_{bl}` als „Netto-Blankzählrate“ betrachtet; sie quantifiziert den Untergrund durch Chemikalien und Glasgeräte, die während einer Analyse verwendet werden. Das Symbol *Rbl* mit Wert und Unsicherheit ist Teil der Tabelle unter dem TAB „Values, uncertainties”, deren Werte durch den Linfit-Aufruf (s. weiter unten in diesem Thema) an diese numerische Routine übergeben werden."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:143
 msgid "For the mathematics see:"
@@ -324,7 +324,7 @@ msgid ""
 "*1*   No. of the variant of this measurement evaluation task for which "
 "this type of fitting shall be used; at present not more than the present "
 "variant of the evaluation of an Y-90 decay curve analysis exists;"
-msgstr ""
+msgstr "*1*   Nr. der Variante dieser Messausgabe-Aufgabe, für die diese Art der Anpassung verwendet werden soll; derzeit existiert nicht mehr als die vorliegende Variante der Auswertung einer Y-90-Abklingkurven-Analyse;"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:184
 #, python-brace-format
@@ -332,7 +332,7 @@ msgid ""
 "*R0*   background counting rate including also blank contributions which "
 "is subtracted from the measured Y-90 gross counting rates, in :math:`s^{-"
 " 1}`;"
-msgstr ""
+msgstr "*R0*   Untergrundzählrate einschließlich Blank-Beiträgen, die von den gemessenen Y-90-Bruttozählraten subtrahiert wird, in :math:`s^{- 1}`;"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:188
 msgid "*t0*   counting time of the background measurement, in :math:`s`;"
@@ -347,34 +347,34 @@ msgid ""
 "*Hwzlong*   half-live of a longer-lived radionuclide contributing to a "
 "(slowly decaying) background, in :math:`s`; e.g. Th-234; if Hwzlong = 0 "
 "is set the associated decay factor is set internally equal to 1"
-msgstr ""
+msgstr "*Hwzlong*   Halbwertszeit eines länglebigeren Radionuklids, das zu einem (langsam abklingenden) Untergrund beiträgt, in :math:`s`; z. B. Th-234; wenn Hwzlong = 0 gesetzt wird, wird der zugehörige Abklingfaktor intern gleich 1 gesetzt"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:196
 msgid ""
 "*HwzAc228*   half-live of the possibly interfering radionuclide Ac-228, "
 "in :math:`s`\\ *;* this cal also simulated a contribution of short-lived "
 "radon decay products"
-msgstr ""
+msgstr "*HwzAc228*   Halbwertszeit des möglicherweise störenden Radionuklids Ac-228, in :math:`s`\\ *;* dies kann auch einen Beitrag kurzlebiger Radon-Zerfallsprodukte simulieren"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:200
 msgid ""
 "*tmess*   place holder for the counting times of the individual counting "
 "times belonging to the net counting rates"
-msgstr ""
+msgstr "*tmess*   Platzhalter für die Zähldauern der einzelnen, zu den Nettozählraten gehörenden Messungen"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:203
 msgid ""
 "*tstart*   place holder for the periods of time between the time of the "
 "Y-90/Sr-90 separation and the starting time of the individual "
 "measurements"
-msgstr ""
+msgstr "*tstart*   Platzhalter für die Zeitdifferenzen zwischen dem Zeitpunkt der Y-90/Sr-90-Trennung und dem Beginn der einzelnen Messungen"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:207
 msgid ""
 "**Note:** Since version 2.4.24, only the three parameters *Rbl, tmess* "
 "and *tstart* shall be given in the Linfit call: *Rn = Linfit(1, Rbl, "
 "tmess, tstart)*"
-msgstr ""
+msgstr "**Hinweis:** Seit Version 2.4.24 sind im Linfit-Aufruf nur noch die drei Parameter *Rbl, tmess* und *tstart* anzugeben: *Rn = Linfit(1, Rbl, tmess, tstart)*"
 
 #: ../../doc_files/special_methods/linear_least_square.rst:211
 msgid ""
@@ -450,7 +450,7 @@ msgstr "Die Bedeutung der Symbole ist wie oben im „einfachen Beispiel” erlä
 #: ../../doc_files/special_methods/linear_least_square.rst:264
 #, python-brace-format
 msgid "Apart from the fixed symbols *Rbl*, *tmess* and *tstart,* which have to appear in the Linfit call, neither the names of other symbols are fixed nor their number; however, they must appear in the whole (global) symbol list. They must be used in the equations defining the functions :math:`X_{i}\\left( t_{k} \\right)`; for more information, see also :numref:`dialog definition of the decay curve model`."
-msgstr "Neben den festen Symbolen *Rbl*, *tmess* und *tstart,* die in dem Aufruf von Linfit stehen müssen, sind die Namen weiterer Symbole nicht vorgegeben, auch nicht ihre Anzahl; sie müssen jedoch in der globalen Symbolliste vom Benutzer definiert werden. Sie müssen allerdings in den Definitionsgleichungen für die Funktionen :math:`X_{i}\\left( t_{k} \\right)` verwendet werden; siehe dazu auch **Dialog Festlegung des Modells der Abklingkurve**."
+msgstr "Neben den festen Symbolen *Rbl*, *tmess* und *tstart,* die in dem Aufruf von Linfit stehen müssen, sind die Namen weiterer Symbole nicht vorgegeben, auch nicht ihre Anzahl; sie müssen jedoch in der globalen Symbolliste vom Benutzer definiert werden. Sie müssen allerdings in den Definitionsgleichungen für die Funktionen :math:`X_{i}\\left( t_{k} \\right)` verwendet werden; siehe dazu auch :numref:`dialog definition of the decay curve model`."
 
 #: ../../doc_files/special_methods/linear_least_square.rst:272
 msgid ""

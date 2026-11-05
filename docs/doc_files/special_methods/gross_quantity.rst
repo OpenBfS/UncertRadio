@@ -360,7 +360,7 @@ Application to Procedure A („not being counts“)
 
 If the variances :math:`u^{2}(x_{g})` and :math:`u^{2}(x_{b})` are taken
 as products :math:`f_{g}s_{g}^{2}` and :math:`f_{b}s_{b}^{2}` according
-to 6.12.1, for the model case :math:`y = w(x_{g} - x_{b} - xint)` the
+to :numref:`gross quantity: variance interpolation for a mean`, for the model case :math:`y = w(x_{g} - x_{b} - xint)` the
 result for the interpolated variance of the gross quantity
 :math:`{\widetilde{x}}_{g}` is:
 

@@ -171,7 +171,7 @@ msgid ""
 ":math:`\\mathbf{U}_{\\mathbf{a}_{\\mathbf{t}}}` can be established "
 "associated with :math:`\\mathbf{a}_{\\mathbf{t}}`. We assume that this "
 "matrix is diagonal."
-msgstr ""
+msgstr "Für die eleganteste Lösungsmethode dieser Aufgabe wird :eq:`eq_decay_chains_1` als lineares Least-Squares-Problem interpretiert. Die Matrix :math:`\\mathbf{F}` wird als Planmatrix betrachtet und der Vektor :math:`\\mathbf{a}_{\\mathbf{0}}` als der gesuchte Lösungsvektor behandelt. Der Vektor :math:`\\mathbf{a}_{\\mathbf{t}}` stellt die Messungen dar. Eine Kovarianzmatrix :math:`\\mathbf{U}_{\\mathbf{a}_{\\mathbf{t}}}` kann zu :math:`\\mathbf{a}_{\\mathbf{t}}` zugeordnet aufgestellt werden. Wir nehmen an, dass diese Matrix diagonal ist."
 
 #: ../../doc_files/special_methods/decay_chains.rst:116
 msgid ""
@@ -293,7 +293,7 @@ msgid ""
 ":eq:`eq_decay_chains_5` can be re-formulated as follows by tracing back "
 "the uncertainties of :math:`A_{i}(t)` to the uncertainties of the input "
 "quantities :math:`x_{j}`:"
-msgstr ""
+msgstr ":eq:`eq_decay_chains_5` kann wie folgt umgeformt werden, indem die Unsicherheiten von :math:`A_{i}(t)` auf die Unsicherheiten der Eingangsgrößen :math:`x_{j}` zurückgeführt werden:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:183
 msgid ""
@@ -386,7 +386,7 @@ msgid ""
 "also elements of the :math:`\\mathbf{F\\ }`\\ matrix. They can more "
 "generally be derived numerically by the partial derivatives of the output"
 " quantity with respect to the net count rates :math:`R_{n,k}`:"
-msgstr ""
+msgstr "Die geänderten Zählratenwerte :math:`{\\widetilde{R}}_{nk} =` :math:`\\widetilde{q} \\cdot {\\widetilde{R}}_{nk}` (:math:`k`\\ = 1,2) führen zu geänderten Werten :math:`{\\widetilde{R}}_{bk} = {\\widetilde{R}}_{nk} + R_{0,k}` und Unsicherheiten :math:`u^{2}\\left( {\\widetilde{R}}_{b,k} \\right) = {\\widetilde{R}}_{b,k}/t_{b}` der Bruttozählraten, aus denen die Unsicherheit :math:`u(\\widetilde{A})` abgeleitet wird, basierend auf der Unsicherheitsfortpflanzung der Gleichung :eq:`eq_decay_chains_9`. Dies stellt einen Iterationsschritt bei der Berechnung der Nachweisgrenze dar. Werte für die zwei „Kalibrierfaktoren” *w1* und *w2* sind nicht immer leicht zu berechnen, weil sie auch Elemente der :math:`\\mathbf{F\\ }`\\ -Matrix enthalten. Sie können allgemeiner numerisch abgeleitet werden durch die partiellen Ableitungen der Ergebnisgröße nach den Nettozählraten :math:`R_{n,k}`:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:240
 msgid ""
@@ -627,7 +627,7 @@ msgstr "Ja: Zerfallskonstanten; Nein: Halbwertszeiten"
 msgid ""
 "A few pre-defined decay chains are available in a file "
 ":file:`List_DecaySeries.txt`, which is read by UR if required:"
-msgstr ""
+msgstr "Einige vordefinierte Zerfallsketten stehen in der Datei :file:`List_DecaySeries.txt` zur Verfügung, die von UR bei Bedarf gelesen wird:"
 
 #: ../../doc_files/special_methods/decay_chains.rst:385
 msgid "List of available decay series:"
@@ -716,7 +716,7 @@ msgid ""
 " also contributes to the count rate. The complete formulas for this "
 "application can already be complicated, especially, when corrections for "
 "the decay during the measurement are included."
-msgstr ""
+msgstr "Bei radiochemischen Sr-89/Sr-90-Analysen sind Formeln für Abklingfaktoren zu erstellen. Beim Zählen der Beta-Strahlung tragen beide Sr-Isotope, Sr-89 und Sr-90, zur selben Zählrate bei. Der Zerfall von Sr-90 ist mit einem Anwuchs des Tochterprodukts Y-90 verbunden, das ebenfalls zur Zählrate beiträgt. Die vollständigen Formeln für diese Anwendung können bereits kompliziert sein, besonders, wenn Korrekturen für den Zerfall während der Messung einbezogen werden."
 
 #: ../../doc_files/special_methods/decay_chains.rst:441
 msgid ""
@@ -724,7 +724,7 @@ msgid ""
 "option for building these formulas as strings which are then transferred "
 "into the text field in the dialog for defining the evaluation model of "
 "decay curves."
-msgstr ""
+msgstr "Für eine solche Anwendung unterstützt UncertRadio den Benutzer mit einer zusätzlichen Option zum Aufbau dieser Formeln als Strings, die dann in das Textfeld im Dialog zur Definition des Auswertemodells von Abklingkurven übertragen werden."
 
 #: ../../doc_files/special_methods/decay_chains.rst:446
 msgid ""

@@ -103,7 +103,7 @@ msgid ""
 "holds: :math:`u\\left( x_{i},x_{i} \\right) = u^{2}\\left( x_{i} "
 "\\right)` and :math:`u\\left( x_{i},x_{j} \\right) = u\\left( x_{j},x_{i}"
 " \\right)`."
-msgstr ""
+msgstr "Hier stellt :math:`u\\left( x_{i},x_{j} \\right)` eine allgemeinere Art dar, eine Kovarianz zwischen zwei gemessenen Eingangsgrößen anzugeben, die oft auch als :math:`cov\\left( x_{i},x_{j} \\right)` bzw. :math:`covar\\left( x_{i},x_{j} \\right)` angegeben wird. Es gilt: :math:`u\\left( x_{i},x_{i} \\right) = u^{2}\\left( x_{i} \\right)` und :math:`u\\left( x_{i},x_{j} \\right) = u\\left( x_{j},x_{i} \\right)`."
 
 #: ../../doc_files/special_methods/unc_prop/without_linear_unfolding.rst:47
 msgid ""
@@ -112,5 +112,5 @@ msgid ""
 "is done by using the values and standard uncertainties defined under the "
 ":ref:`tab “values, uncertainties”`. In case that covariances have also "
 "been declared in this TAB, Equation :eq:`wo_unfolding_eq_5` is applied."
-msgstr ""
+msgstr "Gleichung :eq:`wo_unfolding_eq_3` ist die Grundform der Unsicherheitsfortpflanzung, die in UR für Verfahren ohne lineare Entfaltung verwendet wird. Dies geschieht unter Verwendung der unter dem :ref:`tab “values, uncertainties”` definierten Werte und Standardunsicherheiten. Falls Kovarianzen in diesem TAB ebenfalls deklariert wurden, wird Gleichung :eq:`wo_unfolding_eq_5` angewendet."
 

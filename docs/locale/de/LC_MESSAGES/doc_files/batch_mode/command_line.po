@@ -33,7 +33,7 @@ msgid ""
 "excel application`) are **Windows-only** and require Microsoft Excel with"
 " VBA support. LibreOffice Calc and other spreadsheet applications are not"
 " supported."
-msgstr ""
+msgstr "**Plattform-Kompatibilität**: Die Kommandozeilen-Beispiele in diesem Abschnitt sind **nur für Windows**. Unter Linux und macOS unterscheidet sich die Syntax der Kommandozeilen-Argumente (kein „Start”-Präfix, andere Pfadtrennzeichen). Die Beispiele zum Excel-Batch-Modus (siehe :ref:`batch mode processing with an excel application`) sind **nur für Windows** und erfordern Microsoft Excel mit VBA-Unterstützung. LibreOffice Calc und andere Tabellenkalkulations-Anwendungen werden nicht unterstützt."
 
 #: ../../doc_files/batch_mode/command_line.rst:12
 msgid ""
@@ -75,7 +75,7 @@ msgid ""
 "longer used. Instead, Excel-VBA invokes UncertRadio directly, the "
 "temporary modification of the Windows-PATH variable is also applied "
 "directly."
-msgstr ""
+msgstr "Um Konflikte mit Antivirus-Software zu vermeiden, wird die Datei UR2_start_xls.bat, die zuvor zum Starten von UncertRadio aus Excel verwendet wurde, nicht mehr eingesetzt. Stattdessen ruft Excel-VBA UncertRadio direkt auf; die temporäre Änderung der Windows-PATH-Variable wird ebenfalls direkt angewendet."
 
 #~ msgid ">Start D:\\\\Uncertradio\\\\Uncertradio.exe Arg_1 Arg_2 Arg_3"
 #~ msgstr ""

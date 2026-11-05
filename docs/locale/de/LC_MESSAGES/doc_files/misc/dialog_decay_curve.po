@@ -59,7 +59,7 @@ msgid ""
 "following meaning; therein, only those columns shown in black color shall"
 " be filled in by the user, while the columns with red color are "
 "calculated by the program (see below)."
-msgstr ""
+msgstr "Für die **Eingabe der einzelnen Messwerte der Abklingkurve** steht eine Tabelle mit 11 Spalten zur Verfügung, deren 11 Spalten folgende Bedeutung haben; dabei sind nur die in schwarzer Farbe gezeigten Spalten vom Benutzer auszufüllen, während die rot eingefärbten Spalten vom Programm berechnet werden (siehe unten)."
 
 #: ../../doc_files/misc/dialog_decay_curve.rst
 msgid "Column"

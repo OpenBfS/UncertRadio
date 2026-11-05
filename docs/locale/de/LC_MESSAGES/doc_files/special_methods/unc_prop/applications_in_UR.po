@@ -146,7 +146,7 @@ msgid ""
 "elements of **A**, which are functions of **p**. The chain rule for "
 "partial derivatives takes the form **C\\ p**\\ = **C\\ A\\ ·D\\ p**, with"
 " the property"
-msgstr ""
+msgstr "Hierin sind: :math:`\\mathbf{C}_{\\mathbf{A}}` Matrix der partiellen Ableitungen von *y*\\ :sub:`i` nach den Elementen der Matrix **A**, **D\\ p** Matrix der partiellen Ableitungen der Elemente von **A** nach den Parametern **p**; **U\\ A** Kovarianzmatrix der Elemente von **A**, die Funktionen von **p** sind. Die Kettenregel partieller Ableitungen hat die Form **C\\ p**\\ = **C\\ A\\ ·D\\ p**, mit der Eigenschaft"
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:60
 msgid ""
@@ -176,7 +176,7 @@ msgid ""
 "tests whether the input covariance matrix is positive definite. This has "
 "been improved by testing in advance of the Cholesky decomposition the "
 "Cauchy-Schwarz inequality:"
-msgstr ""
+msgstr "Für die lineare Entfaltung mit dem WTLS-Verfahren war in der vorherigen Version ein Test implementiert, der mit der Cholesky-Zerlegung prüft, ob die Eingangs-Kovarianzmatrix positiv definit ist. Dies wurde verbessert, indem vor der Cholesky-Zerlegung die Cauchy-Schwarz-Ungleichung geprüft wird:"
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:77
 msgid ":math:`cov(i,k)^{2} \\leq var(i)var(k)` ."
@@ -190,7 +190,7 @@ msgid ""
 "cannot be inverted) all non-diagonal elements are multiplied with this "
 "factor. Should this not help, the program evaluation is interrupted with "
 "giving a hint on this problem."
-msgstr ""
+msgstr "Für Paare (i, k), für die Gleichheit gefunden wird, wird das zugehörige cov(i, k) mit dem Faktor (1-δ) multipliziert mit δ=1·10\\ :sup:`-09`. Sollte die Kovarianzmatrix nach diesen Tests erneut nicht positiv definit sein (sie kann nicht invertiert werden), werden alle Nicht-Diagonalelemente mit diesem Faktor multipliziert. Sollte auch dies nicht helfen, wird die Programmauswertung mit einem Hinweis auf dieses Problem unterbrochen."
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:86
 msgid ""
@@ -238,7 +238,7 @@ msgid ""
 "the correspondent (*n* x *n*\\ :sub:`q`)-matrix :math:`\\mathbf{Q'}` of "
 "partial derivatives :math:`{Q'}_{i,k} = \\partial y_{i}^{'}/\\partial "
 "q_{k}`."
-msgstr ""
+msgstr "Die Berechnung der Kovarianzmatrix von :math:`\\mathbf{y}^{\\mathbf{'}}` erfordert nun, in Analogie zu Gl. (11), eine (*n* x *n*)-Matrix :math:`\\mathbf{J}` der partiellen Ableitungen :math:`J_{i,k} = \\partial y_{i}^{'}/\\partial y_{k}` der Funktionen :math:`y_{i}^{'}` bezüglich der angepassten Werte :math:`y_{i}`. Die Berücksichtigung der Unsicherheiten der *n*\\ :sub:`q` Werte **q** erfordert die Berechnung der entsprechenden (*n* x *n*\\ :sub:`q`)-Matrix :math:`\\mathbf{Q'}` der partiellen Ableitungen :math:`{Q'}_{i,k} = \\partial y_{i}^{'}/\\partial q_{k}`."
 
 #: ../../doc_files/special_methods/unc_prop/applications_in_UR.rst:115
 msgid ""

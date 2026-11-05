@@ -55,7 +55,7 @@ msgid ""
 "parameters, WTLS requires an iterative procedure. Therefore, starting "
 "values of the fitting parameters are obtained from a preceding call to "
 "the simpler LSQ routines."
-msgstr ""
+msgstr "Obwohl das Modell bezüglich der Anpassungsparameter linear bleibt, erfordert WTLS ein iteratives Verfahren. Daher werden Startwerte der Anpassungsparameter aus einem vorausgehenden Aufruf der einfacheren LSQ-Routinen erhalten."
 
 #: ../../doc_files/misc/note_wtls.rst:25
 #, python-brace-format
@@ -73,7 +73,7 @@ msgid ""
 " may easily increase to a significant value. If, for example, a LSC "
 "measurement with 3 counting channels is considered and 10 measurements "
 "are done, one obtains:"
-msgstr ""
+msgstr "Leider ist die in der Routine LSQGEN verwendete Mathematik eher kompliziert, weshalb eine Beschreibung hier noch nicht gegeben werden kann. Der Routine LSQGEN ist in UncertRadio eine weitere Routine vorgeschaltet, die die Eingangsdaten in einer von LSQGEN geforderten speziellen Form zusammenstellt. Gemessene Nettozählraten :math:`Y\\left( t_{k} \\right)` und die verschiedenen :math:`X_{i}\\left( t_{k} \\right)\\ `\\ \\ -Werte werden in einem gemeinsamen Vektor y zusammengefasst; Gleiches gilt für die Unsicherheiten und Kovarianzen der :math:`Y\\left( t_{k} \\right)`- und :math:`X_{i}\\left( t_{k} \\right)`-Werte, was zu einer gemeinsamen Eingangs-Kovarianzmatrix cy führt. Der Rang des Vektors :math:`\\mathbf{y}` und der quadratischen Matrix cy kann leicht einen erheblichen Wert annehmen. Betrachtet man beispielsweise eine LSC-Messung mit 3 Zählkanälen und führt 10 Messungen durch, so erhält man:"
 
 #: ../../doc_files/misc/note_wtls.rst:39
 #, python-brace-format
@@ -122,7 +122,7 @@ msgid ""
 "determined by the iteration. Using this one, one can calculate new values"
 " of the **gross counting rates** of the decay curve, where L=1 was set "
 "without losing generality:"
-msgstr ""
+msgstr "Die hier zu betrachtenden speziellen Ergebnisgrößen beziehen sich auf die Komponente L des Ergebnisvektors :math:`\\mathbf{y}` der angepassten Parameter, :math:`y_{L}`, und deren Unsicherheit :math:`u\\left( y_{L} \\right)`, die iteriert wird, bis :math:`y_{L}` und :math:`u\\left( y_{L} \\right)` die Abbruchbedingung der Iteration erfüllen. :math:`y_{L}` wird dann durch einen neuen, von der Iteration bestimmten Wert :math:`y_{L}^{'}\\ `\\ \\ ersetzt. Damit können neue Werte der **Bruttozählraten** der Abklingkurve berechnet werden, wobei L=1 ohne Verlust an Allgemeinheit gesetzt wurde:"
 
 #: ../../doc_files/misc/note_wtls.rst:67
 #, python-brace-format
@@ -178,7 +178,7 @@ msgid ""
 " iteration step is initiated by determining the next iteration value "
 ":math:`y_{1}^{''}` from the pair :math:`y_{1}^{'}` and :math:`u\\left( "
 "y_{1}^{'} \\right)`."
-msgstr ""
+msgstr "Mit diesen geänderten Werten und Unsicherheiten der Nettozählraten wird die Auswertung für die Ergebnisgröße wiederholt, was den neuen Unsicherheitswert :math:`u\\left( y_{1}^{'} \\right)` liefert. Nun kann das Konvergenzkriterium geprüft werden; ist es noch nicht erfüllt, wird der nächste Iterationsschritt eingeleitet, indem aus dem Wertepaar :math:`y_{1}^{''}` und :math:`y_{1}^{'}` der nächste Iterationswert :math:`u\\left( y_{1}^{'} \\right)` bestimmt wird."
 
 #~ msgid ""
 #~ "The so-called “general case” of "

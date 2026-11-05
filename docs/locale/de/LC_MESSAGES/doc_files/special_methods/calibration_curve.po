@@ -122,7 +122,7 @@ msgid ""
 "a higher-degree polynomial a numerical bisection method is used for the "
 "inversion. In the mentioned UR project, the concentration refers to that "
 "of Potassium given in g/L."
-msgstr ""
+msgstr "Sie bedeutet, dass Rnet Zählraten bezeichnet, die in einem ersten Schritt als Polynomfunktion in Abhängigkeit von bekannten Konzentrationswerten x kalibriert werden: Rnet = Polynomial(x). Im zweiten Schritt wird eine Zählrate Rnetx einer anderen Probe gemessen und daraus die zugehörige Konzentration Cx bestimmt. Bei einem Polynom 1. Grades würde man die Konzentration Cx zu (Rnetx-a\\ :sub:`1`)/a\\ :sub:`2` berechnen; für Polynome höheren Grades wird für die Umkehrung ein numerisches Bisektionsverfahren verwendet. Im genannten UR-Projekt bezieht sich die Konzentration auf diejenige von Kalium in g/L."
 
 #: ../../doc_files/special_methods/calibration_curve.rst:64
 msgid ""

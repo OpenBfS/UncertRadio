@@ -55,7 +55,7 @@ msgstr "Die Spaltenüberschriften in der Ausgabedatei sollen einen Bezug zu den 
 msgid ""
 "In the case of MC simulation, a PNG graphics file is generated for each "
 "project and output quantity."
-msgstr ""
+msgstr "Bei MC-Simulation wird für jedes Projekt und jede Ergebnisgröße eine PNG-Grafikdatei erzeugt."
 
 #: ../../doc_files/batch_mode/processing_projects_batch_mode.rst:31
 msgid ""

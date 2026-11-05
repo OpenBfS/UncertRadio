@@ -93,7 +93,7 @@ msgstr ""
 msgid ""
 "counting rate of the integrated Compton-background in the region 1,7×Fwhm"
 " of peak *i* at energy :math:`E_{i}`, in :math:`s^{-1}`"
-msgstr ""
+msgstr "Zählrate des integrierten Compton-Untergrunds im Bereich 1,7×Fwhm des Peaks *i* bei der Energie :math:`E_{i}`, in :math:`s^{-1}`"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:40
 #, python-brace-format
@@ -168,7 +168,7 @@ msgstr ""
 msgid ""
 "coincidence summing correction of the line at energy :math:`E_{i}`; it is"
 " used in its multiplicative form;"
-msgstr ""
+msgstr "Koinzidenz-Summationskorrektur der Linie bei der Energie :math:`E_{i}`; sie wird in ihrer multiplikativen Form verwendet;"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:55
 #, python-brace-format
@@ -199,7 +199,7 @@ msgid ""
 " 7 radio buttons, the data are internally adapted to 5 buttons achieved "
 "by dividing the values of effi and pgamm by 100 if their buttons were not"
 " given as “abs”."
-msgstr ""
+msgstr "**Hinweis:** Bis zur Version 2.4.18 standen sieben Radiobuttons zur Verfügung; seit Version 2.4.19 können nur noch 5 verwendet werden. Die Radiobuttons für effi und pgamm wurden entfernt, weil ihre Werte nur als absolute Werte geliefert werden können. Werden ältere Projekte geladen, die noch für 7 Radiobuttons definiert wurden, werden die Daten intern auf 5 Buttons angepasst, indem die Werte von effi und pgamm durch 100 geteilt werden, falls ihre Buttons nicht als „abs” angegeben waren."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:73
 msgid ""
@@ -217,7 +217,7 @@ msgstr ""
 msgid ""
 "Furthermore, the uncertainties of the net count rates are calculated by "
 "the program according to the following equation:"
-msgstr ""
+msgstr "Außerdem werden die Unsicherheiten der Nettozählraten vom Programm nach folgender Gleichung berechnet:"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:81
 msgid ""
@@ -232,7 +232,7 @@ msgid ""
 "Herein, :math:`f_{B}` is a factor which depends on how the net counting "
 "rate *R*\\ :sub:`ni` of the peak has been evaluated. In the case of the "
 "“classical” total peak area (TPA) method, it is given by:"
-msgstr ""
+msgstr "Hierin ist :math:`f_{B}` ein Faktor, der davon abhängt, wie die Nettozählrate *R*\\ :sub:`ni` des Peaks ausgewertet wurde. Im Falle der „klassischen” Methode der gesamten Peakfläche (TPA) ist er gegeben durch:"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:87
 #, python-brace-format
@@ -253,13 +253,13 @@ msgid ""
 " :math:`f_{B}` may be approximated by a fixed value being „slightly "
 "larger than 1“. Then, this factor depends on the method used for peak "
 "fitting; it may be estimated by some sort of “calibration” calculations."
-msgstr ""
+msgstr "Wird jedoch *R*\\ :sub:`ni` durch die Methode der Peak-Anpassung bestimmt, so kann :math:`f_{B}` durch einen festen Wert approximiert werden, der „etwas größer als 1” ist. Dieser Faktor hängt dann von der verwendeten Methode der Peak-Anpassung ab; er kann durch eine Art „Kalibrier”-Rechnungen abgeschätzt werden."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:98
 msgid ""
 "Within the upper part of the dialog a radio list field allows to **choose"
 " the type of mean** between:"
-msgstr ""
+msgstr "Im oberen Teil des Dialogs erlaubt ein Radiolisten-Feld die **Wahl der Art des Mittelwerts** zwischen:"
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:101
 msgid ":ref:`calculation of the weighted mean and its standard uncertainty`,"
@@ -277,19 +277,19 @@ msgid ""
 "Furthermore, a number field in this dialog allows inputting the value of "
 "the factor :math:`f_{B}`; the use of efficiency covariances can be "
 "selected or de-selected."
-msgstr ""
+msgstr "Außerdem erlaubt ein Zahlenfeld in diesem Dialog die Eingabe des Werts des Faktors :math:`f_{B}`; die Verwendung von Effizienz-Kovarianzen kann ausgewählt oder abgewählt werden."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:110
 msgid ""
 "The gamma energies and the net counting rates and their standard "
 "uncertainties must be entered directly in the table."
-msgstr ""
+msgstr "Die Gamma-Energien sowie die Nettozählraten und deren Standardunsicherheiten müssen direkt in die Tabelle eingegeben werden."
 
 #: ../../doc_files/misc/dialog_spectrum_eval.rst:113
 msgid ""
 "In the first column of the table one can select or de-select individual "
 "gamma lines."
-msgstr ""
+msgstr "In der ersten Spalte der Tabelle können einzelne Gammalinien ausgewählt oder abgewählt werden."
 
 #~ msgid "|image50|"
 #~ msgstr ""

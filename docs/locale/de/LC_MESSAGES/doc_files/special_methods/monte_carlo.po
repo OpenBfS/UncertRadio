@@ -47,7 +47,7 @@ msgid ""
 "have got a simulated value, a value of the output quantity - “the first "
 "simulated value of **y**\\ ” - is calculated according to the equations "
 "already defined."
-msgstr ""
+msgstr "Die Simulation erfolgt für eine gewählte (große) Zahl von Simulationen der Messung. Dazu werden für jede derjenigen Größen, die in der Symboleliste unter dem TAB „Equations” definiert und dort als unabhängig (u) gekennzeichneten Eingangsgrößen sind, simulierte Eingangswerte aus ihren entsprechenden Verteilungen (Normal-, Rechteck- oder Dreiecksverteilung) entnommen. Die zugrunde liegenden Einzelverteilungen wurden unter dem TAB „Values, uncertainties” festgelegt. Wenn dort die :ref:`low-level applications, (n+x)-rule` für Impulsanzahlen gewählt wurde, werden ihre zugehörigen Werte gemäß einer Gamma-Verteilung MC-gezogen; die Werte der aus den Impulsanzahlen abgeleiteten Zählraten sind dann ebenfalls Gamma-verteilt. Wenn alle diese Eingangsgrößen einen simulierten Wert erhalten haben, wird ein Wert der Ergebnisgröße – „der erste simulierte Wert von **y**” – gemäß den bereits definierten Gleichungen berechnet."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:24
 msgid ""
@@ -84,7 +84,7 @@ msgstr "Das eben beschriebene Vorgehen gilt für den Fall, dass zwischen den als
 
 #: ../../doc_files/special_methods/monte_carlo.rst:44
 msgid "**Important note on this issue**: Since the UncertRadio version 0.05 (2007/11) this method of producing correlated variables was completely adapted to methods described in textbooks where matrix methods are used (keyword: “Gaussian distributed random numbers in n dimensions”; S. Brandt, Datenanalyse; V. Blobel and E. Lohrmann, Statistische und numerische Methoden der Datenanalyse; as well as the Draft of the new Supplement 1 of ISO GUM). This can be proven by trying the UncertRadio example project files **Kessel-2a-2006_EN.txp and Kessel-2b-2006_EN.txp** from the recent publication by Kessel et al. (2006) (see also: :ref:`Meaning of the TAB “Uncertainty budget” <tab “uncertainty budget”>`)."
-msgstr ""
+msgstr "**Wichtiger Hinweis zu diesem Thema**: Seit der UncertRadio-Version 0.05 (2007/11) wurde diese Methode zur Erzeugung korrelierter Variablen vollständig an Lehrbuchmethoden angepasst, bei denen Matrixmethoden verwendet werden (Stichwort: „Gauß-verteilte Zufallszahlen in n Dimensionen”; S. Brandt, Datenanalyse; V. Blobel und E. Lohrmann, Statistische und numerische Methoden der Datenanalyse; sowie der Entwurf des neuen Supplement 1 des ISO GUM). Dies lässt sich durch Ausprobieren der UncertRadio-Beispielprojektdateien **Kessel-2a-2006_EN.txp und Kessel-2b-2006_EN.txp** aus der Veröffentlichung von Kessel et al. (2006) nachprüfen (siehe auch: :ref:`Meaning of the TAB “Uncertainty budget” <tab “uncertainty budget”>`)."
 
 #: ../../doc_files/special_methods/monte_carlo.rst:55
 msgid ""

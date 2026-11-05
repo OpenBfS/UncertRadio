@@ -170,17 +170,8 @@ msgstr "Die Standardunsicherheiten :math:`u\\left( A_{i} \\right)` der nach obig
 
 #: ../../doc_files/special_methods/gamma_lines.rst:47
 #, python-brace-format
-msgid ""
-"Note: C\\ ovariances between the calculated activities :math:`A_{i}` are "
-"considered. Such covariances e.g. may be inferred by reading efficiency "
-"values from the same FEP efficiency curve :math:`\\epsilon(E)`, because "
-"their values for different energies are derived from the same identical "
-"set of parameters obtained from fitting the curve. Considering this would"
-" require the inclusion of the full covariance matrix of these parameters,"
-" which however cannot be handled by the program. Instead, single values "
-"of the covariance/correlation can be input under the TAB “Values, "
-"Uncertainties”."
-msgstr ""
+msgid "Note: Covariances between the calculated activities :math:`A_{i}` are considered. Such covariances e.g. may be inferred by reading efficiency values from the same FEP efficiency curve :math:`\\epsilon(E)`, because their values for different energies are derived from the same identical set of parameters obtained from fitting the curve. Considering this would require the inclusion of the full covariance matrix of these parameters, which however cannot be handled by the program. Instead, single values of the covariance/correlation can be input under the TAB “Values, Uncertainties”."
+msgstr "Hinweis: Kovarianzen zwischen den berechneten Aktivitäten :math:`A_{i}` werden berücksichtigt. Solche Kovarianzen können z. B. daraus folgen, dass Effizienzwerte aus derselben FEP-Effizienzkurve :math:`\\epsilon(E)` gelesen werden, weil ihre Werte für verschiedene Energien aus demselben identischen Satz von Parametern abgeleitet werden, der aus der Anpassung der Kurve erhalten wurde. Dies zu berücksichtigen würde die Einbeziehung der vollständigen Kovarianzmatrix dieser Parameter erfordern, was jedoch vom Programm nicht geleistet werden kann. Stattdessen können Einzelwerte der Kovarianz/Korrelation unter dem TAB „Values, Uncertainties” eingegeben werden."
 
 #: ../../doc_files/special_methods/gamma_lines.rst:57
 msgid "**Description of procedures for calculating a mean**"
@@ -203,7 +194,7 @@ msgid ""
 ":ref:`Procedure for calculating Decision threshold and Detection limit "
 "for Gamspk1 <approach of calculating decision threshold and detection "
 "limit for gamspk1>`"
-msgstr ""
+msgstr ":ref:`Verfahren zur Berechnung von Erkennungs- und Nachweisgrenze für Gamspk1 <approach of calculating decision threshold and detection limit for gamspk1>`"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:69
 msgid "**Invoking the evaluation of several gamma lines**"
@@ -230,7 +221,7 @@ msgstr "**Gamspk1** ist der Name der Prozedur, welche die gewünschte Mittelwert
 msgid ""
 "*E* placeholder for the energies of individual gamma lines, in keV; the "
 "program automatically attributes values to :math:`E`"
-msgstr ""
+msgstr "*E* Platzhalter für die Energien einzelner Gammalinien, in keV; dem Symbol :math:`E` werden vom Programm automatisch Werte zugewiesen"
 
 #: ../../doc_files/special_methods/gamma_lines.rst:84
 msgid "*tlive* counting time (duration) (live-time) , in :math:`s`;"
@@ -244,14 +235,14 @@ msgid ""
 " course, instead of *E* and *tlive* other symbol names can be used, they "
 "only must be defined in the symbol list of the project. These symbols are"
 " defined always as “global” variables."
-msgstr ""
+msgstr "Nach dem Laden der Symbole aus den Gleichungen stehen sie für die Funktion **Gamspk1** zur Verfügung. Innerhalb des TABs „Values, uncertainties” muss für das Symbol *tlive* ein Wert und dessen Unsicherheit angegeben werden, nicht aber für *E*. Natürlich können statt *E* und *tlive* auch andere Symbolnamen verwendet werden, sie müssen nur in der Symboleliste des Projekts definiert sein. Diese Symbole werden immer als „globale” Variablen definiert."
 
 #: ../../doc_files/special_methods/gamma_lines.rst:94
 msgid ""
 "For the source activity *A* as defined here the decay correction and e.g."
 " a mass or a volume have to be defined in the equations outside of "
 "Gamspk1."
-msgstr ""
+msgstr "Für die Quellenaktivität *A*, wie sie hier definiert ist, müssen die Abkorrektur und z. B. eine Masse oder ein Volumen in den Gleichungen außerhalb von Gamspk1 definiert werden."
 
 #: ../../doc_files/special_methods/gamma_lines.rst:98
 msgid "**Input of values:**"
@@ -267,7 +258,7 @@ msgstr ""
 msgid ""
 ":ref:`Viewing the result of mean calculation with Gamspk1 <view of the "
 "result from calculating a mean with gamspk1>`"
-msgstr ""
+msgstr ":ref:`Ansicht des Ergebnisses der Mittelwertberechnung mit Gamspk1 <view of the result from calculating a mean with gamspk1>`"
 
 #~ msgid ""
 #~ "A_{i} = R_{ni}\\frac{f_{att,i\\ } \\bullet "

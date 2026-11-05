@@ -63,7 +63,7 @@ msgid ""
 "increases with increasing gross count rate; it is called positive linear."
 " The activity is considered as detected if the gross count rate "
 "significantly exceeds the background count rate."
-msgstr ""
+msgstr "Bei dem oben erläuterten Messmodell wächst die Nettozählrate Rn mit steigender Bruttozählrate; es wird als positiv linear bezeichnet. Die Aktivität gilt als nachgewiesen, wenn die Bruttozählrate die Untergrundzählrate deutlich überschreitet."
 
 #: ../../doc_files/content/numericalProcedures/model_types.rst:28
 msgid ""
@@ -92,5 +92,5 @@ msgid ""
 " situation that only an uncertainty according to GUM is of interest for a"
 " measurement, but a detection limit shall not be calculated, as it occurs"
 " for instance in the case of weighing a sample."
-msgstr ""
+msgstr "Der mit **„only GUM”** abgekürzte Fall wurde nur für die Situation eingeführt, dass bei einer Messung lediglich eine Unsicherheit nach GUM von Interesse ist, aber keine Nachweisgrenze berechnet werden soll, wie es z. B. beim Waagen einer Probe vorkommt."
 

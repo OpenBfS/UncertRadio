@@ -71,7 +71,7 @@ msgid ""
 "channel“); the limits of the histograms are determined after the MC "
 "simulation – and not before. These modifications made the MC procedure "
 "code easier to handle."
-msgstr ""
+msgstr "Daher wurde mit Version 2.1.9 das MC-Verfahren geändert – und damit vereinfacht –, indem alle MC-Werte der Ergebnisgröße nun in einem Array gespeichert werden. Die MC-Simulation liefert nun für jede der drei oben genannten Verteilungen Arrays von bis zu 2 000 000 MC-Werten. Aus diesen Arrays werden Mittelwert und Standardabweichung leicht berechnet. Quantile werden mit einer verteilungsfreien Methode geschätzt, wofür die Arrays zunächst sortiert werden müssen. Nur zum Zweck der grafischen Darstellung als Histogramm müssen die MC-Werte in 20 000 Bins („multi-channel“) einsortiert werden; die Grenzen der Histogramme werden nach der MC-Simulation bestimmt – und nicht vorher. Diese Änderungen machten das MC-Verfahren im Code leichter handhabbar."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:39
 msgid "**Bayesian estimates**"
@@ -85,7 +85,7 @@ msgid ""
 "considered for the total number of values. The confidence limits are "
 "estimated as lower and upper quantile of the distribution. The total "
 "number of values considered in one run is only about N/2."
-msgstr ""
+msgstr "Für die Schätzung von Mittelwert, Standardabweichung und unterer und oberer Vertrauensgrenze nach der Bayes-Methode wird nur die bei null abgeschnittene Verteilung verwendet; Werte unter null werden nicht verwendet und nicht für die Gesamtzahl der Werte berücksichtigt. Die Vertrauensgrenzen werden als unteres und oberes Quantil der Verteilung geschätzt. Die Gesamtzahl der in einem Lauf berücksichtigten Werte ist nur etwa N/2."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:51
 msgid ""
@@ -95,7 +95,7 @@ msgid ""
 "interval of shortest length) instead of the symmetrical confidence "
 "limits. Test case: Neutron-Dose-Cox-2006_EN.txp. The activation of this "
 "option does not lead to a significant increase of simulation duration."
-msgstr ""
+msgstr "Mit Version 1.03 wurde im Dialog „Results”, MC-Abschnitt, eine Option ergänzt, mit der sich ein spezielles Paar von Überdeckungsgrenzen berechnen lässt, das den kürzesten Abstand hat (Bayes’sches Überdeckungsintervall kürzester Länge), statt der symmetrischen Vertrauensgrenzen. Testfall: Neutron-Dose-Cox-2006_EN.txp. Die Aktivierung dieser Option führt nicht zu einer wesentlichen Verlängerung der Simulationsdauer."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:59
 msgid ""
@@ -103,32 +103,19 @@ msgid ""
 "distribution may result in a significant **asymmetry of the output "
 "quantity distribution**. In the decision threshold case this may cause "
 "some deviation of the mean value from zero."
-msgstr ""
+msgstr "Eingangsgrößen-Werte, die einer asymmetrischen oder Rechteck-Verteilung zugeordnet sind, können zu einer signifikanten **Asymmetrie der Verteilung der Ergebnisgröße** führen. Im Fall der Erkennungsgrenze kann dies eine gewisse Abweichung des Mittelwerts von null bewirken."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:64
-msgid ""
-"At first, a deviation from an expected distribution symmetrically to zero"
-" is tested. This is done by comparing the mean value *y*\\ :sub:`1`, "
-"deviating from zero, with the MC uncertainty of the mean, *u*\\ (*y*\\ "
-":sub:`1`)/√\\ *N* (see below). In the case of"
-msgstr ""
+msgid "At first, a deviation from an expected distribution symmetrically to zero is tested. This is done by comparing the mean value *y*\\ :sub:`1`, deviating from zero, with the MC uncertainty of the mean, *u*\\ (*y*\\ :sub:`1`)/√\\ *N* (see below). If this ratio exceeds 0.02, or 0.150 if PMLE is applied, the following applies:"
+msgstr "Zunächst wird eine Abweichung von einer erwarteten, symmetrisch zu null liegenden Verteilung geprüft. Dazu wird der von null abweichende Mittelwert *y*\\ :sub:`1` mit der MC-Unsicherheit des Mittelwerts, *u*\\ (*y*\\ :sub:`1`)/√\\ *N* verglichen (siehe unten). Wenn dieses Verhältnis 0.02 überschreitet, oder 0.150 falls PMLE angewendet wird, gilt Folgendes:"
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:69
-msgid ":math:`\\frac{y_{1}}{u\\left( y_{1} \\right)/\\sqrt{N}} > 0.10\\ `"
+msgid ":math:`\\frac{y_{1}}{u\\left( y_{1} \\right)/\\sqrt{N}} > 0.02\\ `"
 msgstr ""
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:71
-msgid ""
-"**an iteration is performed for the decision threshold using the secant "
-"method**, which shifts the mean value closer to zero\\ **.** If "
-"necessary, up to 12 steps are performed, each of them requiring a full MC"
-" simulation; this leads to increasing computational effort. If the above "
-"ratio does not fall below 0.10, that distribution with the lowest ratio "
-"is selected from those of the 12 steps, from which the decision threshold"
-" is then calculated. *y*\\ :sub:`1` can be reduced by typically one to "
-"two orders of magnitude; it may happen, however, that *y*\\ :sub:`1` is "
-"reduced by hardly more that a factor of 10."
-msgstr ""
+msgid "**an iteration is performed for the decision threshold using the secant method**, which shifts the mean value closer to zero. If necessary, up to 12 steps are performed, each of them requiring a full MC simulation; this leads to increasing computational effort. If none of the ratios falls below the applicable limit, that distribution with the lowest ratio is selected from those of the 12 steps, from which the decision threshold is then calculated. *y*\\ :sub:`1` can be reduced by typically one to two orders of magnitude; it may happen, however, that *y*\\ :sub:`1` is reduced by hardly more that a factor of 10."
+msgstr "**wird für die Erkennungsgrenze eine Iteration mit der Sekantenmethode durchgeführt**, die den Mittelwert näher zu null verschiebt. Falls erforderlich, werden bis zu 12 Schritte ausgeführt, von denen jeder eine vollständige MC-Simulation erfordert; dies führt zu steigendem Rechenaufwand. Falls keines der Verhältnisse unter den geltenden Grenzwert fällt, wird die Verteilung mit dem kleinsten Verhältnis aus denen der 12 Schritte ausgewählt, aus der dann die Erkennungsgrenze berechnet wird. *y*\\ :sub:`1` kann typischerweise um eins bis zwei Größenordnungen reduziert werden; es kann jedoch vorkommen, dass *y*\\ :sub:`1` kaum um mehr als einen Faktor 10 reduziert wird."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:81
 msgid "**Decision threshold**"
@@ -181,7 +168,7 @@ msgid ""
 "estimates is possible after a comparison between primary output quantity "
 "and the Decision limit has been done and has led to the conclusion that "
 "the assumption of a non-zero activity value in the sample is true."
-msgstr ""
+msgstr "Um die Verteilungen im Falle der Bayes-Schätzung nicht-negativ zu machen, ist dies möglich, nachdem ein Vergleich zwischen primärer Ergebnisgröße und der Erkennungsgrenze durchgeführt wurde und zu dem Schluss geführt hat, dass die Annahme eines von null verschiedenen Aktivitätswerts in der Probe zutrifft."
 
 #: ../../doc_files/misc/obtaining_calc_details.rst:122
 msgid "**Estimating the MC uncertainties of the characteristic values**"
@@ -366,7 +353,7 @@ msgid ""
 "calculations in the :ref:`tab “values, uncertainties”` or calculations "
 "initiated by the change from :ref:`tab “values, uncertainties”` to the "
 "TAB :ref:`tab “uncertainty budget”` are invoked."
-msgstr ""
+msgstr "Hinweis: Das separate Fenster mit den MC-Grafiken bleibt nach Abschluss der MC-Simulationsberechnungen erhalten. Dies ermöglicht eine zusätzliche Inspektion der unter den verschiedenen TABs gezeigten Daten sowie den Aufruf eines Ergebnisberichts und die anschließende Rückkehr zum TAB „Results” mit diesem Fenster. Falls während dieses Schritts Daten oder Optionen geändert werden mit der Folge, dass die ursprünglichen, der MC-Simulation zugrunde liegenden Annahmen nicht mehr gültig sind, wird dieses MC-Fenster geschlossen. Dies geschieht auch, wenn Berechnungen im :ref:`tab “values, uncertainties”` oder durch den Wechsel vom :ref:`tab “values, uncertainties”` zum TAB :ref:`tab “uncertainty budget”` initiierte Berechnungen aufgerufen werden."
 
 #~ msgid ""
 #~ ":math:`\\frac{\\sigma}{\\varphi\\left( \\Phi^{-1}(1 - "

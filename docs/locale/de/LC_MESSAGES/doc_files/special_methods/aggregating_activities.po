@@ -89,7 +89,7 @@ msgstr ""
 msgid ""
 "*A1, A2, …* the list *np* of symbol names (freely chosen) representing "
 "the activity or activity concentration values"
-msgstr ""
+msgstr "*A1, A2, …* die Liste *np* der Symbolnamen (frei gewählt), die die Aktivitäts- oder Aktivitätskonzentrationswerte darstellen"
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:47
 msgid ""
@@ -239,7 +239,7 @@ msgid ""
 " :math:`u(a^{'})` associated with the activity value :math:`a'` is "
 "calculated. Such pairs :math:`(a^{'},\\ u(a^{'}))` are used for the "
 "iteration necessary for the detection limit calculation."
-msgstr ""
+msgstr "Aus den Unsicherheiten der geänderten Bruttozählraten wird die zum Aktivitätswert :math:`a'` gehörige Unsicherheit :math:`u(a^{'})` berechnet. Solche Wertepaare :math:`(a^{'},\\ u(a^{'}))` werden für die zur Nachweisgrenzenberechnung notwendige Iteration verwendet."
 
 #: ../../doc_files/special_methods/aggregating_activities.rst:158
 msgid "**Example project:**"

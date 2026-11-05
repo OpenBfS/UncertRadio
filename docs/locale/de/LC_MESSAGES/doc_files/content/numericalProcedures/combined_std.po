@@ -61,7 +61,7 @@ msgid ""
 " **MeasdValue(i) = p(i)**. Then, in a subprogram RESULT the value of the "
 "output quantity is calculated from the values of the array elements "
 "*p(i)* by using the function parser."
-msgstr ""
+msgstr "Die analytische Ableitung von Formeln für die kombinierte Unsicherheit z.B. einer masse- oder volumenbezogenen Aktivität nach dem Fortpflanzungsgesetz der Unsicherheiten kann leicht zu einer Vielzahl mehr oder weniger komplexer Formeln führen, deren Richtigkeit oft nicht einfach zu kontrollieren ist. Daher wird ein numerisches Verfahren angewendet. Der erste Schritt besteht darin, alle zur Berechnung erforderlichen Messgrößen/Parameter, dies können schnell mehr als 20 sein, in ein Programm-Array **MeasdValue(i) = p(i)** zu übertragen. Anschließend wird in einem Unterprogramm RESULT der Wert der Ergebnisgröße aus den Werten der Array-Elemente *p(i)* mithilfe des Funktions-Parsers berechnet."
 
 #: ../../doc_files/content/numericalProcedures/combined_std.rst:34
 msgid "Similarly, the known measurement uncertainties of the individual quantities/parameters are transferred to an array **StdUnc(i) = u(i)**. For the calculation of the combined uncertainty a subroutine (see :numref:`algorithm for numerical calculation of the combined uncertainty`) is used to which the two arrays *p(i)* and *u(i)* are transferred. Covariances are considered in this subroutine. The sensitivity coefficients, i.e. the partial derivates of the function calculated with RESULT with respect to the array elements *p(i)*, are numerically approximated by differential quotients."

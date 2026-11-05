@@ -43,7 +43,7 @@ msgid ""
 "Load an existing project file (extensions txp or csv) of a measurement "
 "problem with the |project-open_icon| button, whereby all calculations are"
 " done and, finally, the :ref:`tab “results”` becomes visible."
-msgstr ""
+msgstr "Laden Sie eine vorhandene Projektdatei (Erweiterungen txp oder csv) eines Messproblems über den Button |project-open_icon|, wodurch alle Berechnungen durchgeführt werden und schließlich der :ref:`tab “results”` sichtbar wird."
 
 #: ../../doc_files/first_steps/open_project.rst:61
 msgid "project-open_icon"
@@ -67,7 +67,7 @@ msgstr ""
 
 #: ../../doc_files/first_steps/open_project.rst:24
 msgid "Click the button \"Load symbols from finalized symbol table\""
-msgstr ""
+msgstr "Klicken Sie auf den Button „Load symbols from finalized symbol table”"
 
 #: ../../doc_files/first_steps/open_project.rst:25
 msgid ""
@@ -103,19 +103,19 @@ msgstr ""
 msgid ""
 "Select the :ref:`tab “results”` to view all results, including Decision "
 "threshold and Detection limit"
-msgstr ""
+msgstr "Wählen Sie den :ref:`tab “results”` aus, um alle Ergebnisse einschließlich Erkennungsgrenze und Nachweisgrenze anzusehen"
 
 #: ../../doc_files/first_steps/open_project.rst:40
 msgid ""
 "Alternatively, you can start a Monte Carlo simulation of the calculations"
 " by clicking the \"Start\" button."
-msgstr ""
+msgstr "Alternativ können Sie eine Monte-Carlo-Simulation der Berechnungen starten, indem Sie auf den Button „Start” klicken."
 
 #: ../../doc_files/first_steps/open_project.rst:43
 msgid ""
 "To close the project file, load the next project, or terminate the "
 "program, use the following options:"
-msgstr ""
+msgstr "Um die Projektdatei zu schließen, das nächste Projekt zu laden oder das Programm zu beenden, verwenden Sie die folgenden Optionen:"
 
 #: ../../doc_files/first_steps/open_project.rst:46
 msgid "File – Quit program to terminate the program"
@@ -129,7 +129,7 @@ msgstr ""
 msgid ""
 "Close the project file using the |project-close| option or terminating "
 "the program: File – Quit program."
-msgstr ""
+msgstr "Schließen Sie die Projektdatei über die Option |project-close| oder beenden Sie das Programm: Datei – Programm beenden."
 
 #: ../../doc_files/first_steps/open_project.rst:66
 msgid "project-close"
@@ -140,7 +140,7 @@ msgid ""
 "If one has changed values while going through the different parts of the "
 "program, one should NOT save the project when the program asks for it, "
 "because otherwise the project file would be modified."
-msgstr ""
+msgstr "Wenn man beim Durchgehen der verschiedenen Programmteile Werte geändert hat, sollte man das Projekt nicht speichern, wenn das Programm danach fragt, da sonst die Projektdatei verändert würde."
 
 #: ../../doc_files/first_steps/open_project.rst:58
 msgid ""

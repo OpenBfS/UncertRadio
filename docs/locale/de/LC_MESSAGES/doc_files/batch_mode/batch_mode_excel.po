@@ -32,7 +32,7 @@ msgid ""
 "spreadsheet applications are not supported**. The Excel file is provided "
 "as an example to demonstrate the possibility of batch processing, not as "
 "a required component for using UncertRadio."
-msgstr ""
+msgstr "**Plattform-Kompatibilität**: Der in diesem Abschnitt beschriebene Excel-Batch-Modus ist **nur unter Windows** verfügbar. Er erfordert **Microsoft Excel** (32- oder 64-Bit) und nutzt Windows-spezifische VBA-APIs. **LibreOffice Calc und andere Tabellenkalkulations-Anwendungen werden nicht unterstützt**. Die Excel-Datei wird als Beispiel bereitgestellt, um die Möglichkeit der Batch-Verarbeitung zu demonstrieren, nicht als erforderliche Komponente für die Nutzung von UncertRadio."
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:13
 msgid "Overview"
@@ -43,7 +43,7 @@ msgid ""
 "The automated usage of UncertRadio is of practical value when the UR "
 "calls are embedded in another program, which also takes control over the "
 "sequence of calls to UR with different project files."
-msgstr ""
+msgstr "Die automatisierte Nutzung von UncertRadio ist dann von praktischem Wert, wenn die UR-Aufrufe in ein anderes Programm eingebettet sind, das auch die Steuerung der Aufrufsequenz von UR mit unterschiedlichen Projektdateien übernimmt."
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:19
 msgid ""
@@ -52,14 +52,14 @@ msgid ""
 "file is used for evaluating different batch samples. In this scenario, "
 "only a part of the input parameters varies from measurement to "
 "measurement."
-msgstr ""
+msgstr "**Beispiel-Anwendungsfall**: Ein benutzergeschriebenes Programm zur Verarbeitung der Datenauswertung für ein bestimmtes Messverfahren, bei dem eine Master-Projektdatei zur Auswertung unterschiedlicher Batch-Proben verwendet wird. In diesem Szenario variiert nur ein Teil der Eingangsgrößen-Werte von Messung zu Messung."
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:25
 msgid ""
 "You must provide a program part which modifies the \"variable\" input "
 "parameters in a copy of the master project file based on the :ref:`input "
 "format of a TXP project file <structure of the project file>`."
-msgstr ""
+msgstr "Sie müssen einen Programmteil bereitstellen, der die „variablen” Eingangsgrößen-Werte in einer Kopie der Master-Projektdatei auf Basis des :ref:`input format of a TXP project file <structure of the project file>` ändert."
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:30
 msgid "Excel Application Setup"
@@ -121,13 +121,13 @@ msgid ""
 "A simple macro that performs batch-like processing of UR projects after "
 "they have been selected in ``Table6``. This macro is invoked by a button "
 "in ``Table7``."
-msgstr ""
+msgstr "Ein einfaches Makro, das eine batch-artige Verarbeitung von UR-Projekten durchführt, nachdem diese in ``Table6`` ausgewählt wurden. Dieses Makro wird über einen Button in ``Table7`` aufgerufen."
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:59
 msgid ""
 "`Function`: Iterates through a list of project filenames and executes UR "
 "for each one sequentially, enabling automated batch processing."
-msgstr ""
+msgstr "`Funktion`: Iteriert über eine Liste von Projekt-Dateinamen und führt UR für jeden davon sequenziell aus, was eine automatisierte Batch-Verarbeitung ermöglicht."
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:62
 msgid "**Import_UR_CSV_file**"
@@ -138,13 +138,13 @@ msgid ""
 "This macro allows importing an external UR project file in CSV format "
 "into ``Table4`` of the Excel file. It is invoked by a button in "
 "``Table7``."
-msgstr ""
+msgstr "Dieses Makro ermöglicht den Import einer externen UR-Projektdatei im CSV-Format in ``Table4`` der Excel-Datei. Es wird über einen Button in ``Table7`` aufgerufen."
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:67
 msgid ""
 "`New feature (version 2.4.03+)`: Contains an ``if-then`` construct that "
 "allows selecting a worksheet name using the ``Run_SheetName`` variable."
-msgstr ""
+msgstr "`Neue Funktion (Version 2.4.03+)`: Enthält eine ``if-then``-Konstruktion, mit der ein Arbeitsblatt-Name über die Variable ``Run_SheetName`` ausgewählt werden kann."
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:70
 msgid "**SingleRun_UR**"
@@ -154,7 +154,7 @@ msgstr ""
 msgid ""
 "After editing a project already existing in ``Table4``, this macro "
 "performs the following steps:"
-msgstr ""
+msgstr "Nach der Bearbeitung eines bereits in ``Table4`` vorhandenen Projekts führt dieses Makro die folgenden Schritte aus:"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:75
 msgid "Exports the project to a CSV file"
@@ -178,7 +178,7 @@ msgid ""
 "Excel file. - ``DoTheExport``: Exports edited ``Table4`` to CSV - "
 "``DoSingleRun_UncertRadio``: Executes UR with the external CSV file - "
 "``doFileQuery``: Imports results into ``Table5``"
-msgstr ""
+msgstr "`Unterprogramme`: - ``Init_pathnames``: Setzt die Pfadnamen von UR und der Excel-Datei. - ``DoTheExport``: Exportiert die bearbeitete ``Table4`` nach CSV - ``DoSingleRun_UncertRadio``: Führt UR mit der externen CSV-Datei aus - ``doFileQuery``: Importiert Ergebnisse in ``Table5``"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:87
 msgid "**Run_UR_AUTOSEP**"
@@ -189,7 +189,7 @@ msgid ""
 "This macro calls ``SingleRun_UR`` with a new public variable "
 "``UR_AUTOSEP=True``. It uses two separate tables (sheets): ``UR2_data`` "
 "and ``UR2_results`` instead of ``Table4`` and ``Table5``."
-msgstr ""
+msgstr "Dieses Makro ruft ``SingleRun_UR`` mit einer neuen öffentlichen Variable ``UR_AUTOSEP=True`` auf. Es verwendet zwei separate Tabellen (Blätter): ``UR2_data`` und ``UR2_results`` statt ``Table4`` und ``Table5``."
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:93
 msgid "**Key differences from SingleRun_UR**:"
@@ -197,7 +197,7 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:95
 msgid "UR2 does not save data to ``Auto_Report`` files in this mode"
-msgstr ""
+msgstr "UR speichert in diesem Modus keine Daten in ``Auto_Report``-Dateien"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:96
 msgid ""
@@ -217,7 +217,7 @@ msgstr ""
 msgid ""
 "The typical workflow between calling the two macros "
 "``Import_UR_CSV_file`` and ``SingleRun_UR`` is as follows:"
-msgstr ""
+msgstr "Der typische Ablauf zwischen dem Aufruf der beiden Makros ``Import_UR_CSV_file`` und ``SingleRun_UR`` ist wie folgt:"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:105
 msgid "Import a UR project from a CSV file using ``Import_UR_CSV_file``"
@@ -227,13 +227,13 @@ msgstr ""
 msgid ""
 "**Edit the data** in ``Table4`` as needed (e.g., enter new input data for"
 " the next measurement)"
-msgstr ""
+msgstr "**Bearbeiten Sie die Daten** in ``Table4`` nach Bedarf (z. B. neue Eingangsdaten für die nächste Messung eingeben)"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:107
 msgid ""
 "Execute ``SingleRun_UR`` to export, process, and import results into "
 "``Table5``"
-msgstr ""
+msgstr "Führen Sie ``SingleRun_UR`` aus, um Ergebnisse zu exportieren, zu verarbeiten und in ``Table5`` zu importieren"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:108
 msgid "Use the results in ``Table5`` for further processing in Excel"
@@ -253,7 +253,7 @@ msgstr ""
 msgid ""
 "The command string for starting UR evaluation of an external project is "
 "stored in the variable ``UR_string``. This has evolved across versions:"
-msgstr ""
+msgstr "Der Kommando-String zum Starten der UR-Auswertung eines externen Projekts ist in der Variablen ``UR_string`` gespeichert. Dieser hat sich über die Versionen hinweg gewandelt:"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:120
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:226
@@ -292,7 +292,7 @@ msgid ""
 "The batch file approach was discontinued to avoid conflicts with "
 "antivirus software. UncertRadio is now invoked directly by Excel after "
 "modifying the Windows-Path variable:"
-msgstr ""
+msgstr "Der Ansatz mit Batch-Dateien wurde wegen Konflikten mit Antivirus-Software aufgegeben. UncertRadio wird nun direkt von Excel aufgerufen, nachdem die Windows-Path-Variable geändert wurde:"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:189
 msgid "Version 2.4.26 and Later"
@@ -424,13 +424,13 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:283
 msgid "Numbers are written using the decimal-point character defined in Windows"
-msgstr ""
+msgstr "Zahlen werden mit dem in Windows definierten Dezimalpunktzeichen geschrieben"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:284
 msgid ""
 "These files may be deleted when they grow too large; UR will create new "
 "ones"
-msgstr ""
+msgstr "Diese Dateien können gelöscht werden, wenn sie zu groß werden; UR erzeugt neue"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:287
 msgid "Output File Columns"
@@ -440,7 +440,7 @@ msgstr ""
 msgid ""
 "The meaning of the columns in the UR output files is shown below. Columns"
 " are listed with German (Bedeutung) and English (Meaning) descriptions:"
-msgstr ""
+msgstr "Die Bedeutung der Spalten in den UR-Ausgabedateien ist im Folgenden dargestellt. Die Spalten sind mit deutschen (Bedeutung) und englischen (Meaning) Beschreibungen aufgelistet:"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:292
 msgid "UR Output File Columns"
@@ -540,7 +540,7 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:319
 msgid "Value of expanded uncertainty (using coverage factor k)"
-msgstr ""
+msgstr "Wert der erweiterten Unsicherheit (unter Verwendung des Erweiterungsfaktors k)"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:320
 msgid "BE"
@@ -564,7 +564,7 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:325
 msgid "Uncertainty associated with best estimate"
-msgstr ""
+msgstr "Dem besten Schätzwert beigeordnete Unsicherheit"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:326
 msgid "LQ"
@@ -644,13 +644,13 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:345
 msgid "Nachweisgrenzentyp (sollte nur noch 1 sein, d.h. ISO 11929)"
-msgstr ""
+msgstr "Nachweisgrenzentyp (sollte nur noch 1 sein, d.h. ISO 11929)"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:346
 msgid ""
 "Type of detection limit calculation (can only be 1, according to ISO "
 "11929)"
-msgstr ""
+msgstr "Typ der Nachweisgrenzenberechnung (kann nur 1 sein, gemäß ISO 11929)"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:347
 msgid "k"
@@ -694,7 +694,7 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:357
 msgid "Wahrscheinlichkeit 1-γ für das Vertrauensintervall"
-msgstr ""
+msgstr "Wahrscheinlichkeit 1-γ für das Vertrauensintervall"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:358
 msgid "Confidence interval related probability"
@@ -706,8 +706,8 @@ msgstr ""
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:360
 msgid "Reduziertes Chi-Quadrat (im Falle linearer Entfaltung)"
-msgstr ""
+msgstr "Reduziertes Chi-Quadrat (im Falle linearer Entfaltung)"
 
 #: ../../doc_files/batch_mode/batch_mode_excel.rst:361
 msgid "Reduced Chi-square value (in case of linear unfolding)"
-msgstr ""
+msgstr "Reduzierter Chi-Quadrat-Wert (im Falle linearer Entfaltung)"

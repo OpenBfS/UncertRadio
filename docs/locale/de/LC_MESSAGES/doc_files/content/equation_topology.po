@@ -84,7 +84,7 @@ msgid ""
 "only count rates *Ri* alone are applied in the equations, but they should"
 " also be defined explicitly by *Ri*\\ =\\ *Ni*/*ti*. This results in the "
 "recommendation, to apply this in working with UncertRadio."
-msgstr ""
+msgstr "Kennt man den Zusammenhang zwischen der Bruttozählrate *Rg*, der Bruttoimpulsanzahl *Ng* und der Zähldauer *tg* sowie deren Symbolnummern innerhalb einer Kette, so kann man zur Ableitung von Erkennungsgrenze und Nachweisgrenze aus der zugehörigen Änderung von *Ng* nach :math:`\\tilde{N}g` eine entsprechende Änderung von *Rg* nach :math:`\\tilde{R}g` erzeugen. Zur Vereinfachung dieses Schrittes werden in UncertRadio Indexfelder erzeugt, die von einer Zählrate auf die Impulsanzahl und die Zähldauer verweisen und umgekehrt. Dies erfordert allerdings, dass in den Gleichungen nicht nur Zählraten *Ri* allein angewendet werden, sondern dass sie explizit durch *Ri*\\ =\\ *Ni*/*ti* definiert werden. Daraus ergibt sich die Empfehlung, dies bei der Arbeit mit UncertRadio anzuwenden."
 
 #: ../../doc_files/content/equation_topology.rst:56
 msgid "**Example** Ra226_U235-at-186keV_EN.txp:"

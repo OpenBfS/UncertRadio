@@ -57,7 +57,7 @@ msgid ""
 "\\cdot \\left( 1 - e^{- \\lambda \\cdot t_{m}} \\right)` of the binomial "
 "distribution; :math:`N` is the other. :math:`N` relates to the activity "
 ":math:`A` by :math:`A = \\lambda \\cdot N`."
-msgstr ""
+msgstr "Es sei :math:`N` die Anzahl der zu Beginn der Messung vorhandenen Atome. Das Produkt aus der Wahrscheinlichkeit :math:`\\left( 1 - e^{- \\lambda \\cdot t_{m}} \\right)` für den Zerfall eines Atoms während der Dauer :math:`t_{m}` und der Wahrscheinlichkeit :math:`\\varepsilon`, diesen Zerfall nachzuweisen, bildet einen Parameter :math:`p = \\varepsilon \\cdot \\left( 1 - e^{- \\lambda \\cdot t_{m}} \\right)` der Binomialverteilung; :math:`N` ist der zweite. :math:`N` hängt mit der Aktivität :math:`A` über :math:`A = \\lambda \\cdot N` zusammen."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:30
 msgid "The literature mainly restricted the consideration to the binomial distribution of the sample counts contribution. However, the distribution of the gross counts (including background also) is also required. It can be found by folding two discrete distributions, of the binomial and the Poisson variables X and Y:"
@@ -121,7 +121,7 @@ msgid ""
 "faster than applying Eq. :eq:`short-lived_eq1`, especially for larger "
 "values of :math:`N`. This version of the :math:`P_{BiPo}` distribution is"
 " actually applied in UncertRadio."
-msgstr ""
+msgstr "Streng genommen ist die Form der :math:`P_{BiPo}`-Verteilung, wie gerade definiert, nur für ganzzahlige Werte des Binomialparameters :math:`N` gültig. Für nicht-ganzzahlige Werte ist der Binomialverteilungs-Anteil nicht auf eins normiert. Dieses Problem kann vermieden werden, wenn Gl. :eq:`short-lived_eq1` durch eine spezielle numerische Funktion ersetzt wird, die durch eine hypergeometrische Verteilung unter Verwendung der sogenannten **Kummer confluent hypergeometric function** ausgedrückt wird. Diese Form der Verteilung erlaubt auch nicht-ganzzahlige Werte von :math:`N`. Ihre Berechnung ist außerdem schneller als die Anwendung von Gl. :eq:`short-lived_eq1`, besonders für größere Werte von :math:`N`. Diese Version der :math:`P_{BiPo}`-Verteilung wird tatsächlich in UncertRadio angewendet."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:67
 msgid ""
@@ -135,7 +135,7 @@ msgid ""
 "numbers (background contribution) are continuous. For a small number of "
 "gross counts, the shape of the distribution is therefore a series of "
 "overlapping peaks, one for each binomial integer value."
-msgstr ""
+msgstr "Für einen Wert der Bruttoimpulsanzahl, der durch **Monte-Carlo-Simulation** erzeugt wird, werden ein binomialverteilter Wert (Probenbeitrag) und ein Poisson-verteilter Wert (Untergrundbeitrag) erzeugt. Beide Werte werden zur Bruttoimpulsanzahl addiert. Dabei wird allerdings nur das durch Gl. :eq:`short-lived_eq1` gegebene Verfahren befolgt (diskrete :math:`k`-Werte), weil der Zufallszahlengenerator der Binomialverteilung nur ganzzahlige Werte erzeugen kann, während die Poisson-Zufallswerte (Untergrundbeitrag) kontinuierlich sind. Für eine kleine Zahl von Bruttoimpulsen ist die Form der Verteilung daher eine Serie überlappender Peaks, einer für jeden ganzzahligen Binomialwert."
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:79
 msgid "Aspects of uncertainties and evaluation"
@@ -306,7 +306,7 @@ msgid ""
 "An equation for :math:`A_{0}` follows from the equation for the count "
 "rate :math:`R_{s}` (:math:`f_{3}` is a correction for the decay during "
 "the counting duration)"
-msgstr ""
+msgstr "Eine Gleichung für :math:`A_{0}` folgt aus der Gleichung für die Zählrate :math:`R_{s}` (:math:`f_{3}` ist eine Korrektur für den Zerfall während der Zähldauer)"
 
 #: ../../doc_files/special_methods/short-lived_nuclide.rst:157
 msgid ""

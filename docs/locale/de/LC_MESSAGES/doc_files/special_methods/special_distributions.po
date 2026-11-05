@@ -90,7 +90,7 @@ msgstr ""
 
 #: ../../doc_files/special_methods/special_distributions.rst
 msgid "Binomial+Poisson distribution"
-msgstr ""
+msgstr "Binomial+Poisson-Verteilung"
 
 #: ../../doc_files/special_methods/special_distributions.rst
 msgid "Binom+Poiss"
@@ -190,14 +190,14 @@ msgstr "deren Eigenschaften nachfolgend beschrieben werden. Diese können zusät
 msgid ""
 "In the following, the probability density functions (pdf) and the "
 "relation of their parameters to measured data are shortly introduced."
-msgstr ""
+msgstr "Im Folgenden werden die Wahrscheinlichkeitsdichtefunktionen (pdf) und der Zusammenhang ihrer Parameter zu Messdaten kurz eingeführt."
 
 #: ../../doc_files/special_methods/special_distributions.rst:53
 msgid ""
 "The icon |Distrib_24| allow to invoke a dialog for showing the "
 "distribution-related parameters of an input quantity. This requires that "
 "the row within the table “Values, uncertainties” needs to be highlighted."
-msgstr ""
+msgstr "Das Icon |Distrib_24| erlaubt den Aufruf eines Dialogs zur Anzeige der verteilungsbezogenen Parameter einer Eingangsgröße. Dazu muss die Zeile innerhalb der Tabelle „Values, uncertainties” markiert sein."
 
 #: ../../doc_files/special_methods/special_distributions.rst:59
 msgid "Distrib_24"
@@ -364,7 +364,7 @@ msgid ""
 ":math:`{\\widehat{\\sigma}}^{2}` are considered as unknown. This leads to"
 " the probability density of the input quantity :math:`X` given by the "
 ":math:`t`-distribution of the form"
-msgstr ""
+msgstr "Zur Ableitung der den Parametern zugeordneten Werte sei angenommen, dass eine Serie wiederholter Messungen :math:`x_{1},x_{2},\\ldots,x_{n}` gaußverteilter Werte gegeben ist, wobei :math:`\\widehat{\\mu}` und :math:`{\\widehat{\\sigma}}^{2}` als unbekannt betrachtet werden. Dies führt zur Wahrscheinlichkeitsdichte der Eingangsgröße :math:`X`, gegeben durch die :math:`t`-Verteilung der Form"
 
 #: ../../doc_files/special_methods/special_distributions.rst:154
 msgid ":math:`P_{\\upsilon}(\\overline{x},\\frac{s^{2}}{n})`"
@@ -408,7 +408,7 @@ msgid ""
 "considered as the input values of the *t*-distribution as obtained by "
 "measurements, while the factor :math:`(n - 1)/(n - 3)` follows from a "
 "property of the *t*-distribution."
-msgstr ""
+msgstr "In diesem Fall werden :math:`\\overline{x}` und :math:`\\frac{s^{2}}{n}` als die durch Messungen erhaltenen Eingangswerte der *t*-Verteilung betrachtet, während der Faktor :math:`(n - 1)/(n - 3)` aus einer Eigenschaft der *t*-Verteilung folgt."
 
 #: ../../doc_files/special_methods/special_distributions.rst:177
 msgid ""
@@ -419,7 +419,7 @@ msgid ""
 "= df = n - 1`, and :math:`\\ mu = \\overline{x},\\ \\ sigma = \\ s` are "
 "known within the program; they may be displayed by the following dialog "
 "invoked by the toolbar icon |Distrib_24|:"
-msgstr ""
+msgstr "Da sich die *t*-Verteilung auf eine Messreihe bezieht, muss die betreffende Eingangsgröße in UncertRadio als Mittelwertgröße deklariert werden (siehe :ref:`Anwendung von Mittelwerten <Applying means in UncertRadio>`). Damit sind im Programm die Parameterwerte :math:`n`, bzw. :math:`\\upsilon = df = n - 1`, und :math:`\\ mu = \\overline{x},\\ \\ sigma = \\ s` bekannt; sie können über den folgenden, durch das Toolbar-Icon |Distrib_24| aufgerufenen Dialog angezeigt werden:"
 
 #: ../../doc_files/special_methods/special_distributions.rst:190
 msgid ""

@@ -66,7 +66,7 @@ msgid ""
 "fulfilled; if not, the next iterated value :math:`a_{1}^{''}` is "
 "determined and the above procedure is repeated in order to find its "
 "uncertainty :math:`u\\left( a_{1}^{''} \\right)`; and so on."
-msgstr ""
+msgstr "Das Verfahren zur Berechnung von Erkennungsgrenze und Nachweisgrenze folgt ISO 11929:2010. Der Parameter :math:`a_{1}` wird durch Iteration geändert. Zunächst wird in obiger Gleichung (d. h. dem Wert der Y-90-Zählrate im Falle einer Y-90-Abklingkurve) der Parameter :math:`a_{1}` durch einen iterierten Wert :math:`a_{1}^{'}` ersetzt, während alle übrigen Werte unverändert bleiben. Daraus werden neue gemessene Nettozählraten :math:`Y^{'}\\left( t_{k} \\right)` sowie deren neue Unsicherheiten :math:`u\\left( Y'\\left( t_{k} \\right) \\right)` berechnet (die Unsicherheitsfunktion). Mit diesen neuen Werten, d. h. (:math:`a_{1}^{'}`,\\ :math:`Y^{'}\\left( t_{k} \\right)`,\\ :math:`\\ u\\left( Y'\\left( t_{k} \\right) \\right)`), werden die Berechnungen der Methode der kleinsten Quadrate wiederholt, was die Unsicherheit :math:`u\\left( a_{1}^{'} \\right)` des iterierten Parameterwerts :math:`a_{1}^{'}` liefert. Mit diesem Wertepaar (:math:`a_{1}^{'}`,\\ :math:`\\ u\\left( a_{1}^{'} \\right)`) wird dann geprüft, ob die Abbruchbedingung des Iterationsverfahrens erfüllt ist; falls nicht, wird der nächste iterierte Wert :math:`a_{1}^{''}` bestimmt und das obige Verfahren wiederholt, um dessen Unsicherheit :math:`u\\left( a_{1}^{''} \\right)` zu finden; und so weiter."
 
 #: ../../doc_files/misc/note_dt_dl_fit.rst:32
 msgid ""

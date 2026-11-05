@@ -31,7 +31,7 @@ msgid ""
 "Calc and other spreadsheet applications are not supported**. The Excel "
 "file is provided as an example to demonstrate the possibility of batch "
 "processing, not as a required component for using UncertRadio."
-msgstr ""
+msgstr "**Plattform-Kompatibilität**: Dieses Beispiel zum Excel-Batch-Modus ist **nur unter Windows** verfügbar. Es erfordert **Microsoft Excel** mit VBA-Unterstützung. **LibreOffice Calc und andere Tabellenkalkulations-Anwendungen werden nicht unterstützt**. Die Excel-Datei wird als Beispiel bereitgestellt, um die Möglichkeit der Batch-Verarbeitung zu demonstrieren, nicht als erforderliche Komponente für die Nutzung von UncertRadio."
 
 #: ../../doc_files/batch_mode/example_Excel_batch.rst:11
 msgid ""

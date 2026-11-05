@@ -62,7 +62,7 @@ msgid ""
 "Introducing furthermore an *m*\\ ×\\ *n* matrix :math:`\\mathbf{Q}` with "
 "elements :math:`Q_{i,k} = \\partial Y_{i}/\\partial x_{k}\\ `, i.e., "
 "partial derivatives,"
-msgstr ""
+msgstr "Zu dieser Gleichung gibt es eine äquivalente Darstellung in der Schreibweise der Matrixalgebra, die in UR tatsächlich angewendet wird. Ausgegangen wird von einem *n*-Vektor :math:`\\mathbf{X}` und einem *m*-Vektor **Y** mit zugeordneten Kovarianzmatrizen :math:`\\mathbf{U}_{\\mathbf{x}}` der Dimension *n*\\ ×\\ *n* bzw. :math:`\\mathbf{U}_{\\mathbf{y}}` der Dimension *m*\\ ×\\ *m*. Weiter führt man eine *m*\\ ×\\ *n*-Matrix :math:`\\mathbf{Q}` mit Elementen :math:`Q_{i,k} = \\partial Y_{i}/\\partial x_{k}\\ `, also partiellen Ableitungen, ein:"
 
 #: ../../doc_files/special_methods/unc_prop/several_output_quantities.rst:27
 msgid ""

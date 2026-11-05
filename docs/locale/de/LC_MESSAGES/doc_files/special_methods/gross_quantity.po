@@ -80,7 +80,7 @@ msgid ""
 "*t*-distribution, are given in the following table for the example of the"
 " gross quantity (subscript g); the table for the background quantity "
 "(subscript b) would look similarly."
-msgstr ""
+msgstr "Für diejenigen Eingangsgrößen, denen Mittelwerte zugeordnet sind, wird die *t*-Verteilung als Verteilungstyp genommen. Die möglichen Werte, die den drei Parametern (Anzahl der Freiheitsgrade :math:`\\upsilon`, Mittelwert :math:`\\widehat{\\mu}`, Standardunsicherheit :math:`\\widehat{\\sigma}` (scaling)) der *t*-Verteilung zugeordnet werden können, sind in der folgenden Tabelle für das Beispiel der Bruttogröße (Index g) angegeben; die Tabelle für die Untergrundgröße (Index b) sähe ähnlich aus."
 
 #: ../../doc_files/special_methods/gross_quantity.rst:41
 msgid "Method A |br| “not being counts“"
@@ -294,7 +294,7 @@ msgstr ""
 msgid ""
 "are added to this, where :math:`z_{rnd}` are standard-normal distributed "
 "random values:"
-msgstr ""
+msgstr "werden hierzu addiert, wobei :math:`z_{rnd}` standard-normalverteilte Zufallswerte sind:"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:152
 msgid ""
@@ -334,7 +334,7 @@ msgid ""
 ":eq:`eq:mu_expression` or :eq:`eq:mu_random`, the value :math:`s_{n}^{2}`"
 " is calculated from the associated :math:`u(x)` by reversing equations "
 ":eq:`eq:mu_expression` or :eq:`eq:mu_random`."
-msgstr ""
+msgstr "Im :ref:`tab “values, uncertainties”` in UncertRadio werden diejenigen Unsicherheiten :math:`u(x)` angezeigt, die der Zeile für :math:`\\widehat{\\sigma}` in Tabelle 2 entsprechen. Vor der Erzeugung von MC-Werten für einen angenommenen Wert :math:`\\widetilde{y}` gemäß Gln. :eq:`eq:mu_expression` oder :eq:`eq:mu_random` wird der Wert :math:`s_{n}^{2}` aus dem zugehörigen :math:`u(x)` durch Umkehren der Gleichungen :eq:`eq:mu_expression` oder :eq:`eq:mu_random` berechnet."
 
 #: ../../doc_files/special_methods/gross_quantity.rst:175
 msgid "From the uncertainty :math:`u(.)` one calculates:"
@@ -428,7 +428,7 @@ msgid ""
 "**(gross, background, interference)** is assumed, in which both, "
 ":math:`{\\widetilde{x}}_{g}` and :math:`x_{b}` are treated as mean "
 "values:"
-msgstr ""
+msgstr "In UncertRadio bezieht sich eine solche Interpolation jedoch auf entsprechende zwei Varianzwerte der Bruttogröße :math:`{\\widetilde{x}}_{g}`. Dieser Fall kann aus dem in Gl. :eq:`eq:gross_count_rate_int_5` abgeleiteten Fall gewonnen werden. Es wird ein **Messmodell mit Größen** :math:`{\\widetilde{\\mathbf{x}}}_{\\mathbf{g}}\\mathbf{,}\\mathbf{\\ \\ }\\mathbf{x}_{\\mathbf{b}}\\mathbf{\\ ,}\\mathbf{x}_{\\mathbf{int}}` **(brutto, Untergrund, Störung)** angenommen, in dem sowohl :math:`{\\widetilde{x}}_{g}` als auch :math:`x_{b}` als Mittelwerte behandelt werden:"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:235
 msgid ""
@@ -648,7 +648,7 @@ msgstr "Somit entfällt das Eintragen einer Formel in die „grüne Zelle” fü
 
 #: ../../doc_files/special_methods/gross_quantity.rst:343
 msgid "**Example projects:** ISO-Example-2a_EN.txp (with the old UR-treatment)"
-msgstr ""
+msgstr "**Beispiel-Projekte:** ISO-Beispiel-2a_DE.txp (nach altem UR-Verfahren)"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:346
 msgid "ISO-Example-2a_V2_EN.txp (with the new UR-treatment)"
@@ -666,15 +666,15 @@ msgid ""
 "variances, it needs to be tested, whether the interpolated values "
 "according to these two interpolation variants would agree. This has been "
 "tested with small R program, separately for procedures A and B."
-msgstr ""
+msgstr "Die gemäß ISO 11929 anzuwendende Interpolation der Varianzen der Ergebnisgröße soll linear sein wie in Gl. :eq:`eq:variance_expression`. Da sich die Interpolation in diesem Abschnitt stattdessen auf Varianzen der Bruttozählrate bezieht, muss geprüft werden, ob die interpolierten Werte gemäß dieser zwei Interpolationsvarianten übereinstimmen. Dies wurde mit einem kleinen R-Programm, getrennt für die Verfahren A und B, geprüft."
 
 #: ../../doc_files/special_methods/gross_quantity.rst:358
 msgid "Application to Procedure A („not being counts“)"
 msgstr "Anwendung auf Verfahren A („nicht Impulsanzahl”)"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:360
-msgid "If the variances :math:`u^{2}(x_{g})` and :math:`u^{2}(x_{b})` are taken as products :math:`f_{g}s_{g}^{2}` and :math:`f_{b}s_{b}^{2}` according to 6.12.1, for the model case :math:`y = w(x_{g} - x_{b} - xint)` the result for the interpolated variance of the gross quantity :math:`{\\widetilde{x}}_{g}` is:"
-msgstr ""
+msgid "If the variances :math:`u^{2}(x_{g})` and :math:`u^{2}(x_{b})` are taken as products :math:`f_{g}s_{g}^{2}` and :math:`f_{b}s_{b}^{2}` according to :numref:`gross quantity: variance interpolation for a mean`, for the model case :math:`y = w(x_{g} - x_{b} - xint)` the result for the interpolated variance of the gross quantity :math:`{\\widetilde{x}}_{g}` is:"
+msgstr "Werden die Varianzen :math:`u^{2}(x_{g})` und :math:`u^{2}(x_{b})` gemäß :numref:`gross quantity: variance interpolation for a mean` als Produkte :math:`f_{g}s_{g}^{2}` und :math:`f_{b}s_{b}^{2}` geführt, so ergibt sich für den Modellfall :math:`y = w(x_{g} - x_{b} - xint)` folgendes Ergebnis für die interpolierte Varianz der Bruttogröße :math:`{\\widetilde{x}}_{g}`:"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:366
 msgid ""
@@ -1245,7 +1245,7 @@ msgstr "In der folgenden Tabelle werden die für jeden Wert ytilde berechneten W
 
 #: ../../doc_files/special_methods/gross_quantity.rst:623
 msgid "var_y_tilde_lin from Eq. :eq:`eq:variance_expression`;"
-msgstr ""
+msgstr "var_y_tilde_lin aus Gl. :eq:`eq:variance_expression`;"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:625
 msgid "Rg_tilde (from reversing Eq. (2),"
@@ -1403,11 +1403,11 @@ msgid ""
 "influence can be quantified by parameter :math:`\\vartheta`, which is "
 "applied also to the other involved measurement quantities like gross and "
 "background counts."
-msgstr ""
+msgstr "Es wird angenommen, dass wiederholte Messungen unbekannten zufälligen Einflüssen unterliegen, die klein sind. Weiter wird angenommen, dass die Brutto-, Untergrund- und anderen Impulsanzahlen auf gleiche Weise beeinflusst werden, auch im Fall verschiedener Messungen bei gleichen Messbedingungen. Mit einer Referenzanalyse, d. h. mit einer größeren Zahl :math:`m` von Messungen einer Probe (die einen Index r erhält), kann der unbekannte Einfluss durch den Parameter :math:`\\vartheta` quantifiziert werden, der auch auf die übrigen beteiligten Messgrößen wie Brutto- und Untergrund-Impulsanzahlen angewendet wird."
 
 #: ../../doc_files/special_methods/gross_quantity.rst:736
 msgid "The parameter :math:`\\vartheta` has already been introduced in :numref:`using data sets for mean and variance`. It is determined from the reference data set and applied to the uncertainty calculations of the other count numbers (subscript x):"
-msgstr ""
+msgstr "Der Parameter :math:`\\vartheta` wurde bereits in :numref:`using data sets for mean and variance` eingeführt. Er wird aus dem Referenz-Datensatz ermittelt und auf die Unsicherheitsrechnungen der übrigen Impulsanzahlen (Index x) angewendet:"
 
 #: ../../doc_files/special_methods/gross_quantity.rst:740
 msgid ""
@@ -1456,7 +1456,7 @@ msgid ""
 " it is no longer necessary for the user to enter uncertainty formulae "
 "with the :ref:`tab “values, uncertainties”` ; the introduction of further"
 " auxiliary quantities also is no longer necessary."
-msgstr ""
+msgstr "Mit der Anwendung des Werkzeugs für Mittelwerte (:ref:`using data sets for mean and variance`; siehe auch :ref:`definitions`) stehen die zur Berechnung von :math:`\\vartheta` nötigen Daten, aber auch die sich auf mittelwertbezogene Datensätze beziehenden Daten innerhalb des Programms zur Verfügung. Daher sind die den Gleichungen :eq:`eq:known_random_influences_1`, :eq:`eq:known_random_influences_2` und :eq:`eq:known_random_influences_3` entsprechenden Formeln leicht zu programmieren und sind Teil des Programms. Das bedeutet, im Gegensatz zu früheren UncertRadio-Versionen, dass es für den Benutzer nicht mehr notwendig ist, Unsicherheitsformeln unter dem :ref:`tab “values, uncertainties”` einzugeben; die Einführung weiterer Hilfsgrößen ist ebenfalls nicht mehr notwendig."
 
 #: ../../doc_files/special_methods/gross_quantity.rst:769
 msgid ""

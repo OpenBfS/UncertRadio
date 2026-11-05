@@ -138,7 +138,7 @@ msgid ""
 "consuming general least squares procedure (WTLS). The latter is able to "
 "consider directly also uncertainties of the :math:`X_{i}\\left( t_{k} "
 "\\right)` values and covariances between them."
-msgstr ""
+msgstr "Eine Checkbox in diesem Dialog erlaubt es, anstelle der einfacheren LSQ-Analyse (WLS) das allgemeinere, aufwändigere, aber auch rechenintensivere general least squares-Verfahren (WTLS) zu wählen. Letzteres kann direkt auch Unsicherheiten der :math:`X_{i}\\left( t_{k} \\right)`-Werte und Kovarianzen zwischen ihnen berücksichtigen."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:69
 msgid ""
@@ -164,7 +164,7 @@ msgid ""
 "longer be specified explicitly within the Linfit call. Look at the new "
 "example project Sr89-Sr90_IAEA_AQ-27_2013_V2_EN.txp which demonstrates "
 "this."
-msgstr ""
+msgstr "**seit Version 2.4.24** müssen diese Nachweiseffizienz-Parameter nicht mehr explizit im Linfit-Aufruf angegeben werden. Siehe das neue Beispiel-Projekt Sr89-Sr90_IAEA_AQ-27_2013_V2_EN.txp, das dies zeigt."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:86
 #, python-brace-format
@@ -215,7 +215,7 @@ msgid ""
 "\\right)`, :math:`Y_{B}\\left( t_{k} \\right)` and :math:`Y_{C}\\left( "
 "t_{k} \\right)` have to be considered. Then up to three model equations "
 "are used instead of only one:"
-msgstr ""
+msgstr "Die Anzahl der Zählkanäle (nchs) kann im Dialog gewählt werden. Im vorliegenden Fall sind bis zu drei Abklingkurven :math:`Y_{A}\\left( t_{k} \\right)`, :math:`Y_{B}\\left( t_{k} \\right)` und :math:`Y_{C}\\left( t_{k} \\right)` zu berücksichtigen. Dann werden bis zu drei Modellgleichungen verwendet statt nur einer:"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:140
 #, python-brace-format
@@ -418,7 +418,7 @@ msgid ""
 "If the same calibration activity *A*\\ :sub:`cal` of a radionuclide was "
 "used for the efficiency calibration of the two to three energy windows, "
 "these efficiencies are correlated. Their covariances, pair-wise given by"
-msgstr ""
+msgstr "Wurde für die Effizienzkalibrierierung der zwei bis drei Energiefenster dieselbe Kalibrieraktivität *A*\\ :sub:`cal` eines Radionuklids verwendet, so sind diese Effizienzen korreliert. Ihre Kovarianzen, paarweise gegeben durch"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:280
 #, python-brace-format
@@ -432,7 +432,7 @@ msgid ""
 "are to be inserted for each pair of energy windows N and M, separately "
 "for the present radionuclides, in the covariance grid under the TAB "
 "\"Values, uncertainties\"."
-msgstr ""
+msgstr "sind für jedes Paar von Energiefenstern N und M, getrennt für die betreffenden Radionuklide, im Kovarianzraster unter dem TAB „Values, uncertainties” einzutragen."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:287
 msgid "Organizing of the Xi Functions"
@@ -448,7 +448,7 @@ msgstr "(verwendete Ergebnisgrößen: Fitparameter, für die „fitten” oder �
 msgid ""
 "(applied output quantities: fitting parameters, for which “fit“ or "
 "“fixed“ was selected)"
-msgstr ""
+msgstr "(angewandte Ergebnisgrößen: Anpassungsparameter, für die „fit” oder „fixed” gewählt wurde)"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:295
 msgid "or"
@@ -458,7 +458,7 @@ msgstr ""
 msgid ""
 "number of Xi formulae = (number of measurements) x (number of Xi "
 "formulae) x x (number of counting channels)"
-msgstr ""
+msgstr "Anzahl der Xi-Formeln = (Anzahl der Messungen) x (Anzahl der verwendeten Ergebnisgrößen) x (Anzahl der Zählkanäle)"
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:301
 msgid "(if a formulae (Xi) is defined explicitly for each of the measurements)"
@@ -475,7 +475,7 @@ msgstr "ORDER BY Zählkanal, Nr. der Messung, Nummer der Ergebnisgröße"
 msgid ""
 "“ORDER BY counting channel, number of measurements, number of output "
 "quantity”."
-msgstr ""
+msgstr "„ORDER BY counting channel, number of measurements, number of output quantity”."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:313
 msgid ""
@@ -779,7 +779,7 @@ msgid ""
 "always the same value of the background contribution is used (abbreviated"
 " here as :math:`R_{BG}`). The partial derivatives are calculated "
 "numerically."
-msgstr ""
+msgstr "Der erste Term innerhalb der letzten Gleichung tritt nur auf, wenn für die Berechnung der Nettozählraten :math:`R_{n}\\left( t_{i} \\right)` immer derselbe Wert des Untergrundbeitrags verwendet wird (hier abgekürzt als :math:`R_{BG}`). Die partiellen Ableitungen werden numerisch berechnet."
 
 #: ../../doc_files/misc/dialog_def_curve_model.rst:448
 msgid ""

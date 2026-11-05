@@ -171,7 +171,7 @@ msgid ""
 "calculating the “coefficient of contribution” and resulting values "
 "presented in the column “relat. contribut(%) in the uncertainty budget "
 "table. Eq. :eq:`coeff_contrib_3` then is no longer valid."
-msgstr ""
+msgstr "Nach dem erwähnten Paper von Kessel et al. werden Korrelationen (Kovarianzen) zwischen Eingangsgrößen gemäß Gl. :eq:`coeff_contrib_1` in Kombination mit Gl. :eq:`coeff_contrib_4` zur Berechnung des „coefficient of contribution” berücksichtigt und die resultierenden Werte in der Spalte „relat. contribut(%)” der Unsicherheitsbudget-Tabelle dargestellt. Gl. :eq:`coeff_contrib_3` gilt dann nicht mehr."
 
 #: ../../doc_files/first_steps/TABS/Uncertainty_Budget.rst:95
 msgid "With UncertRadio this procedure according to Kessel et al. is implemented since version 0.05 (2007/11), i.e. the values shown in the column “relat. contribut(%)“ of the uncertainty budget correspond to this new definition. This may be demonstrated with the **example** **projects** **Kessel-2a-2006_EN.txp and Kessel-2b-2006_EN.txp**, which were prepared from two examples from that publication."

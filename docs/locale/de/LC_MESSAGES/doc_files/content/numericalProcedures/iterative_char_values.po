@@ -42,7 +42,7 @@ msgid ""
 ":math:`\\tilde{\\mathbf{u}}\\left(\\tilde{\\mathbf{y}} \\right)` is in "
 "turn derived from the easily calculated "
 ":math:`\\tilde{u}(\\tilde{R_{b}}).`"
-msgstr ""
+msgstr "Die **Berechnung von Nachweisgrenzen basiert auf ISO 11929:2019**, die aus Bayes-Methoden abgeleitet ist (siehe auch Weise et al., 2006). Sie nutzt die vollständige Unsicherheitsfortpflanzung unter Berücksichtigung aller Einzelunsicherheiten und Kovarianzen, wobei die numerischen Berechnungen auf den Routinen **RESULT** und **UncPropa** basieren. Die Werte von Erkennungsgrenze und Nachweisgrenze für die Ergebnisgröße :math:`y` werden mit einem iterativen Verfahren berechnet. Bei diesem Verfahren wird der Wert von :math:`y` variiert, nun als „Annahmewert” :math:`\\tilde{y}` bezeichnet. Daraus wird **der iterierte Wert** :math:`\\tilde{\\mathbf{R}}_{\\mathbf{b}}` **der Bruttozählrate** erhalten, indem die Nettozählrate aus :math:`\\tilde{y}` berechnet wird. Für jeden Iterationsschritt wird die kombinierte Standardunsicherheit von :math:`\\tilde{y}`, nun Unsicherheitsfunktion :math:`\\tilde{\\mathbf{u}}\\left(\\tilde{\\mathbf{y}} \\right)` genannt, ihrerseits aus dem leicht berechenbaren :math:`\\tilde{u}(\\tilde{R_{b}}).` abgeleitet."
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:21
 msgid ""
@@ -95,7 +95,7 @@ msgstr "Dies stellt eine implizite Gleichung für :math:`y^{\\#}` dar, da auf de
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:49
 msgid "The solution of the implicit equation :eq:`char_thres_eq2` is obtained by a simple iterative procedure which is demonstrated for the detection limit case (see :numref:`algorithm for iterative numerical calculation of the detection limit`). The value of Factor is determined in the subprogram **RESULT**, while the uncertainty in Eq. (2) is calculated with the function subprogram **UncPropa**. In order to use UncPropa correctly, for each iteration step the corresponding value :math:`R_{n}^{i}` is obtained from the associated :math:`\\mathbf{y}^{\\mathbf{\\# i}}`, which then is transformed to the gross counting rate, which in this example is stored in the array element :math:`{p(8)}^{i}`. The uncertainty of the latter is calculated from the \"uncertainty function (standard uncertainty) of the gross counting rate\" which has been supplied to the program by the user. In the example the gross counting rate is calculated as if :math:`{p(8)}^{i}` had been obtained by simple single-channel counting, which applies to most cases: :math:`u(8)^{i} = \\sqrt{p(8)^{i}/t}`."
-msgstr ""
+msgstr "Die Lösung der impliziten Gleichung :eq:`char_thres_eq2` wird mit einem einfachen iterativen Verfahren erhalten, das für den Nachweisgrenzen-Fall demonstriert wird (siehe :numref:`algorithm for iterative numerical calculation of the detection limit`). Der Wert des Faktors wird im Unterprogramm **RESULT** bestimmt, während die Unsicherheit in Gl. (2) mit dem Funktionsunterprogramm **UncPropa** berechnet wird. Um UncPropa korrekt zu verwenden, wird für jeden Iterationsschritt der entsprechende Wert :math:`R_{n}^{i}` aus dem zugehörigen :math:`\\mathbf{y}^{\\mathbf{\\# i}}` erhalten, der dann in die Bruttozählrate umgeformt wird, die in diesem Beispiel im Array-Element :math:`{p(8)}^{i}` gespeichert ist. Die UnsicherheitLetzterer wird aus der „Unsicherheitsfunktion (Standardunsicherheit) der Bruttozählrate” berechnet, die dem Programm vom Benutzer geliefert wurde. Im Beispiel wird die Bruttozählrate so berechnet, als sei :math:`{p(8)}^{i}` durch einfache Einkanal-Zählung erhalten worden, was in den meisten Fällen zutrifft: :math:`u(8)^{i} = \\sqrt{p(8)^{i}/t}`."
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:65
 msgid ""
@@ -104,7 +104,7 @@ msgid ""
 "Numerical Recipes, Press et al., 1992). It works more effectively than "
 "the secant method. Since version 2.2.11 (2018/11) the method by Brent is "
 "applied."
-msgstr ""
+msgstr "Mit der Version 2.2.02 (2017/12) wurde das oben beschriebene Iterationsverfahren durch die Ridder-Methode (Routine zriddr aus Numerical Recipes, Press et al., 1992) ersetzt. Sie arbeitet effektiver als das Sekantenverfahren. Seit der Version 2.2.11 (2018/11) wird das Brent-Verfahren angewendet."
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:71
 msgid "**Special cases**"
@@ -112,9 +112,9 @@ msgstr "**Sonderfälle**"
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:73
 msgid "In the case of linear unfolding by using linear least squares analysis, e.g. in the evaluation of a decay curve, the fitting parameter for the desired net counting rate is that quantity which is varied by iteration for estimating Decision threshold and Detection limit (c.f. :numref:`note on decision threshold and detection limit for linear fitting`)."
-msgstr "Im Falle einer linearen Entfaltung mithilfe der linearen Least squares-Analyse, z.B. bei der Auswertung von Abklingkurven, ist der Fitparameter für die gesuchte Nettozählrate diejenige Größe, die zur iterativen Bestimmung von Erkennungs- und Nachweisgrenze variiert wird (vgl. **Hinweis zu Erkennungs- und Nachweisgrenzen bei linearer Entfaltung**)."
+msgstr "Im Falle einer linearen Entfaltung mithilfe der linearen Least squares-Analyse, z.B. bei der Auswertung von Abklingkurven, ist der Fitparameter für die gesuchte Nettozählrate diejenige Größe, die zur iterativen Bestimmung von Erkennungs- und Nachweisgrenze variiert wird (vgl. :numref:`note on decision threshold and detection limit for linear fitting`)."
 
 #: ../../doc_files/content/numericalProcedures/iterative_char_values.rst:80
 msgid "For determining the activity of a radionuclide from several gamma lines the quantity associated with this activity is the one of which the value is iterated (c.f. :numref:`approach of calculating decision threshold and detection limit for gamspk1`)."
-msgstr "Bei der Aktivitätsbestimmung eines Radionuklids mit mehreren Gammalinien ist der Wert der Aktivität der Messgröße diejenige Größe, die variiert wird (vgl. **Verfahren der Berechnung von Erkennungs- und Nachweisgrenze für Gamspk1**)."
+msgstr "Bei der Aktivitätsbestimmung eines Radionuklids mit mehreren Gammalinien ist der Wert der Aktivität der Messgröße diejenige Größe, die variiert wird (vgl. :numref:`approach of calculating decision threshold and detection limit for gamspk1`)."
 
