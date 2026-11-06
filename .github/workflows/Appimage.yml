@@ -68,7 +68,7 @@ jobs:
           if [ "${{ github.ref_type }}" = "tag" ]; then
             mv UncertRadio-*.AppImage "UncertRadio_${{ github.ref_name }}_x86_64.AppImage"
           else
-            mv UncertRadio-*.AppImage "UncertRadio_nightly_$(date +%F)_x86_64.AppImage"
+            mv UncertRadio-*.AppImage "UncertRadio_nightly-${{ github.ref_name }}_$(date +%F)_x86_64.AppImage"
           fi
 
       - name: Smoke test AppImage
@@ -88,7 +88,7 @@ jobs:
           generate_release_notes: false
           fail_on_unmatched_files: true
           files: |
-            UncertRadio_nightly_*.AppImage
+            UncertRadio_nightly-*_x86_64.AppImage
 
       - name: Tag Release
         if: ${{ github.ref_type == 'tag' }}
