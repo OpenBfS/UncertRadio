@@ -79,6 +79,12 @@ jobs:
             tar -czf "UncertRadio_nightly-${{ github.ref_name }}_windows.tar.gz" -C install .
           fi
 
+      - name: Move nightly tag to built commit
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.nightly == 'true' }}
+        run: |
+          git tag -f Nightly_${{ github.ref_name }} ${{ github.sha }}
+          git push -f origin refs/tags/Nightly_${{ github.ref_name }}
+
       - name: Nightly Release
         uses: softprops/action-gh-release@v3
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.nightly == 'true' }}

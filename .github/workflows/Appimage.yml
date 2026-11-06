@@ -78,6 +78,12 @@ jobs:
           grep "BA-Test finished: no deviations!" run_tests.log
           grep "STOP 0" run_tests.log
 
+      - name: Move nightly tag to built commit
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.nightly == 'true' }}
+        run: |
+          git tag -f Nightly_${{ github.ref_name }} ${{ github.sha }}
+          git push -f origin refs/tags/Nightly_${{ github.ref_name }}
+
       - name: Nightly Release
         uses: softprops/action-gh-release@v3
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.nightly == 'true' }}
