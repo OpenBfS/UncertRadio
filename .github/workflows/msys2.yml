@@ -85,9 +85,9 @@ jobs:
           GIT_TERMINAL_PROMPT: '0'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          tok=$(printf 'x-access-token:*** "$GITHUB_TOKEN" | base64 -w0)
+          hdr=$(printf 'AUTHORIZATION: basic %s' "$(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)")
           git tag -f Nightly_${{ github.ref_name }} ${{ github.sha }}
-          git -c http.extraheader="AUTHORIZATION: basic ***" push -f origin refs/tags/Nightly_${{ github.ref_name }}
+          git -c http.extraheader="$hdr" push -f origin refs/tags/Nightly_${{ github.ref_name }}
 
       - name: Nightly Release
         uses: softprops/action-gh-release@v3
