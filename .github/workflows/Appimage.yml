@@ -68,7 +68,7 @@ jobs:
           if [ "${{ github.ref_type }}" = "tag" ]; then
             mv UncertRadio-*.AppImage "UncertRadio_${{ github.ref_name }}_x86_64.AppImage"
           else
-            mv UncertRadio-*.AppImage "UncertRadio_nightly-${{ github.ref_name }}_$(date +%F)_x86_64.AppImage"
+            mv UncertRadio-*.AppImage "UncertRadio_nightly-${{ github.ref_name }}_x86_64.AppImage"
           fi
 
       - name: Smoke test AppImage

@@ -76,7 +76,7 @@ jobs:
           if [ "${{ github.ref_type }}" = "tag" ]; then
             tar -czf "UncertRadio_windows_${{ github.ref_name }}.tar.gz" -C install .
           else
-            tar -czf "UncertRadio_nightly-${{ github.ref_name }}_$(date +%F)_windows.tar.gz" -C install .
+            tar -czf "UncertRadio_nightly-${{ github.ref_name }}_windows.tar.gz" -C install .
           fi
 
       - name: Nightly Release
@@ -90,7 +90,7 @@ jobs:
           tag_name: Nightly_${{ github.ref_name }}
           fail_on_unmatched_files: true
           files: |
-            UncertRadio_nightly-${{ github.ref_name }}_*_windows.tar.gz
+            UncertRadio_nightly-${{ github.ref_name }}_windows.tar.gz
 
       - name: Tag Release
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
