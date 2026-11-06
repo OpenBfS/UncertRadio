@@ -24,13 +24,11 @@ cp "${PWD}/icons/ur2_symbol.png" "${APPDIR}/ur2_symbol.png"
 
 PLPLOT_LIB="/usr/lib/plplot5.15.0"
 PLPLOT_SHARE="/usr/share/plplot5.15.0"
-PIXBUF_LOADERS="/usr/lib/gdk-pixbuf-2.0"
 if [[ -f /etc/os-release ]]; then
     . /etc/os-release
     case "$ID" in
         ubuntu|debian)
         PLPLOT_LIB="/usr/lib/x86_64-linux-gnu/plplot5.15.0"
-        PIXBUF_LOADERS="/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0"
         ;;
     esac
 fi
@@ -40,10 +38,6 @@ mkdir "${APPDIR}/usr/lib"
 cp -a "$PLPLOT_LIB" "${APPDIR}/usr/lib/plplot5.15.0"
 cp -a "$PLPLOT_SHARE" "${APPDIR}/usr/share/plplot5.15.0"
 rm -rf "${APPDIR}/usr/share/plplot5.15.0/examples"
-
-# pixbuf loaders
-cp -a "$PIXBUF_LOADERS" "${APPDIR}/usr/lib/gdk-pixbuf-2.0"
-sed -i -e "s#${PIXBUF_LOADERS}#/usr/lib/gdk-pixbuf-2.0#g" "${APPDIR}/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache"
 
 # glib data
 cp -a /usr/share/glib-2.0 "${APPDIR}/usr/share/glib-2.0"
